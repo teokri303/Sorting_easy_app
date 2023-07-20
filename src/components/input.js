@@ -13,9 +13,23 @@ export default function NumberInputComponent() {
     setNumber2(e.target.value);
   }
 
+  function createGround(width, height) {
+    var result = [];
+    for (var i = 0; i < width; i++) {
+      result[i] = [];
+      for (var j = 0; j < height; j++) {
+        result[i][j] = (Math.random() * 100) | 0;
+      }
+    }
+    return result;
+  }
+
   const handlePrintNumbers = () => {
     console.log("Number 1:", number1);
     console.log("Number 2:", number2);
+    var ground = createGround(number1, number2);
+
+    console.log(ground);
   };
 
   return (
