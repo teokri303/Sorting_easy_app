@@ -1,0 +1,43 @@
+.Welcome {
+  text-align: center;
+  background-color: #FBAB7E;
+  background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(40px + 2vmin);
+  font-weight: 800;
+  color: white;
+}
+
+.Welcome h1{
+  margin-bottom: 20px;
+}
+.Welcome #logo{
+  margin-top: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.Welcome #papalogo{
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.introduction{
+  font-size: 25px; 
+}
+
+
+
+
+
+
+
