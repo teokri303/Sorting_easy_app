@@ -1,65 +1,59 @@
 import { useState } from "react";
-import { Box, Button, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+} from "@chakra-ui/react";
+import Mesh from "../components/array";
 
 export default function NumberInputComponent() {
-  const [number1, setNumber1] = useState("");
-  const [number2, setNumber2] = useState("");
+  const [number1, setNumber1] = useState("null");
+  const [showMesh, setShowMesh] = useState(false);
+  const isError = number1 >= 20 || number1 <= 3;
 
   function handleTextareaChange1(e) {
     setNumber1(e.target.value);
-  }
-
-  function handleTextareaChange2(e) {
-    setNumber2(e.target.value);
-  }
-
-  function createGround(width, height) {
-    var result = [];
-    for (var i = 0; i < width; i++) {
-      result[i] = [];
-      for (var j = 0; j < height; j++) {
-        result[i][j] = (Math.random() * 100) | 0;
-      }
-    }
-    return result;
+    setShowMesh(false);
   }
 
   const handlePrintNumbers = () => {
     console.log("Number 1:", number1);
-    console.log("Number 2:", number2);
-    var ground = createGround(number1, number2);
 
-    console.log(ground);
+    setShowMesh(true);
   };
 
   return (
     <Box maxWidth="400px" margin="0 auto">
-      <FormControl>
-        <FormLabel>Number 1</FormLabel>
+      <FormControl isInvalid={isError}>
+        <FormLabel>Dimensions of 2D array</FormLabel>
         <Input
           type="number"
           value={number1}
           onChange={handleTextareaChange1}
-          placeholder="Enter number 1"
+          placeholder="Enter Mesh Dimension"
         />
-      </FormControl>
-      <FormControl marginTop="2">
-        <FormLabel>Number 2</FormLabel>
-        <Input
-          type="number"
-          value={number2}
-          onChange={handleTextareaChange2}
-          placeholder="Enter number 2"
-        />
+        {!isError ? (
+          <FormHelperText>
+            Enter under 20 cells for better understanding.
+          </FormHelperText>
+        ) : (
+          <FormErrorMessage>Please enter valid dimension</FormErrorMessage>
+        )}
       </FormControl>
       <Button
+        isDisabled={isError}
         colorScheme="teal"
         onClick={handlePrintNumbers}
         marginTop="4"
         size="sm"
       >
-        Print Array
+        Show Mesh
       </Button>
+      <div>{showMesh && <Mesh rows={number1} columns={number1} />}</div>
     </Box>
   );
 }
