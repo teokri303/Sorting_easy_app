@@ -13,12 +13,15 @@ export default function NumberInputComponent() {
   const [number1, setNumber1] = useState("null");
   const [showMesh, setShowMesh] = useState(false);
   const [generatedArray, setGeneratedArray] = useState(null);
+  const [sortedArray, setSortedArray] = useState([]);
+  const [isSorted, setSort] = useState(false);
 
   const isError = number1 >= 20 || number1 <= 3;
 
   function handleTextareaChange1(e) {
     setNumber1(e.target.value);
     setShowMesh(false);
+    setSort(false);
   }
 
   function generateRandomMesh(rows, columns) {
@@ -42,11 +45,113 @@ export default function NumberInputComponent() {
   const handlePrintNumbers = () => {
     //console.log("Number 1:", number1);
     const mesh = generateRandomMesh(number1, number1);
-    console.log(mesh);
+    //console.log(mesh);
 
     setGeneratedArray(mesh);
+    setSortedArray(mesh);
+    /*setSortedArray([
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ]);
+*/
     setShowMesh(true);
   };
+
+  const sort2DArray = () => {
+    setSort(false);
+
+    let array = sortedArray;
+
+    // Phase 1: Sort rows in ascending order, then sort columns
+    let numRows = array.length;
+    let numCols = array[0].length;
+    console.log("we started sorting");
+
+    for (let i = 0; i < numRows; i++) {
+      if (i % 2 === 0) {
+        // Sort the row in ascending order (for even rows)
+        array[i].sort((a, b) => a - b);
+      } else {
+        // Sort the row in descending order (for odd rows)
+        array[i].sort((a, b) => b - a);
+      }
+    }
+    console.log(array);
+
+    // Phase 2: Sort columns in ascending order
+    for (let col = 0; col < numCols; col++) {
+      let columnValues = [];
+      for (let row = 0; row < numRows; row++) {
+        columnValues.push(array[row][col]);
+      }
+      columnValues.sort((a, b) => a - b);
+      for (let row = 0; row < numRows; row++) {
+        array[row][col] = columnValues[row];
+      }
+    }
+
+    // Check if the array is sorted after Phase 2
+    if (isDone(array)) {
+      setSortedArray(array);
+      setSort(true);
+      return array;
+    }
+
+    // Phase 3: Sort rows again
+    for (let i = 0; i < numRows; i++) {
+      if (i % 2 === 0) {
+        // Sort the row in ascending order (for even rows)
+        array[i].sort((a, b) => a - b);
+      } else {
+        // Sort the row in descending order (for odd rows)
+        array[i].sort((a, b) => b - a);
+      }
+    }
+
+    // Check if the array is sorted after Phase 3
+    if (isDone(array)) {
+      setSortedArray(array);
+      setSort(true);
+      return array;
+    }
+
+    // Phase 4: Sort columns again
+    for (let col = 0; col < numCols; col++) {
+      let columnValues = [];
+      for (let row = 0; row < numRows; row++) {
+        columnValues.push(array[row][col]);
+      }
+      columnValues.sort((a, b) => a - b);
+      for (let row = 0; row < numRows; row++) {
+        array[row][col] = columnValues[row];
+      }
+    }
+
+    // Check if the array is sorted after Phase 4
+    if (isDone(array)) {
+      setSortedArray(array);
+      setSort(true);
+      return array;
+    }
+
+    // Recursive call to repeat the process until the array is sorted
+    return sort2DArray(array);
+  };
+
+  // Helper function to check if the 2D array is sorted
+  function isDone(array) {
+    let numRows = array.length;
+    let numCols = array[0].length;
+    for (let row = 1; row < numRows; row++) {
+      for (let col = 0; col < numCols; col++) {
+        if (array[row][col] < array[row - 1][col]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
   //------------------------------------------------------------------------------------------
 
@@ -95,7 +200,20 @@ export default function NumberInputComponent() {
       >
         Show Mesh
       </Button>
-      <div>{showMesh && <Mesh numbers={generatedArray} />}</div>
+      <div>
+        {showMesh && <Mesh numbers={generatedArray} />}
+        {showMesh && (
+          <Button
+            colorScheme="teal"
+            onClick={sort2DArray}
+            marginTop="4"
+            size="sm"
+          >
+            Sort Mesh
+          </Button>
+        )}
+      </div>
+      <div>{isSorted && <Mesh numbers={sortedArray} />}</div>
     </Box>
   );
 }
