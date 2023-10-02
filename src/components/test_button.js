@@ -42,7 +42,7 @@ function print() {
 function oddEvenSort2D(mesh) {
     //here will be the sorting
   console.log("Sorting.....")
-  console.log(mesh[0])
+  console.log(mesh)
 
   return mesh;
 }
