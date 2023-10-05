@@ -48,4 +48,55 @@ function swap(nums, i, j) {
     return number % 2 === 0;
   }
 
-  export {odd_Even_Sort,Reverse_odd_Even_Sort, swap ,isEven}
+
+
+
+// Function to perform one iteration of odd-even transposition sort on a column
+function oddEvenTranspositionSortColumn(mesh, columnIndex) {
+  var numRows = mesh.length;
+  var swapped = false;
+
+  for (let i = 0; i < numRows - 1; i += 2) {
+    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+      // Swap adjacent rows if they are out of order
+      var temp = mesh[i][columnIndex];
+      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
+      mesh[i + 1][columnIndex] = temp;
+      swapped = true;
+    }
+  }
+
+  for (let i = 1; i < numRows - 1; i += 2) {
+    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+      // Swap adjacent rows if they are out of order
+      let temp = mesh[i][columnIndex];
+      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
+      mesh[i + 1][columnIndex] = temp;
+      swapped = true;
+    }
+  }
+
+  return swapped;
+}
+
+// Function to sort all columns of the mesh using odd-even transposition sort
+function sortColumns(mesh) {
+  var numColumns = mesh[0].length;
+  var sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+    for (var columnIndex = 0; columnIndex < numColumns; columnIndex++) {
+      sorted = !oddEvenTranspositionSortColumn(mesh, columnIndex) && sorted;
+    }
+  }
+
+  return mesh; // Return the sorted mesh
+}
+
+
+
+
+
+
+  export {odd_Even_Sort,Reverse_odd_Even_Sort,sortColumns, swap ,isEven}

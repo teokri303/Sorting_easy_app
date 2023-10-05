@@ -1,5 +1,5 @@
 import { Button } from '@chakra-ui/react'
-import {odd_Even_Sort ,Reverse_odd_Even_Sort,isEven} from '../algorithms/odd_even_sort';
+import {odd_Even_Sort ,Reverse_odd_Even_Sort,sortColumns, isEven} from '../algorithms/odd_even_sort';
 
 
 export default function Test() {
@@ -64,12 +64,23 @@ function oddEvenSort2D(mesh) {
 }
 
 function printsorted(){
-    const sortedMesh = oddEvenSort2D(array);
+    var sortedMesh = oddEvenSort2D(array);
     console.log("SORTED 5x5 array:");
 
     for (const row of sortedMesh) {
         console.log(row.join("\t"));
    }
+
+   console.log("SORTED COLUMN:");
+
+   sortedMesh = sortColumns(array);
+
+   for (const row of sortedMesh) {
+    console.log(row.join("\t"));
+}
+
+   
+
 }
 
 
