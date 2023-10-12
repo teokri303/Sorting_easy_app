@@ -1,11 +1,11 @@
 // Function to generate a random 5x5 2D array with unique numbers
-function generateUniqueArray() {
+function generateUniqueArray(side) {
   const array = [];
-  const uniqueNumbers = Array.from({ length: 25 }, (_, i) => i + 1);
+  const uniqueNumbers = Array.from({ length: side * side }, (_, i) => i + 1);
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < side; i++) {
     const row = [];
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < side; j++) {
       const randomIndex = Math.floor(Math.random() * uniqueNumbers.length);
       const randomValue = uniqueNumbers.splice(randomIndex, 1)[0];
       row.push(randomValue);
@@ -109,6 +109,45 @@ function sortColumns(mesh) {
   return mesh; // Return the sorted mesh
 }
 
+function oddEvenSort2D(mesh) {
+  //here will be the sorting
+  let numRows = mesh.length;
+  let oddPhases = Math.round(Math.sqrt(numRows) + 1);
+  let evenPhases = Math.round(Math.sqrt(numRows));
+  let Phases = oddPhases + evenPhases;
+  console.log(
+    "Sorting.....with " +
+      oddPhases +
+      " oddPhases and " +
+      evenPhases +
+      " evenPhases"
+  );
+
+  for (let i = 0; i < Phases; i++) {
+    if (isEven(i)) {
+      for (let i = 0; i < numRows; i++) {
+        if (isEven(i)) {
+          odd_Even_Sort(mesh[i]);
+        } else {
+          Reverse_odd_Even_Sort(mesh[i]);
+        }
+      }
+      console.log("PHASE " + [i + 1] + " rows snakelike");
+      for (const row of mesh) {
+        console.log(row.join("\t"));
+      }
+    } else {
+      sortColumns(mesh);
+      console.log("PHASE " + [i + 1] + " columns sort");
+      for (const row of mesh) {
+        console.log(row.join("\t"));
+      }
+    }
+  }
+
+  return mesh;
+}
+
 export {
   odd_Even_Sort,
   Reverse_odd_Even_Sort,
@@ -116,4 +155,5 @@ export {
   swap,
   isEven,
   generateUniqueArray,
+  oddEvenSort2D,
 };
