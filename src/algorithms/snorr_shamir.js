@@ -5,6 +5,9 @@ import {
   sortColumns,
 } from "../algorithms/odd_even_sort";
 
+let gridSize = 16;
+let blockSize = 4;
+
 function oddEven_Blocks(mesh) {
   //here will be the sorting
   let numRows = mesh.length;
@@ -29,4 +32,56 @@ function oddEven_Blocks(mesh) {
   return mesh;
 }
 
-export { oddEven_Blocks };
+// Λειτουργία για δημιουργία ενός κενού ταξινομημένου πλέγματος.
+function createEmptySortedGrid() {
+  const sortedGrid = new Array(gridSize)
+    .fill(0)
+    .map(() => new Array(gridSize).fill(0));
+  return sortedGrid;
+}
+
+// Λειτουργία για τον πλήρη υπολογισμό του ταξινομημένου πλέγματος.
+function createSortedGrid(blocks) {
+  const sortedGrid = createEmptySortedGrid(16);
+  let blockIndex = 0;
+
+  for (let row = 0; row < gridSize; row += blockSize) {
+    for (let col = 0; col < gridSize; col += blockSize) {
+      const block = blocks[blockIndex++];
+      for (let i = 0; i < blockSize; i++) {
+        for (let j = 0; j < blockSize; j++) {
+          sortedGrid[row + i][col + j] = block[i][j];
+        }
+      }
+    }
+  }
+
+  return sortedGrid;
+}
+//xorizetai to mesh se blocks kai ta sortarei ena ena me odd even
+function sortAndPopulateBlocks(grid) {
+  const blocks = [];
+
+  for (let row = 0; row < gridSize; row += blockSize) {
+    for (let col = 0; col < gridSize; col += blockSize) {
+      let block = [];
+      for (let i = 0; i < blockSize; i++) {
+        const blockRow = [];
+        for (let j = 0; j < blockSize; j++) {
+          blockRow.push(grid[row + i][col + j]);
+        }
+        block.push(blockRow);
+      }
+
+      //edo ginetai i taksinomisi tou kathe block
+      oddEven_Blocks(block);
+
+      blocks.push(block);
+      //console.log(blocks);
+    }
+  }
+
+  return blocks;
+}
+
+export { sortAndPopulateBlocks, createSortedGrid };

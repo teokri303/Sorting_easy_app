@@ -4,7 +4,11 @@ import {
   oddEvenSort2D,
 } from "../algorithms/odd_even_sort";
 
-import { oddEven_Blocks } from "../algorithms/snorr_shamir";
+import {
+  sortAndPopulateBlocks,
+  createSortedGrid,
+} from "../algorithms/snorr_shamir";
+import { kWayUnshuffle2D } from "../algorithms/kway_unsuffle";
 
 export default function Test() {
   let array = [];
@@ -23,66 +27,22 @@ export default function Test() {
 
   function sort_First_Alg() {
     var sortedMesh = oddEvenSort2D(array);
+
     console.log("SORTED array:");
 
     for (const row of sortedMesh) {
       console.log(row.join("\t"));
     }
-  }
-  //----------------------------------------------------line-------------------------------------------------
-  const gridSize = 16;
-  const blockSize = 4;
 
-  // Λειτουργία για δημιουργία ενός κενού ταξινομημένου πλέγματος.
-  function createEmptySortedGrid() {
-    const sortedGrid = new Array(gridSize)
-      .fill(0)
-      .map(() => new Array(gridSize).fill(0));
-    return sortedGrid;
-  }
+    var unshuffled = kWayUnshuffle2D(sortedMesh, 2);
 
-  function sortAndPopulateBlocks(grid) {
-    const blocks = [];
+    console.log("SORTED UNSHUFFLED:");
 
-    for (let row = 0; row < gridSize; row += blockSize) {
-      for (let col = 0; col < gridSize; col += blockSize) {
-        let block = [];
-        for (let i = 0; i < blockSize; i++) {
-          const blockRow = [];
-          for (let j = 0; j < blockSize; j++) {
-            blockRow.push(grid[row + i][col + j]);
-          }
-          block.push(blockRow);
-        }
-
-        oddEven_Blocks(block);
-
-        blocks.push(block);
-        //console.log(blocks);
-      }
+    for (const row of unshuffled) {
+      console.log(row.join("\t"));
     }
-
-    return blocks;
   }
-
-  // Λειτουργία για τον πλήρη υπολογισμό του ταξινομημένου πλέγματος.
-  function createSortedGrid(blocks) {
-    const sortedGrid = createEmptySortedGrid();
-    let blockIndex = 0;
-
-    for (let row = 0; row < gridSize; row += blockSize) {
-      for (let col = 0; col < gridSize; col += blockSize) {
-        const block = blocks[blockIndex++];
-        for (let i = 0; i < blockSize; i++) {
-          for (let j = 0; j < blockSize; j++) {
-            sortedGrid[row + i][col + j] = block[i][j];
-          }
-        }
-      }
-    }
-
-    return sortedGrid;
-  }
+  //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   function sort_Second_Alg() {
     const sortedBlocks = sortAndPopulateBlocks(array);
@@ -101,7 +61,7 @@ export default function Test() {
           Create Random small
         </Button>
         <Button colorScheme="green" onClick={sort_First_Alg}>
-          Sort the array
+          Sort ONE
         </Button>
       </div>
       <div>
@@ -109,7 +69,7 @@ export default function Test() {
           Create BIG
         </Button>
         <Button colorScheme="green" onClick={sort_Second_Alg}>
-          Sort the array
+          Sort SCHAMMIR
         </Button>
       </div>
     </div>
