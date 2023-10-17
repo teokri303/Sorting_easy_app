@@ -34,7 +34,7 @@ export default function Test() {
       console.log(row.join("\t"));
     }
 
-    var unshuffled = kWayUnshuffle2D(sortedMesh, 2);
+    var unshuffled = kWayUnshuffle2D(sortedMesh);
 
     console.log("SORTED UNSHUFFLED:");
 

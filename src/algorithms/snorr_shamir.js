@@ -6,7 +6,11 @@ import {
 } from "../algorithms/odd_even_sort";
 
 let gridSize = 16;
-let blockSize = 4;
+let N = gridSize * gridSize;
+let blocks_Sum = Math.floor(Math.pow(N, 1 / 4));
+let elemenets_in_blocks = Math.pow(blocks_Sum, 3);
+let blockSize = Math.floor(Math.pow(N, 1 / 8));
+blockSize = Math.floor(Math.pow(blockSize, 3));
 
 function oddEven_Blocks(mesh) {
   //here will be the sorting
@@ -42,7 +46,7 @@ function createEmptySortedGrid() {
 
 // Λειτουργία για τον πλήρη υπολογισμό του ταξινομημένου πλέγματος.
 function createSortedGrid(blocks) {
-  const sortedGrid = createEmptySortedGrid(16);
+  const sortedGrid = createEmptySortedGrid();
   let blockIndex = 0;
 
   for (let row = 0; row < gridSize; row += blockSize) {
@@ -61,6 +65,10 @@ function createSortedGrid(blocks) {
 //xorizetai to mesh se blocks kai ta sortarei ena ena me odd even
 function sortAndPopulateBlocks(grid) {
   const blocks = [];
+
+  console.log("NUMBER OF BLOCKS = ", +blocks_Sum);
+  console.log("BLOCKSIZE = " + blockSize);
+  console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
 
   for (let row = 0; row < gridSize; row += blockSize) {
     for (let col = 0; col < gridSize; col += blockSize) {
