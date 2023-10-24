@@ -1,4 +1,8 @@
-function kWayUnshuffle2D(arr, K) {
+let gridSize = 16;
+let N = gridSize * gridSize;
+let K = Math.pow(N, 1 / 4);
+
+function kWayUnshuffle2D(arr) {
   const numRows = arr.length;
   const numCols = arr[0].length;
 

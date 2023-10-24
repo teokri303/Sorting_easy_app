@@ -2,6 +2,7 @@ import { Button } from "@chakra-ui/react";
 import {
   generateUniqueArray,
   oddEvenSort2D,
+  generateLeema,
 } from "../algorithms/odd_even_sort";
 
 import {
@@ -65,9 +66,6 @@ export default function Test() {
         </Button>
       </div>
       <div>
-        <Button colorScheme="blue" onClick={generateArray}>
-          Create BIG
-        </Button>
         <Button colorScheme="green" onClick={sort_Second_Alg}>
           Sort SCHAMMIR
         </Button>

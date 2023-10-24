@@ -7,10 +7,10 @@ import {
 
 let gridSize = 16;
 let N = gridSize * gridSize;
-let blocks_Sum = Math.floor(Math.pow(N, 1 / 4));
+let blocks_Sum = Math.pow(N, 1 / 4);
 let elemenets_in_blocks = Math.pow(blocks_Sum, 3);
-let blockSize = Math.floor(Math.pow(N, 1 / 8));
-blockSize = Math.floor(Math.pow(blockSize, 3));
+let blockSize = Math.pow(N, 1 / 8);
+blockSize = Math.pow(blockSize, 3);
 
 function oddEven_Blocks(mesh) {
   //here will be the sorting
@@ -66,8 +66,9 @@ function createSortedGrid(blocks) {
 function sortAndPopulateBlocks(grid) {
   const blocks = [];
 
+  console.log("N = ", +N);
   console.log("NUMBER OF BLOCKS = ", +blocks_Sum);
-  console.log("BLOCKSIZE = " + blockSize);
+  console.log("BLOCK-SIDE = ", +blockSize);
   console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
 
   for (let row = 0; row < gridSize; row += blockSize) {

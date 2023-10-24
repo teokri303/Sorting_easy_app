@@ -1,4 +1,4 @@
-// Function to generate a random 5x5 2D array with unique numbers
+// Function to generate a random 2D array with unique numbers
 function generateUniqueArray(side) {
   const array = [];
   const uniqueNumbers = Array.from({ length: side * side }, (_, i) => i + 1);
@@ -14,6 +14,21 @@ function generateUniqueArray(side) {
   }
 
   return array;
+}
+
+function generateLeema(side) {
+  const random2DArray = [];
+
+  for (let i = 0; i < side; i++) {
+    const row = [];
+    for (let j = 0; j < side; j++) {
+      const randomValue = Math.random() < 0.65 ? 0 : 1; // 50% chance of 0, 50% chance of 1
+      row.push(randomValue);
+    }
+    random2DArray.push(row);
+  }
+
+  return random2DArray;
 }
 
 function swap(nums, i, j) {
@@ -156,4 +171,5 @@ export {
   isEven,
   generateUniqueArray,
   oddEvenSort2D,
+  generateLeema,
 };
