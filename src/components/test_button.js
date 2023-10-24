@@ -42,10 +42,20 @@ export default function Test() {
     const phase_2 = kWayUnshuffle2D(sortedGrid);
     //phase 3
     const phase_3 = snakelikeBlocks(phase_2);
+    console.log("PHASE 3 SNAKE");
+    for (const row of phase_3) {
+      console.log(row.join("\t"));
+    }
     //phase 4
-    const zoo = sortColumns(phase_3);
+    const phase_4 = sortColumns(phase_3);
+    /*console.log("PHASE 4 COLUMNS");
+    for (const row of phase_4) {
+      console.log(row.join("\t"));
+    }*/
+
     //edw exoyme thema giati to phase 3 epireazetai otan sortarw ta columns
 
+    /*
     console.log("PHASE 1 SNAKE:");
 
     for (const row of sortedGrid) {
@@ -56,16 +66,7 @@ export default function Test() {
     for (const row of phase_2) {
       console.log(row.join("\t"));
     }
-
-    console.log("PHASE 3 SNAKE");
-    for (const row of phase_3) {
-      console.log(row.join("\t"));
-    }
-
-    console.log("PHASE 4 COLUMNS");
-    for (const row of zoo) {
-      console.log(row.join("\t"));
-    }
+    }*/
   }
 
   return (
