@@ -82,26 +82,26 @@ function isEven(number) {
 }
 
 // Function to perform one iteration of odd-even transposition sort on a column
-function oddEvenTranspositionSortColumn(mesh, columnIndex) {
-  var numRows = mesh.length;
+function oddEvenTranspositionSortColumn(grid, columnIndex) {
+  var numRows = grid.length;
   var swapped = false;
 
   for (let i = 0; i < numRows - 1; i += 2) {
-    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
       // Swap adjacent rows if they are out of order
-      var temp = mesh[i][columnIndex];
-      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
-      mesh[i + 1][columnIndex] = temp;
+      var temp = grid[i][columnIndex];
+      grid[i][columnIndex] = grid[i + 1][columnIndex];
+      grid[i + 1][columnIndex] = temp;
       swapped = true;
     }
   }
 
   for (let i = 1; i < numRows - 1; i += 2) {
-    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
       // Swap adjacent rows if they are out of order
-      let temp = mesh[i][columnIndex];
-      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
-      mesh[i + 1][columnIndex] = temp;
+      let temp = grid[i][columnIndex];
+      grid[i][columnIndex] = grid[i + 1][columnIndex];
+      grid[i + 1][columnIndex] = temp;
       swapped = true;
     }
   }
@@ -111,17 +111,18 @@ function oddEvenTranspositionSortColumn(mesh, columnIndex) {
 
 // Function to sort all columns of the mesh using odd-even transposition sort
 function sortColumns(mesh) {
+  const grid = mesh;
   var numColumns = mesh[0].length;
   var sorted = false;
 
   while (!sorted) {
     sorted = true;
     for (var columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-      sorted = !oddEvenTranspositionSortColumn(mesh, columnIndex) && sorted;
+      sorted = !oddEvenTranspositionSortColumn(grid, columnIndex) && sorted;
     }
   }
 
-  return mesh; // Return the sorted mesh
+  return grid; // Return the sorted mesh
 }
 
 function oddEvenSort2D(mesh) {

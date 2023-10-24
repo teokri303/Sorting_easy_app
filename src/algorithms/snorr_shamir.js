@@ -5,6 +5,8 @@ import {
   sortColumns,
 } from "../algorithms/odd_even_sort";
 
+import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
+
 let gridSize = 16;
 let N = gridSize * gridSize;
 let blocks_Sum = Math.pow(N, 1 / 4);
@@ -93,4 +95,11 @@ function sortAndPopulateBlocks(grid) {
   return blocks;
 }
 
-export { sortAndPopulateBlocks, createSortedGrid };
+function snakelikeBlocks(array) {
+  var blocks = sortAndPopulateBlocks(array);
+  var sortedGrid = createSortedGrid(blocks);
+
+  return sortedGrid;
+}
+
+export { snakelikeBlocks };
