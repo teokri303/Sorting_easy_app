@@ -111,28 +111,17 @@ function oddEvenTranspositionSortColumn(grid, columnIndex) {
 
 // Function to sort all columns of the mesh using odd-even transposition sort
 function sortColumns(mesh) {
-  const grid = mesh;
-
-  console.log("TEST");
-
-  //check here giati xalaei to phase_4
-
-  /*
-  for (const row of grid) {
-    console.log(row.join("\t"));
-  }*/
-
   var numColumns = mesh[0].length;
   var sorted = false;
 
   while (!sorted) {
     sorted = true;
     for (var columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-      sorted = !oddEvenTranspositionSortColumn(grid, columnIndex) && sorted;
+      sorted = !oddEvenTranspositionSortColumn(mesh, columnIndex) && sorted;
     }
   }
 
-  return grid; // Return the sorted mesh
+  return mesh; // Return the sorted mesh
 }
 
 function oddEvenSort2D(mesh) {
