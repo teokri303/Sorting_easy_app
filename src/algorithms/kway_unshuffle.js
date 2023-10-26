@@ -1,30 +1,31 @@
-let gridSize = 16;
-let N = gridSize * gridSize;
-let K = Math.pow(N, 1 / 4);
+function kWayUnshuffle2D(mesh) {
+  // Get the dimensions of the mesh
+  const n = mesh.length;
+  const m = mesh[0].length;
+  const old_pos = [];
+  const new_pos = [];
+  // Calculate n^1/4
+  const t = Math.pow(n, 1 / 4);
 
-function kWayUnshuffle2D(arr) {
-  const numRows = arr.length;
-  const numCols = arr[0].length;
+  // Create a new mesh to store the unshuffled result
+  const unshuffledMesh = new Array(n);
 
-  // Calculate the size of each partition
-  const partitionSize = Math.floor(numCols / K);
-
-  // Initialize the unshuffled array
-  const unshuffledArray = new Array(numRows);
-  for (let i = 0; i < numRows; i++) {
-    unshuffledArray[i] = new Array(numCols);
-  }
-
-  // Unshuffle the columns
-  for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
-      const partition = Math.floor(j / partitionSize);
-      const originalColumn = (j % K) * partitionSize + partition;
-      unshuffledArray[i][originalColumn] = arr[i][j];
+  // Iterate through the rows of the mesh
+  for (let i = 0; i < n; i++) {
+    old_pos[i] = i;
+    unshuffledMesh[i] = new Array(m);
+    for (let j = 0; j < m; j++) {
+      // Calculate the new column index using the formula
+      const newJ = (j % t) * (n / t) + Math.floor(j / t);
+      unshuffledMesh[i][newJ] = mesh[i][j];
+      new_pos[j] = newJ;
     }
   }
-
-  return unshuffledArray;
+  console.log("Columns potitions shuffles: ");
+  for (let i = 0; i < old_pos.length; i++) {
+    console.log(old_pos[i] + " ---> " + new_pos[i]);
+  }
+  return unshuffledMesh;
 }
 
 export { kWayUnshuffle2D };
