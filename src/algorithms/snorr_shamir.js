@@ -92,6 +92,7 @@ function sortAndPopulateBlocks(grid) {
     }
   }
 
+  console.log(blocks);
   return blocks;
 }
 
