@@ -21,10 +21,11 @@ function kWayUnshuffle2D(mesh) {
       new_pos[j] = newJ;
     }
   }
+  /*
   console.log("Columns potitions shuffles: ");
   for (let i = 0; i < old_pos.length; i++) {
     console.log(old_pos[i] + " ---> " + new_pos[i]);
-  }
+  }*/
   return unshuffledMesh;
 }
 

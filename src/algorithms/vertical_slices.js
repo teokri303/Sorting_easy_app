@@ -121,6 +121,8 @@ function vertical_slices(grid) {
   let blocks = vertical_slices_sort(grid);
   let sorted = assemble_slices(blocks);
 
+  //console.log(sorted.length);
+
   return sorted;
 }
 
