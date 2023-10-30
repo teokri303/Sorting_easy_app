@@ -8,6 +8,7 @@ import {
 
 import { snakelikeBlocks } from "../algorithms/snorr_shamir";
 import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
+import { vertical_slices } from "../algorithms/vertical_slices";
 
 export default function Test() {
   let array = [];
@@ -63,6 +64,12 @@ export default function Test() {
     const phase_4 = sortColumns(phase_3);
     console.log("PHASE 4 COLUMNS");
     for (const row of phase_4) {
+      console.log(row.join("\t"));
+    }
+
+    const phase_5 = vertical_slices(phase_4);
+    console.log("PHASE 5 VERTICAL SLICES");
+    for (const row of phase_5) {
       console.log(row.join("\t"));
     }
   }
