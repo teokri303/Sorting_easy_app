@@ -1,4 +1,4 @@
-// Function to generate a random 5x5 2D array with unique numbers
+// Function to generate a random 2D array with unique numbers
 function generateUniqueArray(side) {
   const array = [];
   const uniqueNumbers = Array.from({ length: side * side }, (_, i) => i + 1);
@@ -14,6 +14,21 @@ function generateUniqueArray(side) {
   }
 
   return array;
+}
+
+function generateLeema(side) {
+  const random2DArray = [];
+
+  for (let i = 0; i < side; i++) {
+    const row = [];
+    for (let j = 0; j < side; j++) {
+      const randomValue = Math.random() < 0.65 ? 0 : 1; // 50% chance of 0, 50% chance of 1
+      row.push(randomValue);
+    }
+    random2DArray.push(row);
+  }
+
+  return random2DArray;
 }
 
 function swap(nums, i, j) {
@@ -67,26 +82,26 @@ function isEven(number) {
 }
 
 // Function to perform one iteration of odd-even transposition sort on a column
-function oddEvenTranspositionSortColumn(mesh, columnIndex) {
-  var numRows = mesh.length;
+function oddEvenTranspositionSortColumn(grid, columnIndex) {
+  var numRows = grid.length;
   var swapped = false;
 
   for (let i = 0; i < numRows - 1; i += 2) {
-    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
       // Swap adjacent rows if they are out of order
-      var temp = mesh[i][columnIndex];
-      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
-      mesh[i + 1][columnIndex] = temp;
+      var temp = grid[i][columnIndex];
+      grid[i][columnIndex] = grid[i + 1][columnIndex];
+      grid[i + 1][columnIndex] = temp;
       swapped = true;
     }
   }
 
   for (let i = 1; i < numRows - 1; i += 2) {
-    if (mesh[i][columnIndex] > mesh[i + 1][columnIndex]) {
+    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
       // Swap adjacent rows if they are out of order
-      let temp = mesh[i][columnIndex];
-      mesh[i][columnIndex] = mesh[i + 1][columnIndex];
-      mesh[i + 1][columnIndex] = temp;
+      let temp = grid[i][columnIndex];
+      grid[i][columnIndex] = grid[i + 1][columnIndex];
+      grid[i + 1][columnIndex] = temp;
       swapped = true;
     }
   }
@@ -156,4 +171,5 @@ export {
   isEven,
   generateUniqueArray,
   oddEvenSort2D,
+  generateLeema,
 };

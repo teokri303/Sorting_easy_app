@@ -49,12 +49,7 @@ export default function NumberInputComponent() {
 
     setGeneratedArray(mesh);
     setSortedArray(mesh);
-    /*setSortedArray([
-      [1, 2, 3],
-      [4, 5, 6],
-      [7, 8, 9],
-    ]);
-*/
+
     setShowMesh(true);
   };
 
