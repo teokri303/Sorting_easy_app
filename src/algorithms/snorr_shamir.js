@@ -5,8 +5,6 @@ import {
   sortColumns,
 } from "../algorithms/odd_even_sort";
 
-import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
-
 let gridSize = 0;
 let N = 0;
 let blocks_Sum = 0;

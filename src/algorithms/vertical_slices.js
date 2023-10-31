@@ -27,7 +27,6 @@ function show(arr) {
 }
 
 function oddEven_Blocks(mesh) {
-  //here will be the sorting
   let numRows = mesh.length;
   let oddPhases = Math.round(Math.sqrt(numRows) + 1);
   let evenPhases = Math.round(Math.sqrt(numRows));
@@ -64,16 +63,34 @@ function assemble_slices(blocks) {
 
   let blockIndex = 0;
 
-  for (let row = 0; row < gridSize; row += blockSize * 2) {
-    if (row >= blockSize * 2) {
-      row = 0;
+  if (gridSize === 16) {
+    for (let row = 0; row < gridSize; row += blockSize * 2) {
+      if (row >= blockSize * 2) {
+        row = 0;
+      }
+      for (let col = 0; col < gridSize; col += blockSize) {
+        //console.log(blockIndex);
+        const block = blocks[blockIndex++];
+        for (let i = 0; i < blockSize * 2; i++) {
+          for (let j = 0; j < blockSize; j++) {
+            sortedGrid[row + i][col + j] = block[i][j];
+          }
+        }
+      }
     }
-    for (let col = 0; col < gridSize; col += blockSize) {
-      console.log(blockIndex);
-      const block = blocks[blockIndex++];
-      for (let i = 0; i < blockSize * 2; i++) {
-        for (let j = 0; j < blockSize; j++) {
-          sortedGrid[row + i][col + j] = block[i][j];
+  } else {
+    for (let row = 0; row < gridSize; row += blockSize * 2) {
+      for (let col = 0; col < gridSize; col += blockSize) {
+        //console.log(blockIndex, "BLOCKINDEX");
+        if (col >= blockSize * 4) {
+          col = 0;
+          row = 128;
+        }
+        const block = blocks[blockIndex++];
+        for (let i = 0; i < blockSize * 2; i++) {
+          for (let j = 0; j < blockSize; j++) {
+            sortedGrid[row + i][col + j] = block[i][j];
+          }
         }
       }
     }
@@ -84,42 +101,58 @@ function assemble_slices(blocks) {
 function vertical_slices_sort(grid) {
   const blocks = [];
 
-  console.log("INSIDE VERTICALLLLLLL ------ΩΩΩΩΩΩΩΩΩΩΩΩ");
-
-  console.log(grid);
-
-  for (let row = 0; row < gridSize; row += blockSize * 2) {
-    if (row >= blockSize * 2) {
-      row = 0;
-    }
-    for (let col = 0; col < gridSize; col += blockSize) {
-      let block = [];
-      for (let i = 0; i < blockSize * 2; i++) {
-        //rows
-        const blockRow = [];
-        for (let j = 0; j < blockSize; j++) {
-          blockRow.push(grid[row + i][col + j]);
-        }
-        block.push(blockRow);
+  if (gridSize === 16) {
+    for (let row = 0; row < gridSize; row += blockSize * 2) {
+      if (row >= blockSize * 2) {
+        row = 0;
       }
+      for (let col = 0; col < gridSize; col += blockSize) {
+        let block = [];
+        console.log(col);
 
-      oddEven_Blocks(block);
+        for (let i = 0; i < blockSize * 2; i++) {
+          //rows
+          const blockRow = [];
+          for (let j = 0; j < blockSize; j++) {
+            blockRow.push(grid[row + i][col + j]);
+          }
 
-      blocks.push(block);
-      //console.log(blocks);
+          block.push(blockRow);
+        }
+
+        oddEven_Blocks(block);
+
+        blocks.push(block);
+        //console.log(blocks);
+      }
+    }
+  } else {
+    for (let row = 0; row < gridSize; row += blockSize * 2) {
+      //console.log("ROW :" + row);
+      for (let col = 0; col < gridSize; col += blockSize) {
+        //console.log(col);
+        if (col >= blockSize * 4) {
+          col = 0;
+          row = 128;
+        }
+        let block = [];
+
+        for (let i = 0; i < blockSize * 2; i++) {
+          //rows
+          const blockRow = [];
+          for (let j = 0; j < blockSize; j++) {
+            blockRow.push(grid[row + i][col + j]);
+          }
+          block.push(blockRow);
+        }
+
+        oddEven_Blocks(block);
+
+        blocks.push(block);
+        //console.log(blocks);
+      }
     }
   }
-  /*
-  for (let i = 0; i < blocks.length; i++) {
-    console.log(
-      "------------   ------------------------------ " +
-        i +
-        "o BLOCK -------------------------------------------------------------"
-    );
-    for (const row of blocks[i]) {
-      console.log(row.join("\t"));
-    }
-  }*/
 
   return blocks;
 }
@@ -128,11 +161,12 @@ function vertical_slices(grid) {
   calculate_vars(grid);
 
   let blocks = vertical_slices_sort(grid);
-  //let sorted = assemble_slices(blocks);
+  console.log(blocks.length + " vertical slices");
+  let sorted = assemble_slices(blocks);
 
-  //console.log(sorted.length);
+  //console.log(sorted);
 
-  //return sorted;
+  return sorted;
 }
 
 export { vertical_slices };
