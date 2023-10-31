@@ -5,12 +5,20 @@ import {
   sortColumns,
 } from "../algorithms/odd_even_sort";
 
-let gridSize = 16;
-let N = gridSize * gridSize;
-let blocks_Sum = Math.pow(N, 1 / 4);
-let elemenets_in_blocks = Math.pow(blocks_Sum, 3);
-let blockSize = Math.pow(N, 1 / 8);
-blockSize = Math.pow(blockSize, 3);
+let gridSize = 0;
+let N = 0;
+let blocks_Sum = 0;
+let elemenets_in_blocks = 0;
+let blockSize = 0;
+
+function calculate_vars(array) {
+  gridSize = array.length;
+  N = gridSize * gridSize;
+  blocks_Sum = Math.pow(N, 1 / 4);
+  elemenets_in_blocks = Math.pow(blocks_Sum, 3);
+  blockSize = Math.pow(N, 1 / 8);
+  blockSize = Math.pow(blockSize, 3);
+}
 
 function show(arr) {
   for (const row of arr) {
@@ -76,10 +84,9 @@ function assemble_slices(blocks) {
 function vertical_slices_sort(grid) {
   const blocks = [];
 
-  console.log("N = ", +N);
-  console.log("NUMBER OF BLOCKS = ", +blocks_Sum);
-  console.log("BLOCK-SIDE = ", +blockSize);
-  console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
+  console.log("INSIDE VERTICALLLLLLL ------ΩΩΩΩΩΩΩΩΩΩΩΩ");
+
+  console.log(grid);
 
   for (let row = 0; row < gridSize; row += blockSize * 2) {
     if (row >= blockSize * 2) {
@@ -118,12 +125,14 @@ function vertical_slices_sort(grid) {
 }
 
 function vertical_slices(grid) {
+  calculate_vars(grid);
+
   let blocks = vertical_slices_sort(grid);
-  let sorted = assemble_slices(blocks);
+  //let sorted = assemble_slices(blocks);
 
   //console.log(sorted.length);
 
-  return sorted;
+  //return sorted;
 }
 
 export { vertical_slices };

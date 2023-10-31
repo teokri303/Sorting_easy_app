@@ -7,12 +7,25 @@ import {
 
 import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
 
-let gridSize = 16;
-let N = gridSize * gridSize;
-let blocks_Sum = Math.pow(N, 1 / 4);
-let elemenets_in_blocks = Math.pow(blocks_Sum, 3);
-let blockSize = Math.pow(N, 1 / 8);
-blockSize = Math.pow(blockSize, 3);
+let gridSize = 0;
+let N = 0;
+let blocks_Sum = 0;
+let elemenets_in_blocks = 0;
+let blockSize = 0;
+
+function calculate_vars(array) {
+  gridSize = array.length;
+  N = gridSize * gridSize;
+  blocks_Sum = Math.pow(N, 1 / 4);
+  elemenets_in_blocks = Math.pow(blocks_Sum, 3);
+  blockSize = Math.pow(N, 1 / 8);
+  blockSize = Math.pow(blockSize, 3);
+
+  console.log("N = ", +N);
+  console.log("NUMBER OF BLOCKS = ", +blocks_Sum);
+  console.log("BLOCK-SIDE = ", +blockSize);
+  console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
+}
 
 function oddEven_Blocks(mesh) {
   //here will be the sorting
@@ -68,11 +81,6 @@ function createSortedGrid(blocks) {
 function sortAndPopulateBlocks(grid) {
   const blocks = [];
 
-  console.log("N = ", +N);
-  console.log("NUMBER OF BLOCKS = ", +blocks_Sum);
-  console.log("BLOCK-SIDE = ", +blockSize);
-  console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
-
   for (let row = 0; row < gridSize; row += blockSize) {
     for (let col = 0; col < gridSize; col += blockSize) {
       let block = [];
@@ -103,4 +111,4 @@ function snakelikeBlocks(array) {
   return sortedGrid;
 }
 
-export { snakelikeBlocks };
+export { snakelikeBlocks, calculate_vars };

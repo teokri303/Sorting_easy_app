@@ -1,4 +1,5 @@
-import { Button } from "@chakra-ui/react";
+import { useState } from "react";
+import { Button, Input } from "@chakra-ui/react";
 import {
   generateUniqueArray,
   oddEvenSort2D,
@@ -6,24 +7,27 @@ import {
   generateLeema,
 } from "../algorithms/odd_even_sort";
 
-import { snakelikeBlocks } from "../algorithms/snorr_shamir";
+import { snakelikeBlocks, calculate_vars } from "../algorithms/snorr_shamir";
 import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
 import { vertical_slices } from "../algorithms/vertical_slices";
 
 export default function Test() {
   let array = [];
+  const [gridsize, setGridsize] = useState("null");
 
   // Function to print the 2D array to the console
   function generateArray() {
-    let randomArray = generateLeema(16);
+    let randomArray = generateLeema(gridsize);
     array = randomArray;
 
-    console.log("Random array:");
-
+    console.log("STARTING Random array PRINT :");
+    /*
     for (const row of randomArray) {
       console.log(row.join("\t"));
-    }
+    }*/
   }
+
+  //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   function sort_First_Alg() {
     var sortedMesh = oddEvenSort2D(array);
@@ -37,6 +41,7 @@ export default function Test() {
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   function sort_Second_Alg() {
+    calculate_vars(array);
     //phase 1
     const sortedGrid = snakelikeBlocks(array);
     console.log("-!-!-!-! PHASE 1 SNAKE: -!-!-!-! ");
@@ -74,9 +79,19 @@ export default function Test() {
     //    }
   }
 
+  function handleTextareaChange1(e) {
+    setGridsize(e.target.value);
+  }
+
   return (
     <div>
       <div>
+        <Input
+          type="number"
+          value={gridsize}
+          onChange={handleTextareaChange1}
+          placeholder="Enter Mesh Dimension"
+        />
         <Button colorScheme="blue" onClick={generateArray}>
           Create Random small
         </Button>
