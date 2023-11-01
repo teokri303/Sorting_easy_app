@@ -55,7 +55,7 @@ function odd_Even_Sort(nums) {
     }
   }
 
-  console.log("steeeeeeps " + steps);
+  //console.log("steeeeeeps R " + steps);
   return nums;
 }
 
@@ -76,7 +76,7 @@ function Reverse_odd_Even_Sort(nums) {
       }
     }
   }
-
+  //console.log("steeeeeeps L " + steps);
   return nums;
 }
 
