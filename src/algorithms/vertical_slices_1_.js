@@ -3,7 +3,7 @@ import {
   odd_Even_Sort,
   Reverse_odd_Even_Sort,
   sortColumns,
-} from "../algorithms/odd_even_sort";
+} from "./odd_even_sort";
 
 let gridSize = 0;
 let N = 0;
@@ -28,6 +28,7 @@ function show(arr) {
 
 function oddEven_Blocks(mesh) {
   let numRows = mesh.length;
+  //console.log(numRows);
   let oddPhases = Math.round(Math.sqrt(numRows) + 1);
   let evenPhases = Math.round(Math.sqrt(numRows));
   let Phases = oddPhases + evenPhases;
@@ -157,7 +158,7 @@ function vertical_slices_sort(grid) {
   return blocks;
 }
 
-function vertical_slices(grid) {
+function vertical_slices_first(grid) {
   calculate_vars(grid);
 
   let blocks = vertical_slices_sort(grid);
@@ -169,4 +170,4 @@ function vertical_slices(grid) {
   return sorted;
 }
 
-export { vertical_slices };
+export { vertical_slices_first };

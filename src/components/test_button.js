@@ -9,7 +9,9 @@ import {
 
 import { snakelikeBlocks, calculate_vars } from "../algorithms/snorr_shamir";
 import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
-import { vertical_slices } from "../algorithms/vertical_slices";
+import { vertical_slices_first } from "../algorithms/vertical_slices_1_";
+import { vertical_slices_second } from "../algorithms/vertical_slices_2_";
+import { simple_snakelike } from "../algorithms/simple_snakelike_7";
 
 export default function Test() {
   let array = [];
@@ -43,24 +45,30 @@ export default function Test() {
     calculate_vars(array);
     //phase 1
     const sortedGrid = snakelikeBlocks(array);
-    console.log("-!-!-!-! PHASE 1 SNAKE: -!-!-!-! ");
+    console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
 
     //phase 2
     const phase_2 = kWayUnshuffle2D(sortedGrid);
-    console.log("-!-!-!-! PHASE 2 SHUFFLE: -!-!-!-! ");
+    console.log("-!-!-!-! PHASE 2 SHUFFLE: -DONE  \u2713 ");
 
     //phase 3
     const phase_3 = snakelikeBlocks(phase_2);
-    console.log("-!-!-!-! PHASE 3 SNAKE -!-!-!-!");
+    console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
 
     //phase 4
     //me kapoio tropo edo meta epireazei to phase_3 pros to paron to afino
     //logika giati mesa sto sortColumns den dimourgeitai neo ARRAY
     const phase_4 = sortColumns(phase_3);
-    console.log("-!-!-!-! PHASE 4 COLUMNS -!-!-!-!");
+    console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
 
-    const phase_5 = vertical_slices(phase_4);
-    console.log("-!-!-!-! PHASE 5 VERTICAL SLICES -!-!-!-!");
+    const phase_5 = vertical_slices_first(phase_4);
+    console.log("-!-!-!-! PHASE 5 VERTICAL SLICES 1 -DONE  \u2713");
+
+    const phase_6 = vertical_slices_second(phase_5);
+    console.log("-!-!-!-! PHASE 6 VERTICAL SLICES 2 -DONE  \u2713");
+
+    const phase_7 = simple_snakelike(phase_6);
+    console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
   }
 
   function handleTextareaChange1(e) {
