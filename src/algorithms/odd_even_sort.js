@@ -38,42 +38,45 @@ function swap(nums, i, j) {
 }
 
 function odd_Even_Sort(nums) {
-  let flag = false;
-  while (!flag) {
-    flag = true;
-    for (let i = 1; i < nums.length - 1; i += 2) {
-      if (nums[i] > nums[i + 1]) {
-        swap(nums, i, i + 1);
-        flag = false;
-      }
-    }
+  let steps = 0;
+  while (steps < nums.length) {
+    steps++;
     for (let i = 0; i < nums.length - 1; i += 2) {
       if (nums[i] > nums[i + 1]) {
         swap(nums, i, i + 1);
-        flag = false;
+      }
+    }
+
+    steps++;
+    for (let i = 1; i < nums.length - 1; i += 2) {
+      if (nums[i] > nums[i + 1]) {
+        swap(nums, i, i + 1);
       }
     }
   }
+
+  console.log("steeeeeeps " + steps);
   return nums;
 }
 
 function Reverse_odd_Even_Sort(nums) {
-  let flag = false;
-  while (!flag) {
-    flag = true;
-    for (let i = 1; i < nums.length - 1; i += 2) {
-      if (nums[i] < nums[i + 1]) {
-        swap(nums, i, i + 1);
-        flag = false;
-      }
-    }
+  let steps = 0;
+
+  while (steps < nums.length) {
+    steps++;
     for (let i = 0; i < nums.length - 1; i += 2) {
       if (nums[i] < nums[i + 1]) {
         swap(nums, i, i + 1);
-        flag = false;
+      }
+    }
+    steps++;
+    for (let i = 1; i < nums.length - 1; i += 2) {
+      if (nums[i] < nums[i + 1]) {
+        swap(nums, i, i + 1);
       }
     }
   }
+
   return nums;
 }
 
@@ -127,8 +130,10 @@ function sortColumns(mesh) {
 function oddEvenSort2D(mesh) {
   //here will be the sorting
   let numRows = mesh.length;
-  let oddPhases = Math.round(Math.sqrt(numRows) + 1);
-  let evenPhases = Math.round(Math.sqrt(numRows));
+  let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
+  let evenPhases = Math.log(numRows) / Math.log(2); //columns
+  // let oddPhases = Math.log(Math.sqrt(numRows) + 1); //roew
+  // let evenPhases = Math.log(Math.sqrt(numRows));
   let Phases = oddPhases + evenPhases;
   console.log(
     "Sorting.....with " +
@@ -147,16 +152,19 @@ function oddEvenSort2D(mesh) {
           Reverse_odd_Even_Sort(mesh[i]);
         }
       }
+      /*
       console.log("PHASE " + [i + 1] + " rows snakelike");
       for (const row of mesh) {
         console.log(row.join("\t"));
-      }
+      }*/
     } else {
       sortColumns(mesh);
+      /*
       console.log("PHASE " + [i + 1] + " columns sort");
       for (const row of mesh) {
         console.log(row.join("\t"));
       }
+      */
     }
   }
 

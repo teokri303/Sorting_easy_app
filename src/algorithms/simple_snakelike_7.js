@@ -24,6 +24,9 @@ function odd_Even_Sort(nums) {
   return nums;
 }
 
+//let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
+//let evenPhases = Math.log(numRows) / Math.log(2); //columns
+
 function Reverse_odd_Even_Sort(nums) {
   let flag = false;
   while (!flag) {
