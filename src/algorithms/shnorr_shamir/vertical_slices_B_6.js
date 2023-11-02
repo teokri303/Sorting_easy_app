@@ -3,7 +3,7 @@ import {
   odd_Even_Sort,
   Reverse_odd_Even_Sort,
   sortColumns,
-} from "../algorithms/odd_even_sort";
+} from "../odd_even_sort/odd_even_sort";
 
 let gridSize = 0;
 let N = 0;
@@ -175,7 +175,7 @@ function vertical_slices_second(grid) {
     console.log(blocks.length + " vertical slices");
     let sorted = assemble_slices(blocks);
 
-    console.log(sorted);
+    //console.log(sorted);
 
     return sorted;
   }

@@ -3,7 +3,7 @@ import {
   odd_Even_Sort,
   Reverse_odd_Even_Sort,
   sortColumns,
-} from "./odd_even_sort";
+} from "../odd_even_sort/odd_even_sort";
 
 let gridSize = 0;
 let N = 0;

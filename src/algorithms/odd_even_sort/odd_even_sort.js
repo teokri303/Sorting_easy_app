@@ -1,36 +1,3 @@
-// Function to generate a random 2D array with unique numbers
-function generateUniqueArray(side) {
-  const array = [];
-  const uniqueNumbers = Array.from({ length: side * side }, (_, i) => i + 1);
-
-  for (let i = 0; i < side; i++) {
-    const row = [];
-    for (let j = 0; j < side; j++) {
-      const randomIndex = Math.floor(Math.random() * uniqueNumbers.length);
-      const randomValue = uniqueNumbers.splice(randomIndex, 1)[0];
-      row.push(randomValue);
-    }
-    array.push(row);
-  }
-
-  return array;
-}
-
-function generateLeema(side) {
-  const random2DArray = [];
-
-  for (let i = 0; i < side; i++) {
-    const row = [];
-    for (let j = 0; j < side; j++) {
-      const randomValue = Math.random() < 0.65 ? 0 : 1; // 50% chance of 0, 50% chance of 1
-      row.push(randomValue);
-    }
-    random2DArray.push(row);
-  }
-
-  return random2DArray;
-}
-
 function swap(nums, i, j) {
   const temp = nums[i];
   nums[i] = nums[j];
@@ -85,27 +52,32 @@ function isEven(number) {
 }
 
 // Function to perform one iteration of odd-even transposition sort on a column
-function oddEvenTranspositionSortColumn(grid, columnIndex) {
+function odd_even_cols(grid, columnIndex) {
   var numRows = grid.length;
+  let steps = 0;
   var swapped = false;
 
-  for (let i = 0; i < numRows - 1; i += 2) {
-    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
-      // Swap adjacent rows if they are out of order
-      var temp = grid[i][columnIndex];
-      grid[i][columnIndex] = grid[i + 1][columnIndex];
-      grid[i + 1][columnIndex] = temp;
-      swapped = true;
+  while (steps < grid.length) {
+    steps++;
+    for (let i = 0; i < numRows - 1; i += 2) {
+      if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
+        // Swap adjacent rows if they are out of order
+        var temp = grid[i][columnIndex];
+        grid[i][columnIndex] = grid[i + 1][columnIndex];
+        grid[i + 1][columnIndex] = temp;
+        swapped = true;
+      }
     }
-  }
 
-  for (let i = 1; i < numRows - 1; i += 2) {
-    if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
-      // Swap adjacent rows if they are out of order
-      let temp = grid[i][columnIndex];
-      grid[i][columnIndex] = grid[i + 1][columnIndex];
-      grid[i + 1][columnIndex] = temp;
-      swapped = true;
+    steps++;
+    for (let i = 1; i < numRows - 1; i += 2) {
+      if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
+        // Swap adjacent rows if they are out of order
+        let temp = grid[i][columnIndex];
+        grid[i][columnIndex] = grid[i + 1][columnIndex];
+        grid[i + 1][columnIndex] = temp;
+        swapped = true;
+      }
     }
   }
 
@@ -115,12 +87,13 @@ function oddEvenTranspositionSortColumn(grid, columnIndex) {
 // Function to sort all columns of the mesh using odd-even transposition sort
 function sortColumns(mesh) {
   var numColumns = mesh[0].length;
+
   var sorted = false;
 
   while (!sorted) {
     sorted = true;
     for (var columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-      sorted = !oddEvenTranspositionSortColumn(mesh, columnIndex) && sorted;
+      sorted = !odd_even_cols(mesh, columnIndex) && sorted;
     }
   }
 
@@ -132,8 +105,6 @@ function oddEvenSort2D(mesh) {
   let numRows = mesh.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
   let evenPhases = Math.log(numRows) / Math.log(2); //columns
-  // let oddPhases = Math.log(Math.sqrt(numRows) + 1); //roew
-  // let evenPhases = Math.log(Math.sqrt(numRows));
   let Phases = oddPhases + evenPhases;
   console.log(
     "Sorting.....with " +
@@ -177,7 +148,5 @@ export {
   sortColumns,
   swap,
   isEven,
-  generateUniqueArray,
   oddEvenSort2D,
-  generateLeema,
 };

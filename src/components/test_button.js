@@ -1,17 +1,24 @@
 import { useState } from "react";
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, Show } from "@chakra-ui/react";
 import {
-  generateUniqueArray,
   oddEvenSort2D,
   sortColumns,
-  generateLeema,
-} from "../algorithms/odd_even_sort";
+} from "../algorithms/odd_even_sort/odd_even_sort";
 
-import { snakelikeBlocks, calculate_vars } from "../algorithms/snorr_shamir";
-import { kWayUnshuffle2D } from "../algorithms/kway_unshuffle";
-import { vertical_slices_first } from "../algorithms/vertical_slices_1_";
-import { vertical_slices_second } from "../algorithms/vertical_slices_2_";
-import { simple_snakelike } from "../algorithms/simple_snakelike_7";
+import {
+  snakelikeBlocks,
+  calculate_vars,
+} from "../algorithms/shnorr_shamir/snakelike_blocks_1";
+import { kWayUnshuffle2D } from "../algorithms/shnorr_shamir/kway_unshuffle_2";
+import { vertical_slices_first } from "../algorithms/shnorr_shamir/vertical_slices_A_5";
+import { vertical_slices_second } from "../algorithms/shnorr_shamir/vertical_slices_B_6";
+import { simple_snakelike } from "../algorithms/shnorr_shamir/simple_snakelike_7";
+import { final_oddEven_steps } from "../algorithms/shnorr_shamir/less_steps_odd_even_8";
+import {
+  generateUniqueArray,
+  generateLeema,
+} from "../algorithms/arrays/generate_arrays";
+import { reshapeArray } from "../algorithms/arrays/arrays_correction_SS";
 
 export default function Test() {
   let array = [];
@@ -69,10 +76,19 @@ export default function Test() {
 
     const phase_7 = simple_snakelike(phase_6);
     console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
+
+    const phase_8 = final_oddEven_steps(phase_7);
+    console.log(
+      "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
+    );
   }
 
   function handleTextareaChange1(e) {
     setGridsize(e.target.value);
+  }
+
+  function test() {
+    reshapeArray(array);
   }
 
   return (
@@ -94,6 +110,11 @@ export default function Test() {
       <div>
         <Button colorScheme="green" onClick={sort_Second_Alg}>
           Sort SCHAMMIR
+        </Button>
+      </div>
+      <div>
+        <Button colorScheme="green" onClick={test}>
+          reshape test
         </Button>
       </div>
     </div>
