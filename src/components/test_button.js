@@ -20,9 +20,18 @@ import {
 } from "../algorithms/arrays/generate_arrays";
 import { reshapeArray } from "../algorithms/arrays/arrays_correction_SS";
 
+import MeshComponent from "../components/mesh_test";
+
 export default function Test() {
   let array = [];
   const [gridsize, setGridsize] = useState("null");
+
+  const yourMeshArray = [
+    [0, 1, 0, 1],
+    [1, 0, 1, 0],
+    [0, 1, 0, 1],
+    [1, 0, 1, 0],
+  ];
 
   function generateArray() {
     let randomArray = generateLeema(gridsize);
@@ -117,6 +126,10 @@ export default function Test() {
         <Button colorScheme="green" onClick={test}>
           reshape test
         </Button>
+      </div>
+      <div>
+        {/* Pass the array (mesh) as a prop to the MeshComponent */}
+        <MeshComponent mesh={yourMeshArray} />
       </div>
     </div>
   );
