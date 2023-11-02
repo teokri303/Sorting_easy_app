@@ -88,7 +88,8 @@ export default function Test() {
   }
 
   function test() {
-    reshapeArray(array);
+    const test_array = reshapeArray(array);
+    const after = oddEvenSort2D(test_array);
   }
 
   return (
@@ -109,7 +110,7 @@ export default function Test() {
       </div>
       <div>
         <Button colorScheme="green" onClick={sort_Second_Alg}>
-          Sort SCHAMMIR
+          Sort shnor -shamir
         </Button>
       </div>
       <div>

@@ -16,6 +16,7 @@ function reshapeArray(inputArray) {
     correct_gridSize = 256;
   }
 
+  let counter = 0;
   const outputArray = [];
 
   for (let i = 0; i < correct_gridSize; i++) {
@@ -26,12 +27,14 @@ function reshapeArray(inputArray) {
       } else {
         // Αν ξεπερνάμε τα όρια του inputArray, προσθέτουμε έναν ασσό.
         outputArray[i][j] = 1;
+        counter++;
       }
     }
   }
 
   console.log("array changed: ");
   console.log(outputArray);
+  console.log("counter : ", counter);
   return outputArray;
 }
 
