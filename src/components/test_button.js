@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Button, Input, Show } from "@chakra-ui/react";
 import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+} from "@chakra-ui/react";
+import {
   oddEvenSort2D,
   sortColumns,
 } from "../algorithms/odd_even_sort/odd_even_sort";
@@ -15,7 +21,7 @@ import { vertical_slices_second } from "../algorithms/shnorr_shamir/vertical_sli
 import { simple_snakelike } from "../algorithms/shnorr_shamir/simple_snakelike_7";
 import { final_oddEven_steps } from "../algorithms/shnorr_shamir/less_steps_odd_even_8";
 import {
-  generateUniqueArray,
+  //generateUniqueArray,
   generateLeema,
 } from "../algorithms/arrays/generate_arrays";
 import { reshapeArray } from "../algorithms/arrays/arrays_correction_SS";
@@ -25,29 +31,34 @@ import MeshComponent from "../components/mesh_test";
 export default function Test() {
   let array = [];
   const [gridsize, setGridsize] = useState("null");
+  const [mesh, setMesh] = useState("null");
 
-  const yourMeshArray = [
-    [0, 1, 0, 1],
-    [1, 0, 1, 0],
+  let test_mesh = [
+    [1, 1, 1, 1, 0],
+    [1, 0, 1, 0, 0],
     [0, 1, 0, 1],
     [1, 0, 1, 0],
   ];
 
   function generateArray() {
     let randomArray = generateLeema(gridsize);
-    array = randomArray;
+    for (let i = 0; i < randomArray.length; i++) {
+      array.push(randomArray[i]);
+    }
+    setMesh(randomArray);
 
     console.log("STARTING RANDOM ARRAY CREATED. ");
-    /*
+
     for (const row of randomArray) {
       console.log(row.join("\t"));
-    }*/
+    }
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   function sort_First_Alg() {
-    var sortedMesh = oddEvenSort2D(array);
+    const sortedMesh = oddEvenSort2D(mesh);
+    //setMesh(mesh);
 
     console.log("SORTED array: ");
 
@@ -110,16 +121,18 @@ export default function Test() {
           onChange={handleTextareaChange1}
           placeholder="Enter Mesh Dimension"
         />
+      </div>
+      <div>
         <Button colorScheme="blue" onClick={generateArray}>
           Create Random small
         </Button>
         <Button colorScheme="green" onClick={sort_First_Alg}>
-          Sort ONE
+          ODD EVEN
         </Button>
       </div>
       <div>
         <Button colorScheme="green" onClick={sort_Second_Alg}>
-          Sort shnor -shamir
+          SHNORR-SHAMMIR
         </Button>
       </div>
       <div>
@@ -128,8 +141,7 @@ export default function Test() {
         </Button>
       </div>
       <div>
-        {/* Pass the array (mesh) as a prop to the MeshComponent */}
-        <MeshComponent mesh={yourMeshArray} />
+        <MeshComponent grid={mesh} />
       </div>
     </div>
   );

@@ -1,16 +1,19 @@
 import React from "react";
+
 import "../styles/MeshComponent.css";
 
-const MeshComponent = ({ mesh }) => {
+const MeshComponent = ({ grid }) => {
   console.log("mphkaaaaaaaa");
-  if (!mesh || !Array.isArray(mesh) || mesh.length === 0) {
+
+  if (!grid || !Array.isArray(grid) || grid.length === 0) {
+    console.log(grid);
     return <div>Invalid mesh data.</div>;
   }
 
   // Render the mesh
   return (
     <div className="mesh">
-      {mesh.map((row, rowIndex) => (
+      {grid.map((row, rowIndex) => (
         <div key={rowIndex} className="row">
           {row.map((cell, cellIndex) => (
             <div
