@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Button, Input, Show } from "@chakra-ui/react";
 import {
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
-} from "@chakra-ui/react";
-import {
   oddEvenSort2D,
   sortColumns,
 } from "../algorithms/odd_even_sort/odd_even_sort";
@@ -42,10 +36,8 @@ export default function Test() {
 
   function generateArray() {
     let randomArray = generateLeema(gridsize);
-    for (let i = 0; i < randomArray.length; i++) {
-      array.push(randomArray[i]);
-    }
-    setMesh(randomArray);
+    array = randomArray;
+    //setMesh(randomArray);
 
     console.log("STARTING RANDOM ARRAY CREATED. ");
 
@@ -57,7 +49,7 @@ export default function Test() {
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   function sort_First_Alg() {
-    const sortedMesh = oddEvenSort2D(mesh);
+    let sortedMesh = oddEvenSort2D(array);
     //setMesh(mesh);
 
     console.log("SORTED array: ");
