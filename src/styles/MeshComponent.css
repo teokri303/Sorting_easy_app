@@ -1,0 +1,24 @@
+.mesh {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .row {
+    display: flex;
+  }
+  
+  .box {
+    width: 10px;
+    height: 10px;
+    border: 1px solid #000;
+    margin : 0.5px
+  }
+  
+  .black {
+    background-color: black;
+  }
+  
+  .white {
+    background-color: white;
+  }
+  
