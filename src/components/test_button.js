@@ -18,7 +18,10 @@ import {
   //generateUniqueArray,
   generateLeema,
 } from "../algorithms/arrays/generate_arrays";
-import { reshapeArray } from "../algorithms/arrays/arrays_correction_SS";
+import {
+  reshapeArray,
+  reshape_to_given,
+} from "../algorithms/arrays/arrays_correction_SS";
 
 import MeshComponent from "../components/mesh_test";
 
@@ -61,7 +64,9 @@ export default function Test() {
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   function sort_Second_Alg() {
+    array = reshapeArray(array);
     calculate_vars(array);
+
     //phase 1
     const sortedGrid = snakelikeBlocks(array);
     console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
@@ -93,15 +98,15 @@ export default function Test() {
     console.log(
       "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
     );
+
+    console.log(phase_8);
+    const final = reshape_to_given(phase_8);
+
+    console.log(final);
   }
 
   function handleTextareaChange1(e) {
     setGridsize(e.target.value);
-  }
-
-  function test() {
-    const test_array = reshapeArray(array);
-    const after = oddEvenSort2D(test_array);
   }
 
   return (
@@ -127,11 +132,7 @@ export default function Test() {
           SHNORR-SHAMMIR
         </Button>
       </div>
-      <div>
-        <Button colorScheme="green" onClick={test}>
-          reshape test
-        </Button>
-      </div>
+
       <div>
         <MeshComponent grid={mesh} />
       </div>
