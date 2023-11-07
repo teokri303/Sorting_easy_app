@@ -100,7 +100,7 @@ export default function Test() {
       "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
     );
 
-    console.log(phase_8);
+    //console.log("PHASEEEEEEE 888888", phase_8);
     let final = reshape_to_given(phase_8);
 
     console.log(final);
