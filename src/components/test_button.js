@@ -26,9 +26,8 @@ import {
 import MeshComponent from "../components/mesh_test";
 
 export default function Test() {
-  let array = [];
   const [gridsize, setGridsize] = useState("null");
-  const [mesh, setMesh] = useState("null");
+  const [array, setArray] = useState("null");
 
   let test_mesh = [
     [1, 1, 1, 1, 0],
@@ -39,8 +38,8 @@ export default function Test() {
 
   function generateArray() {
     let randomArray = generateLeema(gridsize);
-    array = randomArray;
-    //setMesh(randomArray);
+    //array = randomArray;
+    setArray([...randomArray]);
 
     console.log("STARTING RANDOM ARRAY CREATED. ");
 
@@ -53,7 +52,7 @@ export default function Test() {
 
   function sort_First_Alg() {
     let sortedMesh = oddEvenSort2D(array);
-    //setMesh(mesh);
+    setArray([...sortedMesh]);
 
     console.log("SORTED array: ");
 
@@ -64,11 +63,13 @@ export default function Test() {
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   function sort_Second_Alg() {
-    array = reshapeArray(array);
-    calculate_vars(array);
+    let grid = reshapeArray(array);
+
+    setArray([...grid]);
+    calculate_vars(grid);
 
     //phase 1
-    const sortedGrid = snakelikeBlocks(array);
+    const sortedGrid = snakelikeBlocks(grid);
     console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
 
     //phase 2
@@ -100,9 +101,10 @@ export default function Test() {
     );
 
     console.log(phase_8);
-    const final = reshape_to_given(phase_8);
+    let final = reshape_to_given(phase_8);
 
     console.log(final);
+    setArray([...final]);
   }
 
   function handleTextareaChange1(e) {
@@ -134,7 +136,7 @@ export default function Test() {
       </div>
 
       <div>
-        <MeshComponent grid={mesh} />
+        <MeshComponent grid={array} />
       </div>
     </div>
   );
