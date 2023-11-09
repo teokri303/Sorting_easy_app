@@ -106,6 +106,8 @@ function snakelikeBlocks(array) {
   var blocks = sortAndPopulateBlocks(array);
   var sortedGrid = createSortedGrid(blocks);
 
+  //console.log(sortedGrid);
+
   return sortedGrid;
 }
 

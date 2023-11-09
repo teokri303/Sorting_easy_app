@@ -36,7 +36,7 @@ function reshapeArray(inputArray) {
   }
 
   console.log("OPTIMAL STATE ACHIEVED : ");
-  console.log(outputArray);
+  //console.log(outputArray);
   console.log(
     "We added : ",
     counter,
@@ -45,16 +45,15 @@ function reshapeArray(inputArray) {
   return outputArray;
 }
 
-let numberOfAcesToRemove = counter;
-
 function removeAces(matrix) {
+  let numberOfAcesToRemove = counter;
   // Βρίσκουμε τις διαστάσεις του πίνακα
   const gridSize = matrix.length;
 
   // Προσδιορίζουμε την αρχική θέση για αφαίρεση (κάτω αριστερά)
   let rowIndex = gridSize - 1;
   let colIndex = 0;
-
+  console.log(numberOfAcesToRemove + " Aces to remove.");
   while (numberOfAcesToRemove > 0) {
     // Εάν έχουμε φτάσει στο τέλος της γραμμής, πηγαίνουμε στην επόμενη γραμμή από πάνω
     if (colIndex === gridSize) {
@@ -71,6 +70,7 @@ function removeAces(matrix) {
     if (matrix[rowIndex][colIndex] === 1) {
       matrix[rowIndex].splice(colIndex, 1);
       numberOfAcesToRemove--;
+      //console.log("DELETED");
     } else {
       // Διαφορετικά, πηγαίνουμε στο επόμενο στοιχείο στην ίδια γραμμή
       colIndex++;
@@ -82,16 +82,28 @@ function removeAces(matrix) {
 }
 
 function flattenTo2DArray(arr) {
-  arr = arr.flat();
+  const filtered = arr.filter((row) => row.length > 0);
+  let direction_array = [];
+
+  for (let i = 0; i < filtered.length; i++) {
+    if (i % 2 === 0) {
+      direction_array.push(filtered[i]);
+    } else {
+      direction_array.push(filtered[i].reverse());
+    }
+  }
+
+  direction_array = direction_array.flat();
+
   const result = [];
 
   for (let i = 0; i < side; i++) {
     if (i % 2 === 0) {
       //βλεπουμε αν ειναι odd-even για να τα βαλουμε με την σωστη κατευθυνση
 
-      result.push(arr.slice(i * side, (i + 1) * side));
+      result.push(direction_array.slice(i * side, (i + 1) * side));
     } else {
-      result.push(arr.slice(i * side, (i + 1) * side).reverse());
+      result.push(direction_array.slice(i * side, (i + 1) * side).reverse());
     }
   }
 
@@ -99,6 +111,7 @@ function flattenTo2DArray(arr) {
 }
 
 function reshape_to_given(sorted) {
+  console.log(sorted);
   let removed_aces_array = removeAces(sorted);
   let final = flattenTo2DArray(removed_aces_array);
 
