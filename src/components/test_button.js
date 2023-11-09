@@ -147,25 +147,25 @@ export default function Test() {
           placeholder="Enter Mesh Dimension"
         />
       </div>
-      <div>
+      <div className="button-container_b">
         <Button colorScheme="blue" onClick={generateArray}>
-          Create Random small
+          Create Random
         </Button>
-        <Button colorScheme="green" onClick={sort_First_Alg}>
-          ODD EVEN
-        </Button>
-      </div>
-      <div>
-        <Button colorScheme="green" onClick={sort_Second_Alg}>
-          SHNORR-SHAMMIR
-        </Button>
+        <div>
+          <Button colorScheme="green" onClick={sort_First_Alg}>
+            ODD EVEN
+          </Button>
+          <Button colorScheme="green" onClick={sort_Second_Alg}>
+            SHNORR-SHAMMIR
+          </Button>
+        </div>
       </div>
 
       <div>
         <MeshComponent grid={array} />
       </div>
       {showButtons && (
-        <div class="button-container">
+        <div className="button-container">
           <Button
             id="button-left"
             colorScheme="teal"

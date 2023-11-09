@@ -11,11 +11,17 @@
 
   .button-container {
     display: flex;
-  justify-content: space-between;
-  width: 100%;
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+  .button-container_b {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+
   }
   
   #button-left {
@@ -25,3 +31,14 @@
   #button-right {
     margin-right: 80px;
   }
+
+@media (max-width: 600px) {
+  .button-container {
+    width: 100%;
+    position: relative;
+    top: 90%;
+    transform: translateY(-50%);
+  }
+
+  
+}

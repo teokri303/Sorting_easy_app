@@ -4,7 +4,7 @@ import "../styles/MeshComponent.css";
 
 const MeshComponent = ({ grid }) => {
   if (!grid || !Array.isArray(grid) || grid.length === 0) {
-    return <div>Invalid mesh data.</div>;
+    return <div>No input yet.</div>;
   }
 
   const gridLength = grid.length;
