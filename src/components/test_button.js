@@ -28,6 +28,7 @@ export default function Test() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
+  const [showButtons, setShowButtons] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -110,6 +111,7 @@ export default function Test() {
     addRecord(final);
 
     setArray([...final]);
+    setShowButtons(true);
   }
 
   function handleTextareaChange1(e) {
@@ -117,7 +119,7 @@ export default function Test() {
   }
 
   const goForward = () => {
-    //console.log(record);
+    console.log(record);
     //console.log(record.length);
 
     if (currentIndex < record.length - 1) {
@@ -162,14 +164,26 @@ export default function Test() {
       <div>
         <MeshComponent grid={array} />
       </div>
-      <div>
-        <Button colorScheme="teal" variant="outline" onClick={goBack}>
-          BACK
-        </Button>
-        <Button colorScheme="teal" variant="solid" onClick={goForward}>
-          NEXT
-        </Button>
-      </div>
+      {showButtons && (
+        <div class="button-container">
+          <Button
+            id="button-left"
+            colorScheme="teal"
+            variant="outline"
+            onClick={goBack}
+          >
+            BACK
+          </Button>
+          <Button
+            id="button-right"
+            colorScheme="teal"
+            variant="solid"
+            onClick={goForward}
+          >
+            NEXT
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

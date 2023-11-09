@@ -7,6 +7,10 @@ const MeshComponent = ({ grid }) => {
     return <div>Invalid mesh data.</div>;
   }
 
+  const gridLength = grid.length;
+
+  const boxSize = gridLength <= 60 ? 8 : 3;
+  const marginSize = gridLength <= 60 ? 1 : 0.1;
   // Render the mesh
   return (
     <div className="mesh">
@@ -16,6 +20,11 @@ const MeshComponent = ({ grid }) => {
             <div
               key={cellIndex}
               className={`box ${cell === 0 ? "black" : "white"}`}
+              style={{
+                width: `${boxSize}px`,
+                height: `${boxSize}px`,
+                margin: `${marginSize}px`,
+              }}
             ></div>
           ))}
         </div>
