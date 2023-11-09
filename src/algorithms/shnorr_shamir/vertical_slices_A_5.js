@@ -109,7 +109,7 @@ function vertical_slices_sort(grid) {
       }
       for (let col = 0; col < gridSize; col += blockSize) {
         let block = [];
-        console.log(col);
+        //console.log(col);
 
         for (let i = 0; i < blockSize * 2; i++) {
           //rows
@@ -159,6 +159,7 @@ function vertical_slices_sort(grid) {
 }
 
 function vertical_slices_first(grid) {
+  console.log(grid);
   calculate_vars(grid);
 
   let blocks = vertical_slices_sort(grid);

@@ -84,8 +84,16 @@ function odd_even_cols(grid, columnIndex) {
   return swapped;
 }
 
+function createEmptySortedGrid(grid) {
+  const sortedGrid = new Array(grid.length)
+    .fill(0)
+    .map(() => new Array(grid.length).fill(0));
+  return sortedGrid;
+}
+
 // Function to sort all columns of the mesh using odd-even transposition sort
 function sortColumns(mesh) {
+  //console.log(mesh);
   var numColumns = mesh[0].length;
 
   var sorted = false;

@@ -36,7 +36,7 @@ function reshapeArray(inputArray) {
   }
 
   console.log("OPTIMAL STATE ACHIEVED : ");
-  console.log(outputArray);
+  //console.log(outputArray);
   console.log(
     "We added : ",
     counter,
@@ -53,7 +53,7 @@ function removeAces(matrix) {
   // Προσδιορίζουμε την αρχική θέση για αφαίρεση (κάτω αριστερά)
   let rowIndex = gridSize - 1;
   let colIndex = 0;
-  console.log(numberOfAcesToRemove);
+  console.log(numberOfAcesToRemove + " Aces to remove.");
   while (numberOfAcesToRemove > 0) {
     // Εάν έχουμε φτάσει στο τέλος της γραμμής, πηγαίνουμε στην επόμενη γραμμή από πάνω
     if (colIndex === gridSize) {

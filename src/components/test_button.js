@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Button, Input, Show } from "@chakra-ui/react";
-import {
-  oddEvenSort2D,
-  sortColumns,
-} from "../algorithms/odd_even_sort/odd_even_sort";
+import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 
 import {
   snakelikeBlocks,
@@ -24,28 +21,29 @@ import {
 } from "../algorithms/arrays/arrays_correction_SS";
 
 import MeshComponent from "../components/mesh_test";
+import { sortColumns } from "../algorithms/odd_even_sort/sort_columns";
 
 export default function Test() {
   const [gridsize, setGridsize] = useState("null");
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [array, setArray] = useState("null");
+  const [record, setRecord] = useState([]);
 
-  let test_mesh = [
-    [1, 1, 1, 1, 0],
-    [1, 0, 1, 0, 0],
-    [0, 1, 0, 1],
-    [1, 0, 1, 0],
-  ];
+  const addRecord = (newArray) => {
+    setRecord((prevRecord) => [...prevRecord, newArray]);
+  };
 
   function generateArray() {
     let randomArray = generateLeema(gridsize);
-    //array = randomArray;
+    setRecord([]);
     setArray([...randomArray]);
+    addRecord(randomArray);
 
     console.log("STARTING RANDOM ARRAY CREATED. ");
-
+    /*
     for (const row of randomArray) {
       console.log(row.join("\t"));
-    }
+    }*/
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
@@ -64,52 +62,78 @@ export default function Test() {
 
   function sort_Second_Alg() {
     let grid = reshapeArray(array);
-
+    addRecord(grid);
     setArray([...grid]);
     calculate_vars(grid);
 
     //phase 1
-    const sortedGrid = snakelikeBlocks(grid);
+    const phase_1 = snakelikeBlocks(grid);
     console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
+    addRecord(phase_1);
 
     //phase 2
-    const phase_2 = kWayUnshuffle2D(sortedGrid);
+    const phase_2 = kWayUnshuffle2D(phase_1);
     console.log("-!-!-!-! PHASE 2 SHUFFLE: -DONE  \u2713 ");
+    addRecord(phase_2);
 
     //phase 3
+
     const phase_3 = snakelikeBlocks(phase_2);
     console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
+    //console.log(phase_3);
+    addRecord(phase_3);
 
     //phase 4
-    //me kapoio tropo edo meta epireazei to phase_3 pros to paron to afino
-    //logika giati mesa sto sortColumns den dimourgeitai neo ARRAY
     const phase_4 = sortColumns(phase_3);
     console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
+    addRecord(phase_4);
 
     const phase_5 = vertical_slices_first(phase_4);
     console.log("-!-!-!-! PHASE 5 VERTICAL SLICES 1 -DONE  \u2713");
+    addRecord(phase_5);
 
     const phase_6 = vertical_slices_second(phase_5);
     console.log("-!-!-!-! PHASE 6 VERTICAL SLICES 2 -DONE  \u2713");
+    addRecord(phase_6);
 
     const phase_7 = simple_snakelike(phase_6);
     console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
+    addRecord(phase_7);
 
     const phase_8 = final_oddEven_steps(phase_7);
     console.log(
       "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
     );
+    addRecord(phase_8);
 
-    //console.log("PHASEEEEEEE 888888", phase_8);
     let final = reshape_to_given(phase_8);
+    addRecord(final);
 
-    console.log(final);
     setArray([...final]);
   }
 
   function handleTextareaChange1(e) {
     setGridsize(e.target.value);
   }
+
+  const goForward = () => {
+    console.log(record);
+
+    console.log(record.length);
+    if (currentIndex < record.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setArray([...record[currentIndex + 1]]);
+    }
+    console.log("CURRENT INDEX :" + currentIndex);
+  };
+
+  const goBack = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      setArray([...record[currentIndex - 1]]);
+    }
+    console.log("CURRENT INDEX :" + currentIndex);
+  };
 
   return (
     <div>
@@ -137,6 +161,14 @@ export default function Test() {
 
       <div>
         <MeshComponent grid={array} />
+      </div>
+      <div>
+        <Button colorScheme="teal" variant="outline" onClick={goBack}>
+          BACK
+        </Button>
+        <Button colorScheme="teal" variant="solid" onClick={goForward}>
+          NEXT
+        </Button>
       </div>
     </div>
   );
