@@ -117,14 +117,14 @@ export default function Test() {
   }
 
   const goForward = () => {
-    console.log(record);
+    //console.log(record);
+    //console.log(record.length);
 
-    console.log(record.length);
     if (currentIndex < record.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setArray([...record[currentIndex + 1]]);
     }
-    console.log("CURRENT INDEX :" + currentIndex);
+    //console.log("CURRENT INDEX :" + currentIndex);
   };
 
   const goBack = () => {
@@ -132,7 +132,7 @@ export default function Test() {
       setCurrentIndex(currentIndex - 1);
       setArray([...record[currentIndex - 1]]);
     }
-    console.log("CURRENT INDEX :" + currentIndex);
+    //console.log("CURRENT INDEX :" + currentIndex);
   };
 
   return (
