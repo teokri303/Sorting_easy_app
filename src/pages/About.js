@@ -5,10 +5,19 @@ function Welcome() {
     <div className="Home">
       <header>
         <Navbar />
+        <br />
+        <br />
+        <br />
+        <p>Εδω ισως καποιες πληροφοριες για τον σκοπο της εργασιας κλπ</p>
+        <br />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Ενω στο κουμπι πανω δεξια που λεει your feedback σκεφτομουν μηπως
+          βαζαμε καποιο ερωτηματολογιο προς τον χρηστη για το πως κρινει την
+          εφαρμογη και το τι θα ηθελε σε επομενο update και καλα.
         </p>
-        <h1>gogogo bucks go</h1>
+
+        <br />
+        <br />
       </header>
     </div>
   );

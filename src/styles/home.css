@@ -19,10 +19,16 @@
   }
   .button-container_b {
     display: flex;
-    width: 100%;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    margin-bottom: 40px;
 
   }
+  #input{
+    width: 300px;
+  }
+
+ 
   
   #button-left {
    margin-left: 80px;

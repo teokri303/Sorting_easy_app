@@ -1,6 +1,5 @@
 import "../styles/home.css";
 import Navbar from "../components/Navbar";
-import NumberInputComponent from "../components/input";
 
 function Home() {
   return (
@@ -8,7 +7,11 @@ function Home() {
       <header>
         <Navbar />
       </header>
-      <NumberInputComponent />
+      <br />
+      <br />
+      <br />
+      Εδω θα μπουν επεξηγησεις αναλογα με τις διαφορες των δυο αλγοριθμων σε
+      θεωρητικο επιπεδο
     </div>
   );
 }

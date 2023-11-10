@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Input, Show } from "@chakra-ui/react";
+import { Button, Input } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 
 import {
@@ -19,26 +19,43 @@ import {
   reshapeArray,
   reshape_to_given,
 } from "../algorithms/arrays/arrays_correction_SS";
-
-import MeshComponent from "../components/mesh_test";
 import { sortColumns } from "../algorithms/odd_even_sort/sort_columns";
+
+import MeshComponent from "./Mesh";
+import TextDisplay from "../components/phase_expl";
 
 export default function Test() {
   const [gridsize, setGridsize] = useState("null");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
+  const [text, setText] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
 
+  const subtitles = [
+    "RANDOM ARRAY",
+    "NORMALIZATION TO OPTIMAL STATE IF IT WASNT",
+    "PHASE 1 SNAKELIKE BLOCKS",
+    "PHASE 2 K-WAY UNSHUFFLE",
+    "PHASE 3 SNAKELIKE BLOCKS",
+    "PHASE 4 SHORT COLUMNS",
+    "PHASE 5 VERTICAL SLICES SORT (1-2...)",
+    "PHASE 6 VERTICAL SLICES SORT (2-3...)",
+    "PHASE 7 ROWS SORT SNAKELIKE",
+    "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
+    "RESHAPE TO GIVEN DIMENTIONS  FINAL SORTED ARRAY ",
+  ];
+
   function generateArray() {
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
     addRecord(randomArray);
+    setText(subtitles[0]);
 
     console.log("STARTING RANDOM ARRAY CREATED. ");
     /*
@@ -64,7 +81,7 @@ export default function Test() {
   function sort_Second_Alg() {
     let grid = reshapeArray(array);
     addRecord(grid);
-    setArray([...grid]);
+    //setArray([...grid]);
     calculate_vars(grid);
 
     //phase 1
@@ -110,7 +127,7 @@ export default function Test() {
     let final = reshape_to_given(phase_8);
     addRecord(final);
 
-    setArray([...final]);
+    //setArray([...final]);
     setShowButtons(true);
   }
 
@@ -125,6 +142,7 @@ export default function Test() {
     if (currentIndex < record.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setArray([...record[currentIndex + 1]]);
+      setText(subtitles[currentIndex + 1]);
     }
     //console.log("CURRENT INDEX :" + currentIndex);
   };
@@ -133,30 +151,46 @@ export default function Test() {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setArray([...record[currentIndex - 1]]);
+      setText(subtitles[currentIndex - 1]);
     }
     //console.log("CURRENT INDEX :" + currentIndex);
+  };
+
+  const clear_states = () => {
+    setCurrentIndex(0);
+    setArray(null);
+    setText(0);
+    setRecord([]);
+    setShowButtons(false);
   };
 
   return (
     <div>
       <div>
-        <Input
-          type="number"
-          value={gridsize}
-          onChange={handleTextareaChange1}
-          placeholder="Enter Mesh Dimension"
-        />
-      </div>
-      <div className="button-container_b">
-        <Button colorScheme="blue" onClick={generateArray}>
-          Create Random
-        </Button>
-        <div>
-          <Button colorScheme="green" onClick={sort_First_Alg}>
-            ODD EVEN
+        <div className="button-container_b">
+          <Button colorScheme="blue" onClick={generateArray}>
+            Create Random
           </Button>
-          <Button colorScheme="green" onClick={sort_Second_Alg}>
-            SHNORR-SHAMMIR
+          <div>
+            <Input
+              id="input"
+              type="number"
+              value={gridsize}
+              onChange={handleTextareaChange1}
+              placeholder="Enter Mesh Dimension from 1-256. "
+            />
+          </div>
+          <div>
+            <Button colorScheme="green" onClick={sort_First_Alg}>
+              ODD EVEN
+            </Button>
+            <Button colorScheme="green" onClick={sort_Second_Alg}>
+              SHNORR-SHAMMIR
+            </Button>
+          </div>
+
+          <Button colorScheme="red" onClick={clear_states}>
+            CLEAR ARRAY
           </Button>
         </div>
       </div>
@@ -172,7 +206,7 @@ export default function Test() {
             variant="outline"
             onClick={goBack}
           >
-            BACK
+            PREVIOUS PHASE
           </Button>
           <Button
             id="button-right"
@@ -180,10 +214,13 @@ export default function Test() {
             variant="solid"
             onClick={goForward}
           >
-            NEXT
+            NEXT PHASE
           </Button>
         </div>
       )}
+      <div>
+        <TextDisplay text={text} />
+      </div>
     </div>
   );
 }
