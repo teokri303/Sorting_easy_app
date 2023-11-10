@@ -4,9 +4,13 @@ import "../styles/MeshComponent.css";
 
 const MeshComponent = ({ grid }) => {
   if (!grid || !Array.isArray(grid) || grid.length === 0) {
-    return <div>Invalid mesh data.</div>;
+    return <div>No input yet.</div>;
   }
 
+  const gridLength = grid.length;
+
+  const boxSize = gridLength <= 60 ? 8 : 2;
+  const marginSize = gridLength <= 60 ? 1 : 0.1;
   // Render the mesh
   return (
     <div className="mesh">
@@ -16,6 +20,11 @@ const MeshComponent = ({ grid }) => {
             <div
               key={cellIndex}
               className={`box ${cell === 0 ? "black" : "white"}`}
+              style={{
+                width: `${boxSize}px`,
+                height: `${boxSize}px`,
+                margin: `${marginSize}px`,
+              }}
             ></div>
           ))}
         </div>

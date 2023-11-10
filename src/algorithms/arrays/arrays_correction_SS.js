@@ -112,7 +112,8 @@ function flattenTo2DArray(arr) {
 
 function reshape_to_given(sorted) {
   console.log(sorted);
-  let removed_aces_array = removeAces(sorted);
+  let mesh = sorted.map((row) => [...row]);
+  let removed_aces_array = removeAces(mesh);
   let final = flattenTo2DArray(removed_aces_array);
 
   return final;

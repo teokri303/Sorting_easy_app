@@ -8,3 +8,43 @@
     
     
   }
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+  .button-container_b {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    margin-bottom: 40px;
+
+  }
+  #input{
+    width: 300px;
+  }
+
+ 
+  
+  #button-left {
+   margin-left: 80px;
+  }
+  
+  #button-right {
+    margin-right: 80px;
+  }
+
+@media (max-width: 600px) {
+  .button-container {
+    width: 100%;
+    position: relative;
+    top: 90%;
+    transform: translateY(-50%);
+  }
+
+  
+}
