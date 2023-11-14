@@ -1,23 +1,85 @@
 const workerPath = new URL("worker.js", import.meta.url).toString();
 
-function oddEvenSortParallel(matrix) {
-  const promises = matrix.map((row) => {
+let direction = 0;
+
+function oddEvenSort_Rows_Parallel(grid) {
+  const promises = grid.map((row) => {
     return new Promise((resolve) => {
       const worker = new Worker(workerPath);
 
       worker.onmessage = function (event) {
         worker.terminate();
         resolve(event.data);
+        //console.log(event.data);
       };
 
-      worker.postMessage(row);
+      const message = {
+        row: row,
+        direction: direction,
+      };
+
+      worker.postMessage(message);
+      direction++;
     });
   });
-
+  direction = 0;
   return Promise.all(promises).then((sortedRows) => {
-    const sortedMatrix = sortedRows.map((row) => row.slice());
-    return sortedMatrix;
+    const sortedGrid = sortedRows.map((row) => row.slice());
+    return sortedGrid;
   });
 }
 
-export { oddEvenSortParallel };
+function oddEvenSort_Columns_Parallel(grid) {
+  const promises = [];
+  const numColumns = grid[0].length;
+  console.log(numColumns);
+
+  // Δημιουργία ενός worker για κάθε στήλη
+  for (let col = 0; col < numColumns; col++) {
+    const columnData = grid.map((row) => row[col]);
+
+    promises.push(
+      new Promise((resolve) => {
+        const worker = new Worker(workerPath);
+
+        worker.onmessage = function (event) {
+          worker.terminate();
+          resolve(event.data);
+        };
+
+        const message = {
+          row: columnData,
+          direction: 0,
+        };
+
+        worker.postMessage(message);
+      })
+    );
+  }
+
+  return Promise.all(promises).then((sortedColumns) => {
+    // Μετατροπή των ταξινομημένων στηλών πίσω στον αρχικό πίνακα
+    const sortedGrid = [];
+    for (let row = 0; row < grid.length; row++) {
+      sortedGrid[row] = [];
+      for (let col = 0; col < numColumns; col++) {
+        sortedGrid[row][col] = sortedColumns[col][row];
+      }
+    }
+
+    return sortedGrid;
+  });
+}
+
+async function odd_even_parallel(grid) {
+  // Περιμένει την ολοκλήρωση της ταξινόμησης των γραμμών
+  let sorted_rows = await oddEvenSort_Rows_Parallel(grid);
+
+  // Περνά τις ταξινομημένες γραμμές στην ταξινόμηση των στηλών
+  let sorted_cols = await oddEvenSort_Columns_Parallel(sorted_rows);
+
+  // Επιστρέφει το τελικό αποτέλεσμα
+  return sorted_cols;
+}
+
+export { odd_even_parallel };

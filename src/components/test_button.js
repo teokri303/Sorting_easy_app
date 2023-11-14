@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Input } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
-import { oddEvenSortParallel } from "../algorithms/odd_even_sort/parallel_odd_even";
+import { odd_even_parallel } from "../algorithms/odd_even_sort/parallel_odd_even";
 
 import {
   snakelikeBlocks,
@@ -68,7 +68,7 @@ export default function Test() {
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   async function sort_First_Alg() {
-    let sortedMesh = await oddEvenSortParallel(array);
+    let sortedMesh = await odd_even_parallel(array);
     setArray([...sortedMesh]);
     /*
     console.log("SORTED array: ");

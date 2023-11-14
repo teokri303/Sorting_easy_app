@@ -26,8 +26,15 @@ function oddEvenSort(row) {
 
 // Λαμβάνει τα δεδομένα από τον κύριο (main) thread
 onmessage = function (event) {
-  console.log("WORKER CREATED");
-  const sortedRow = oddEvenSort(event.data);
+  let row = event.data.row;
+  //console.log(row);
+  let direction = event.data.direction;
+
+  const sortedRow = oddEvenSort(row);
+
+  if (direction % 2 !== 0) {
+    sortedRow.reverse();
+  }
   // Στέλνει τα ταξινομημένα δεδομένα πίσω στον κύριο (main) thread
   postMessage(sortedRow);
 };
