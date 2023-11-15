@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Button, Input } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
-import { odd_even_parallel } from "../algorithms/odd_even_sort/parallel_odd_even";
+import {
+  oddEvenSort_Columns_Parallel,
+  oddEvenSort_Rows_Parallel,
+  odd_even_parallel,
+} from "../algorithms/odd_even_sort/parallel_odd_even";
 
 import {
   snakelikeBlocks,
@@ -23,7 +27,7 @@ import {
 import { sortColumns } from "../algorithms/odd_even_sort/sort_columns";
 
 import MeshComponent from "./Mesh";
-import TextDisplay from "../components/phase_expl";
+import TextDisplay from "./phase_expl";
 
 export default function Test() {
   const [gridsize, setGridsize] = useState("null");
@@ -68,14 +72,30 @@ export default function Test() {
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   async function sort_First_Alg() {
-    let sortedMesh = await odd_even_parallel(array);
-    setArray([...sortedMesh]);
-    /*
-    console.log("SORTED array: ");
+    let numRows = array.length;
+    let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
+    let evenPhases = Math.log(numRows) / Math.log(2); //columns
+    let Phases = Math.round(oddPhases + evenPhases);
+    console.log("PHASESSSSS : " + Phases);
 
-    for (const row of sortedMesh) {
-      console.log(row.join("\t"));
-    }*/
+    let sortedPhase;
+    let odd_phase;
+    let even_phase = [...array];
+    //setArray([...sortedMesh]);
+
+    for (let i = 0; i < Phases; i++) {
+      if (i % 2 == 0) {
+        odd_phase = await oddEvenSort_Rows_Parallel(even_phase);
+        sortedPhase = [...odd_phase];
+      } else {
+        even_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
+        sortedPhase = [...even_phase];
+      }
+      setArray([...sortedPhase]);
+      addRecord(sortedPhase);
+    }
+    //console.log(record);
+    setShowButtons(true);
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 

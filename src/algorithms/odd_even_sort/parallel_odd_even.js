@@ -32,7 +32,7 @@ function oddEvenSort_Rows_Parallel(grid) {
 function oddEvenSort_Columns_Parallel(grid) {
   const promises = [];
   const numColumns = grid[0].length;
-  console.log(numColumns);
+  //console.log(numColumns);
 
   // Δημιουργία ενός worker για κάθε στήλη
   for (let col = 0; col < numColumns; col++) {
@@ -72,14 +72,16 @@ function oddEvenSort_Columns_Parallel(grid) {
 }
 
 async function odd_even_parallel(grid) {
-  // Περιμένει την ολοκλήρωση της ταξινόμησης των γραμμών
+  // Perimenei tin oloklirosi tis taksinomisis ton grammwn
   let sorted_rows = await oddEvenSort_Rows_Parallel(grid);
 
-  // Περνά τις ταξινομημένες γραμμές στην ταξινόμηση των στηλών
   let sorted_cols = await oddEvenSort_Columns_Parallel(sorted_rows);
 
-  // Επιστρέφει το τελικό αποτέλεσμα
   return sorted_cols;
 }
 
-export { odd_even_parallel };
+export {
+  odd_even_parallel,
+  oddEvenSort_Rows_Parallel,
+  oddEvenSort_Columns_Parallel,
+};

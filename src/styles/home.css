@@ -1,12 +1,23 @@
 .Home {
     text-align: center;
-    background-color: #FBAB7E;
-    background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+    background: #E6DADA;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #274046, #E6DADA);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #274046, #E6DADA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     
     
+  }
+
+  .navbar {
+    box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+    
+
+
+
   }
 
   .button-container {
@@ -37,6 +48,7 @@
   #button-right {
     margin-right: 80px;
   }
+
 
 @media (max-width: 600px) {
   .button-container {
