@@ -4,7 +4,6 @@ import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
   oddEvenSort_Columns_Parallel,
   oddEvenSort_Rows_Parallel,
-  odd_even_parallel,
 } from "../algorithms/odd_even_sort/parallel_odd_even";
 
 import {
@@ -62,7 +61,12 @@ export default function Test() {
     addRecord(randomArray);
     setText(subtitles[0]);
 
-    console.log("STARTING RANDOM ARRAY CREATED. ");
+    //test gia taxitita me ton apo kato poy pao na ton kano parallilo
+    let test = oddEvenSort2D(randomArray);
+
+    console.log(test);
+
+    //console.log("STARTING RANDOM ARRAY CREATED. ");
     /*
     for (const row of randomArray) {
       console.log(row.join("\t"));
@@ -84,13 +88,14 @@ export default function Test() {
     //setArray([...sortedMesh]);
 
     for (let i = 0; i < Phases; i++) {
-      if (i % 2 == 0) {
+      if (i % 2 === 0) {
         odd_phase = await oddEvenSort_Rows_Parallel(even_phase);
         sortedPhase = [...odd_phase];
       } else {
         even_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
         sortedPhase = [...even_phase];
       }
+      console.log("Phase  " + (i + 1) + " COMPLETED");
       setArray([...sortedPhase]);
       addRecord(sortedPhase);
     }
@@ -99,14 +104,14 @@ export default function Test() {
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
-  function sort_Second_Alg() {
+  async function sort_Second_Alg() {
     let grid = reshapeArray(array);
     addRecord(grid);
     //setArray([...grid]);
     calculate_vars(grid);
 
     //phase 1
-    const phase_1 = snakelikeBlocks(grid);
+    const phase_1 = await snakelikeBlocks(grid);
     console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
     addRecord(phase_1);
 
@@ -117,13 +122,13 @@ export default function Test() {
 
     //phase 3
 
-    const phase_3 = snakelikeBlocks(phase_2);
+    const phase_3 = await snakelikeBlocks(phase_2);
     console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
     //console.log(phase_3);
     addRecord(phase_3);
 
     //phase 4
-    const phase_4 = sortColumns(phase_3);
+    const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
     console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
     addRecord(phase_4);
 
@@ -157,7 +162,7 @@ export default function Test() {
   }
 
   const goForward = () => {
-    console.log(record);
+    //console.log(record);
     //console.log(record.length);
 
     if (currentIndex < record.length - 1) {

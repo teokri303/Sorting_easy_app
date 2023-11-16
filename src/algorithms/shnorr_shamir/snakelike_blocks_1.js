@@ -5,6 +5,8 @@ import {
   sortColumns,
 } from "../odd_even_sort/odd_even_sort";
 
+import { odd_even_parallel } from "../odd_even_sort/parallel_for_SS";
+
 let gridSize = 0;
 let N = 0;
 let blocks_Sum = 0;
@@ -25,6 +27,7 @@ function calculate_vars(array) {
   console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
 }
 
+/*
 function oddEven_Blocks(mesh) {
   //here will be the sorting
   let numRows = mesh.length;
@@ -47,7 +50,7 @@ function oddEven_Blocks(mesh) {
   }
 
   return mesh;
-}
+}*/
 
 // Λειτουργία για δημιουργία ενός κενού ταξινομημένου πλέγματος.
 function createEmptySortedGrid() {
@@ -76,7 +79,7 @@ function createSortedGrid(blocks) {
   return sortedGrid;
 }
 //xorizetai to mesh se blocks kai ta sortarei ena ena me odd even
-function sortAndPopulateBlocks(grid) {
+async function sortAndPopulateBlocks(grid) {
   const blocks = [];
 
   for (let row = 0; row < gridSize; row += blockSize) {
@@ -91,20 +94,19 @@ function sortAndPopulateBlocks(grid) {
       }
 
       //edo ginetai i taksinomisi tou kathe block
-      oddEven_Blocks(block);
+      await odd_even_parallel(block);
 
       blocks.push(block);
       //console.log(blocks);
     }
   }
 
-  //console.log(blocks);
   return blocks;
 }
 
-function snakelikeBlocks(array) {
-  var blocks = sortAndPopulateBlocks(array);
-  var sortedGrid = createSortedGrid(blocks);
+async function snakelikeBlocks(array) {
+  let blocks = await sortAndPopulateBlocks(array);
+  let sortedGrid = await createSortedGrid(blocks);
 
   //console.log(sortedGrid);
 

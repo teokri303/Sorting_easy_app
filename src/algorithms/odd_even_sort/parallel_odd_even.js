@@ -69,17 +69,4 @@ function oddEvenSort_Columns_Parallel(grid) {
   });
 }
 
-async function odd_even_parallel(grid) {
-  // Perimenei tin oloklirosi tis taksinomisis ton grammwn
-  let sorted_rows = await oddEvenSort_Rows_Parallel(grid);
-
-  let sorted_cols = await oddEvenSort_Columns_Parallel(sorted_rows);
-
-  return sorted_cols;
-}
-
-export {
-  odd_even_parallel,
-  oddEvenSort_Rows_Parallel,
-  oddEvenSort_Columns_Parallel,
-};
+export { oddEvenSort_Rows_Parallel, oddEvenSort_Columns_Parallel };

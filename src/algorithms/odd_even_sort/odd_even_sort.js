@@ -122,8 +122,8 @@ function oddEvenSort2D(mesh) {
       " evenPhases"
   );
 
-  for (let i = 0; i < Phases; i++) {
-    if (isEven(i)) {
+  for (let j = 0; j < Phases; j++) {
+    if (isEven(j)) {
       for (let i = 0; i < numRows; i++) {
         if (isEven(i)) {
           odd_Even_Sort(mesh[i]);
@@ -136,8 +136,10 @@ function oddEvenSort2D(mesh) {
       for (const row of mesh) {
         console.log(row.join("\t"));
       }*/
+      console.log("Phase " + (j + 1) + "COMPLETED");
     } else {
       sortColumns(mesh);
+      console.log("Phase " + (j + 1) + "COMPLETED");
       /*
       console.log("PHASE " + [i + 1] + " columns sort");
       for (const row of mesh) {
