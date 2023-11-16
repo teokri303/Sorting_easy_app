@@ -34,7 +34,6 @@ function oddEvenSort_Columns_Parallel(grid) {
   const numColumns = grid[0].length;
   //console.log(numColumns);
 
-  // Δημιουργία ενός worker για κάθε στήλη
   for (let col = 0; col < numColumns; col++) {
     const columnData = grid.map((row) => row[col]);
 
@@ -58,7 +57,6 @@ function oddEvenSort_Columns_Parallel(grid) {
   }
 
   return Promise.all(promises).then((sortedColumns) => {
-    // Μετατροπή των ταξινομημένων στηλών πίσω στον αρχικό πίνακα
     const sortedGrid = [];
     for (let row = 0; row < grid.length; row++) {
       sortedGrid[row] = [];
