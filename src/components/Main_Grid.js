@@ -62,9 +62,9 @@ export default function Test() {
     setText(subtitles[0]);
 
     //test gia taxitita me ton apo kato poy pao na ton kano parallilo
-    let test = oddEvenSort2D(randomArray);
+    //let test = oddEvenSort2D(randomArray);
 
-    console.log(test);
+    //console.log(test);
 
     //console.log("STARTING RANDOM ARRAY CREATED. ");
     /*
@@ -83,21 +83,48 @@ export default function Test() {
     console.log("PHASESSSSS : " + Phases);
 
     let sortedPhase;
-    let odd_phase;
-    let even_phase = [...array];
+    let grid = [...array];
+    let rows_phase;
+    let columns_phase;
     //setArray([...sortedMesh]);
 
     for (let i = 0; i < Phases; i++) {
       if (i % 2 === 0) {
-        odd_phase = await oddEvenSort_Rows_Parallel(even_phase);
-        sortedPhase = [...odd_phase];
+        const dirtyRows = grid.filter(
+          (row) => row.includes(0) && row.includes(1)
+        );
+
+        rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows);
+        sortedPhase = [...rows_phase];
       } else {
-        even_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
-        sortedPhase = [...even_phase];
+        columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
+        sortedPhase = await [...columns_phase];
       }
+
+      let dirtyIndex = 0;
+      let resultGrid = [];
+      for (let j = 0; j < grid.length; j++) {
+        if (grid[j].includes(0) && grid[j].includes(1)) {
+          // Αν η γραμμή είναι dirty, προσθέτει την ταξινομημένη dirty γραμμή
+          resultGrid.push(sortedPhase[dirtyIndex]);
+          dirtyIndex++;
+        } else {
+          // Αλλιώς, προσθέτει την clean γραμμή
+          resultGrid.push([...grid[j]]);
+        }
+      }
+
+      grid = [...resultGrid];
+
       console.log("Phase  " + (i + 1) + " COMPLETED");
-      setArray([...sortedPhase]);
-      addRecord(sortedPhase);
+
+      setArray([...grid]);
+      addRecord(grid);
+
+      if (sortedPhase.length === 1) {
+        console.log("GRID IS SORTED ");
+        break;
+      }
     }
     //console.log(record);
     setShowButtons(true);

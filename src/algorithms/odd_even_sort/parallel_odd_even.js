@@ -3,9 +3,11 @@ const workerPath = new URL("worker.js", import.meta.url).toString();
 let direction = 0;
 
 function oddEvenSort_Rows_Parallel(grid) {
+  let workers_counter = 0;
   const promises = grid.map((row) => {
     return new Promise((resolve) => {
       const worker = new Worker(workerPath);
+      workers_counter++;
 
       worker.onmessage = function (event) {
         worker.terminate();
@@ -25,6 +27,7 @@ function oddEvenSort_Rows_Parallel(grid) {
   direction = 0;
   return Promise.all(promises).then((sortedRows) => {
     const sortedGrid = sortedRows.map((row) => row.slice());
+    console.log(workers_counter + " Workers summoned for this ROW sort. ");
     return sortedGrid;
   });
 }
@@ -32,7 +35,6 @@ function oddEvenSort_Rows_Parallel(grid) {
 function oddEvenSort_Columns_Parallel(grid) {
   const promises = [];
   const numColumns = grid[0].length;
-  //console.log(numColumns);
 
   for (let col = 0; col < numColumns; col++) {
     const columnData = grid.map((row) => row[col]);

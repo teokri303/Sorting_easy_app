@@ -10,7 +10,7 @@ const MeshComponent = ({ grid }) => {
   const gridLength = grid.length;
 
   const boxSize = gridLength <= 60 ? 8 : 2;
-  const marginSize = gridLength <= 60 ? 1 : 0.1;
+  const marginSize = gridLength <= 60 ? 1 : 0.03;
   // Render the mesh
   return (
     <div className="mesh">
