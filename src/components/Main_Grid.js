@@ -1,4 +1,6 @@
 import { useState } from "react";
+import React, { useRef } from "react";
+
 import { Button, Input } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
@@ -26,10 +28,10 @@ import {
 import { sortColumns } from "../algorithms/odd_even_sort/sort_columns";
 
 import MeshComponent from "./Mesh";
+
 import TextDisplay from "./phase_expl";
 
 export default function Test() {
-  const [gridsize, setGridsize] = useState("null");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
@@ -54,7 +56,11 @@ export default function Test() {
     "RESHAPE TO GIVEN DIMENTIONS  FINAL SORTED ARRAY ",
   ];
 
+  const inputValueRef = useRef("");
+
   function generateArray() {
+    const gridsize = inputValueRef.current;
+
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
@@ -86,8 +92,8 @@ export default function Test() {
     let grid = [...array];
     let rows_phase;
     let columns_phase;
-    //setArray([...sortedMesh]);
-    console.time();
+
+    console.time("WHOLE TIME");
     for (let i = 0; i < Phases; i++) {
       if (i % 2 === 0) {
         // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
@@ -99,7 +105,11 @@ export default function Test() {
         rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows);
         sortedPhase = [...rows_phase];
       } else {
+        //console.time("AWAIT COLUMN TIME");
+
         columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
+        //console.timeEnd("AWAIT COLUMN TIME");
+
         sortedPhase = [...columns_phase];
       }
 
@@ -128,7 +138,7 @@ export default function Test() {
         break;
       }
     }
-    console.timeEnd();
+    console.timeEnd("WHOLE TIME");
     //console.log(record);
     setShowButtons(true);
   }
@@ -187,8 +197,9 @@ export default function Test() {
     setShowButtons(true);
   }
 
+  //handling small thing functions
   function handleTextareaChange1(e) {
-    setGridsize(e.target.value);
+    inputValueRef.current = e.target.value;
   }
 
   const goForward = () => {
@@ -231,7 +242,6 @@ export default function Test() {
             <Input
               id="input"
               type="number"
-              value={gridsize}
               onChange={handleTextareaChange1}
               placeholder="Enter Mesh Dimension from 1-256. "
             />

@@ -12,7 +12,6 @@ function oddEvenSort_Rows_Parallel(grid) {
       worker.onmessage = function (event) {
         worker.terminate();
         resolve(event.data);
-        //console.log(event.data);
       };
 
       const message = {
@@ -24,10 +23,14 @@ function oddEvenSort_Rows_Parallel(grid) {
       direction++;
     });
   });
+
   direction = 0;
+  console.time("AWAIT ROW TIME");
+
   return Promise.all(promises).then((sortedRows) => {
     const sortedGrid = sortedRows.map((row) => row.slice());
-    console.log(workers_counter + " Workers summoned for this ROW sort. ");
+    //console.log(workers_counter + " Workers summoned for this ROW sort. ");
+    console.timeEnd("AWAIT ROW TIME");
     return sortedGrid;
   });
 }
