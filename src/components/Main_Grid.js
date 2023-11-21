@@ -60,17 +60,17 @@ export default function Test() {
     setArray([...randomArray]);
     addRecord(randomArray);
     setText(subtitles[0]);
+  }
+
+  function seral_shearsort() {
+    console.time();
 
     //test gia taxitita me ton apo kato poy pao na ton kano parallilo
-    //let test = oddEvenSort2D(randomArray);
+    let test = oddEvenSort2D(array);
 
-    //console.log(test);
+    setArray([...test]);
 
-    //console.log("STARTING RANDOM ARRAY CREATED. ");
-    /*
-    for (const row of randomArray) {
-      console.log(row.join("\t"));
-    }*/
+    console.timeEnd();
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
@@ -87,9 +87,11 @@ export default function Test() {
     let rows_phase;
     let columns_phase;
     //setArray([...sortedMesh]);
-
+    console.time();
     for (let i = 0; i < Phases; i++) {
       if (i % 2 === 0) {
+        // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
+        //tis grammes poy den einai sortarismenes
         const dirtyRows = grid.filter(
           (row) => row.includes(0) && row.includes(1)
         );
@@ -98,7 +100,7 @@ export default function Test() {
         sortedPhase = [...rows_phase];
       } else {
         columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
-        sortedPhase = await [...columns_phase];
+        sortedPhase = [...columns_phase];
       }
 
       let dirtyIndex = 0;
@@ -126,6 +128,7 @@ export default function Test() {
         break;
       }
     }
+    console.timeEnd();
     //console.log(record);
     setShowButtons(true);
   }
@@ -235,7 +238,10 @@ export default function Test() {
           </div>
           <div>
             <Button colorScheme="green" onClick={sort_First_Alg}>
-              ODD EVEN
+              PARALLEL SHEAR
+            </Button>
+            <Button colorScheme="green" onClick={seral_shearsort}>
+              SERIAL SHEAR
             </Button>
             <Button colorScheme="green" onClick={sort_Second_Alg}>
               SHNORR-SHAMMIR
