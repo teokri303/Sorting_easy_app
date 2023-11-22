@@ -64,6 +64,7 @@ export default function Test() {
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
+    console.log("ARRAY CREATED");
     addRecord(randomArray);
     setText(subtitles[0]);
   }
@@ -102,13 +103,15 @@ export default function Test() {
           (row) => row.includes(0) && row.includes(1)
         );
 
-        rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows);
+        const index = grid.indexOf(dirtyRows[0]);
+        //console.log(index);
+
+        rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows, index);
         sortedPhase = [...rows_phase];
       } else {
-        //console.time("AWAIT COLUMN TIME");
-
+        //console.log(sortedPhase);
         columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
-        //console.timeEnd("AWAIT COLUMN TIME");
+        //console.log(columns_phase);
 
         sortedPhase = [...columns_phase];
       }
@@ -133,7 +136,7 @@ export default function Test() {
       setArray([...grid]);
       addRecord(grid);
 
-      if (sortedPhase.length === 1) {
+      if (sortedPhase.length <= 1) {
         console.log("GRID IS SORTED ");
         break;
       }

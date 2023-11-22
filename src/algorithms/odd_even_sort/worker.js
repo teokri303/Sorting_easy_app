@@ -4,7 +4,7 @@ function swap(nums, i, j) {
   nums[j] = temp;
 }
 
-function oddEvenSort(row) {
+function oddEvenSort(row, direction) {
   let steps = 0;
   while (steps < row.length) {
     steps++;
@@ -21,20 +21,38 @@ function oddEvenSort(row) {
       }
     }
   }
+  //console.log(direction);
+  if (direction % 2 !== 0) {
+    row.reverse();
+  }
   return row;
 }
 
 // Λαμβάνει τα δεδομένα από τον κύριο (main) thread
 onmessage = function (event) {
-  let row = event.data.row;
-  //console.log(row);
-  let direction = event.data.direction;
+  let chunk = event.data.chunk;
+  let index = event.data.direction;
+  let phase = event.data.phase;
 
-  const sortedRow = oddEvenSort(row);
+  if (phase === 0) {
+    for (let i = 0; i < chunk.length; i++) {
+      oddEvenSort(chunk[i], index);
+      index++;
+    }
+  } else {
+    const numColumns = chunk[0].length;
 
-  if (direction % 2 !== 0) {
-    sortedRow.reverse();
+    for (let col = 0; col < numColumns; col++) {
+      const columnData = chunk.map((row) => row[col]);
+      const sortedColumn = oddEvenSort(columnData, 0);
+
+      // Αντικατάσταση των στοιχείων της στήλης με ταξινομημένα
+      for (let row = 0; row < chunk.length; row++) {
+        chunk[row][col] = sortedColumn[row];
+      }
+    }
   }
+
   // Στέλνει τα ταξινομημένα δεδομένα πίσω στον κύριο (main) thread
-  postMessage(sortedRow);
+  postMessage(chunk);
 };

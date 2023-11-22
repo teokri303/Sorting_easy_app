@@ -131,21 +131,11 @@ function oddEvenSort2D(mesh) {
           Reverse_odd_Even_Sort(mesh[i]);
         }
       }
-      /*
-      console.log("PHASE " + [i + 1] + " rows snakelike");
-      for (const row of mesh) {
-        console.log(row.join("\t"));
-      }*/
+
       console.log("Phase " + (j + 1) + "COMPLETED");
     } else {
       sortColumns(mesh);
       console.log("Phase " + (j + 1) + "COMPLETED");
-      /*
-      console.log("PHASE " + [i + 1] + " columns sort");
-      for (const row of mesh) {
-        console.log(row.join("\t"));
-      }
-      */
     }
   }
 
