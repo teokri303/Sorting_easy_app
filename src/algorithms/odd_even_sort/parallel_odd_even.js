@@ -1,9 +1,9 @@
 const workerPath = new URL("worker.js", import.meta.url).toString();
 
 let direction = 0;
+let numWorkers = 4;
 
 function oddEvenSort_Rows_Parallel(grid, index) {
-  let numWorkers = 4; // Ορίστε τον αριθμό των workers
   const numRows = grid.length;
   if (numRows < 50) {
     numWorkers = 2;
@@ -51,13 +51,14 @@ function oddEvenSort_Rows_Parallel(grid, index) {
 
     const sortedGrid = sortedRows;
 
+    numWorkers = 4;
+
     return sortedGrid;
   });
 }
 
 function oddEvenSort_Columns_Parallel(grid) {
   const numColumns = grid[0].length;
-  const numWorkers = 4;
   const chunkSize = Math.ceil(numColumns / numWorkers);
   const promises = [];
 

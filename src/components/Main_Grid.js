@@ -63,7 +63,7 @@ export default function Test() {
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
-    setArray([...randomArray]);
+    //setArray([...randomArray]);
     console.log("ARRAY CREATED");
     addRecord(randomArray);
     setText(subtitles[0]);
@@ -73,24 +73,24 @@ export default function Test() {
     console.time();
 
     //test gia taxitita me ton apo kato poy pao na ton kano parallilo
-    let test = oddEvenSort2D(array);
-
-    setArray([...test]);
+    let test = oddEvenSort2D(record[0]);
 
     console.timeEnd();
+
+    //setArray([...test]);
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
 
   async function sort_First_Alg() {
-    let numRows = array.length;
+    let numRows = record[0].length;
     let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
     let evenPhases = Math.log(numRows) / Math.log(2); //columns
     let Phases = Math.round(oddPhases + evenPhases);
     console.log("PHASESSSSS : " + Phases);
 
     let sortedPhase;
-    let grid = [...array];
+    let grid = record[0];
     let rows_phase;
     let columns_phase;
 
@@ -133,7 +133,7 @@ export default function Test() {
 
       console.log("Phase  " + (i + 1) + " COMPLETED");
 
-      setArray([...grid]);
+      //setArray([...grid]);
       addRecord(grid);
 
       if (sortedPhase.length <= 1) {
@@ -142,6 +142,7 @@ export default function Test() {
       }
     }
     console.timeEnd("WHOLE TIME");
+    //setArray([...grid]);
     //console.log(record);
     setShowButtons(true);
   }
