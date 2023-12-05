@@ -63,7 +63,7 @@ export default function Test() {
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
-    //setArray([...randomArray]);
+    setArray([...randomArray]);
     console.log("ARRAY CREATED");
     addRecord(randomArray);
     setText(subtitles[0]);
