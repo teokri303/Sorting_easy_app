@@ -35,11 +35,10 @@
     margin-bottom: 40px;
 
   }
-  #input{
-    width: 300px;
-  }
 
- 
+  #create{
+    margin-bottom: 30px;
+  }
   
   #button-left {
    margin-left: 80px;

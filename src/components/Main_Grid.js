@@ -1,7 +1,6 @@
 import { useState } from "react";
-import React, { useRef } from "react";
-
-import { Button, Input } from "@chakra-ui/react";
+import React from "react";
+import { Button } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
   oddEvenSort_Columns_Parallel,
@@ -17,19 +16,21 @@ import { vertical_slices_first } from "../algorithms/shnorr_shamir/vertical_slic
 import { vertical_slices_second } from "../algorithms/shnorr_shamir/vertical_slices_B_6";
 import { simple_snakelike } from "../algorithms/shnorr_shamir/simple_snakelike_7";
 import { final_oddEven_steps } from "../algorithms/shnorr_shamir/less_steps_odd_even_8";
-import {
-  //generateUniqueArray,
-  generateLeema,
-} from "../algorithms/arrays/generate_arrays";
+import { generateLeema } from "../algorithms/arrays/generate_arrays";
 import {
   reshapeArray,
   reshape_to_given,
 } from "../algorithms/arrays/arrays_correction_SS";
-import { sortColumns } from "../algorithms/odd_even_sort/sort_columns";
 
 import MeshComponent from "./Mesh";
 
 import TextDisplay from "./phase_expl";
+import {
+  GlobalStyle,
+  SliderContainer,
+  SliderLabel,
+  StyledSlider,
+} from "../styles/slider";
 
 export default function Test() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,6 +38,7 @@ export default function Test() {
   const [record, setRecord] = useState([]);
   const [text, setText] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
+  const [sliderValue, setSliderValue] = useState(100);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -56,15 +58,13 @@ export default function Test() {
     "RESHAPE TO GIVEN DIMENTIONS  FINAL SORTED ARRAY ",
   ];
 
-  const inputValueRef = useRef("");
-
   function generateArray() {
-    const gridsize = inputValueRef.current;
+    const gridsize = sliderValue;
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
-    console.log("ARRAY CREATED");
+    //console.log("ARRAY CREATED");
     addRecord(randomArray);
     setText(subtitles[0]);
   }
@@ -143,7 +143,6 @@ export default function Test() {
     }
     console.timeEnd("WHOLE TIME");
     //setArray([...grid]);
-    //console.log(record);
     setShowButtons(true);
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
@@ -202,9 +201,6 @@ export default function Test() {
   }
 
   //handling small thing functions
-  function handleTextareaChange1(e) {
-    inputValueRef.current = e.target.value;
-  }
 
   const goForward = () => {
     //console.log(record);
@@ -235,36 +231,52 @@ export default function Test() {
     setShowButtons(false);
   };
 
+  const handleSliderChange = (e) => {
+    setSliderValue(parseInt(e.target.value, 10));
+  };
+
   return (
     <div>
       <div>
+        <Button id="create" colorScheme="teal" onClick={generateArray}>
+          Create Random
+        </Button>
         <div className="button-container_b">
-          <Button colorScheme="blue" onClick={generateArray}>
-            Create Random
-          </Button>
-          <div>
-            <Input
-              id="input"
-              type="number"
-              onChange={handleTextareaChange1}
-              placeholder="Enter Mesh Dimension from 1-256. "
-            />
-          </div>
-          <div>
-            <Button colorScheme="green" onClick={sort_First_Alg}>
-              PARALLEL SHEAR
-            </Button>
-            <Button colorScheme="green" onClick={seral_shearsort}>
-              SERIAL SHEAR
-            </Button>
-            <Button colorScheme="green" onClick={sort_Second_Alg}>
-              SHNORR-SHAMMIR
-            </Button>
-          </div>
+          <>
+            <GlobalStyle />
+            <SliderContainer>
+              <SliderLabel htmlFor="slider">Enter Mesh Dimensions:</SliderLabel>
+              <StyledSlider
+                type="range"
+                id="slider"
+                name="slider"
+                min="2"
+                max="1000"
+                value={sliderValue}
+                step="1"
+                onChange={handleSliderChange}
+              />
+              <p>Current Value: {sliderValue}</p>
+            </SliderContainer>
+          </>
 
-          <Button colorScheme="red" onClick={clear_states}>
-            CLEAR ARRAY
-          </Button>
+          {showButtons && (
+            <div>
+              <Button colorScheme="green" onClick={sort_First_Alg}>
+                PARALLEL SHEAR
+              </Button>
+              <Button colorScheme="green" onClick={seral_shearsort}>
+                SERIAL SHEAR
+              </Button>
+              <Button colorScheme="green" onClick={sort_Second_Alg}>
+                SHNORR-SHAMMIR
+              </Button>
+
+              <Button colorScheme="red" onClick={clear_states}>
+                CLEAR ARRAY
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -291,6 +303,25 @@ export default function Test() {
           </Button>
         </div>
       )}
+
+      <div className="button-container">
+        <Button
+          id="button-left"
+          colorScheme="teal"
+          variant="solid"
+          onClick={goBack}
+        >
+          ALGORITHMS INFO
+        </Button>
+        <Button
+          id="button-right"
+          colorScheme="teal"
+          variant="solid"
+          onClick={goForward}
+        >
+          CHOOSE ALGORITHM
+        </Button>
+      </div>
       <div>
         <TextDisplay text={text} />
       </div>

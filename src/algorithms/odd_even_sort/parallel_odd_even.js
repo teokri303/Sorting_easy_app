@@ -1,6 +1,5 @@
 const workerPath = new URL("worker.js", import.meta.url).toString();
 
-let direction = 0;
 let numWorkers = 4;
 
 function oddEvenSort_Rows_Parallel(grid, index) {

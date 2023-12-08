@@ -5,8 +5,6 @@ import {
   sortColumns,
 } from "../odd_even_sort/odd_even_sort";
 
-import { odd_even_parallel } from "../odd_even_sort/parallel_for_SS";
-
 let gridSize = 0;
 let N = 0;
 let blocks_Sum = 0;
@@ -26,31 +24,6 @@ function calculate_vars(array) {
   console.log("BLOCK-SIDE = ", +blockSize);
   console.log("ELEMENTS BLOCKS = ", +elemenets_in_blocks);
 }
-
-/*
-function oddEven_Blocks(mesh) {
-  //here will be the sorting
-  let numRows = mesh.length;
-  let oddPhases = Math.round(Math.sqrt(numRows) + 1);
-  let evenPhases = Math.round(Math.sqrt(numRows));
-  let Phases = oddPhases + evenPhases;
-
-  for (let i = 0; i < Phases; i++) {
-    if (isEven(i)) {
-      for (let i = 0; i < numRows; i++) {
-        if (isEven(i)) {
-          odd_Even_Sort(mesh[i]);
-        } else {
-          Reverse_odd_Even_Sort(mesh[i]);
-        }
-      }
-    } else {
-      sortColumns(mesh);
-    }
-  }
-
-  return mesh;
-}*/
 
 // Λειτουργία για δημιουργία ενός κενού ταξινομημένου πλέγματος.
 function createEmptySortedGrid() {
@@ -94,7 +67,7 @@ async function sortAndPopulateBlocks(grid) {
       }
 
       //edo ginetai i taksinomisi tou kathe block
-      await odd_even_parallel(block);
+      await odd_Even_Sort(block);
 
       blocks.push(block);
       //console.log(blocks);
