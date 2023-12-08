@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const SliderContainer = styled.div`
-  width: 60%;
+  width: 40%;
   margin: 0 auto;
   text-align: center;
 `;

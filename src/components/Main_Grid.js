@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { Button } from "@chakra-ui/react";
+import { ChakraProvider, VStack, Button } from "@chakra-ui/react";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
   oddEvenSort_Columns_Parallel,
@@ -24,6 +24,8 @@ import {
 
 import MeshComponent from "./Mesh";
 
+import { Radio, Stack, RadioGroup } from "@chakra-ui/react";
+
 import TextDisplay from "./phase_expl";
 import {
   GlobalStyle,
@@ -39,6 +41,7 @@ export default function Test() {
   const [text, setText] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
   const [sliderValue, setSliderValue] = useState(100);
+  const [alg, setAlg] = useState("1");
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -235,6 +238,10 @@ export default function Test() {
     setSliderValue(parseInt(e.target.value, 10));
   };
 
+  const handleButtonClick = (value) => {
+    setAlg(value);
+  };
+
   return (
     <div>
       <div>
@@ -245,7 +252,9 @@ export default function Test() {
           <>
             <GlobalStyle />
             <SliderContainer>
-              <SliderLabel htmlFor="slider">Enter Mesh Dimensions:</SliderLabel>
+              <SliderLabel htmlFor="slider">
+                Enter Mesh Dimensions and click CREATE:
+              </SliderLabel>
               <StyledSlider
                 type="range"
                 id="slider"
@@ -305,22 +314,45 @@ export default function Test() {
       )}
 
       <div className="button-container">
-        <Button
-          id="button-left"
-          colorScheme="teal"
-          variant="solid"
-          onClick={goBack}
-        >
-          ALGORITHMS INFO
-        </Button>
-        <Button
-          id="button-right"
-          colorScheme="teal"
-          variant="solid"
-          onClick={goForward}
-        >
-          CHOOSE ALGORITHM
-        </Button>
+        <div>
+          <Button
+            id="button-left"
+            colorScheme="teal"
+            variant="solid"
+            onClick={goBack}
+          >
+            ALGORITHMS INFO
+          </Button>
+        </div>
+
+        <div>
+          <Button
+            id="button-right"
+            colorScheme="teal"
+            variant="solid"
+            onClick={goForward}
+          >
+            CHOOSE ALGORITHM
+          </Button>
+          <ChakraProvider>
+            <VStack spacing={4} align="start">
+              <Button
+                size="lg"
+                colorScheme={setAlg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+              >
+                SNOR SHAMMIR
+              </Button>
+              <Button
+                size="lg"
+                colorScheme={setAlg === "SHEARSHORT" ? "teal" : "gray"}
+                onClick={() => handleButtonClick("SHEARSHORT")}
+              >
+                SHEARSHORT
+              </Button>
+            </VStack>
+          </ChakraProvider>
+        </div>
       </div>
       <div>
         <TextDisplay text={text} />
