@@ -18,7 +18,7 @@ export const SliderContainer = styled.div`
 
 export const SliderLabel = styled.label`
   font-size: 18px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   display: block;
 `;
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from "react";
-import { ChakraProvider, VStack, Button } from "@chakra-ui/react";
+import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
   oddEvenSort_Columns_Parallel,
@@ -23,9 +24,6 @@ import {
 } from "../algorithms/arrays/arrays_correction_SS";
 
 import MeshComponent from "./Mesh";
-
-import { Radio, Stack, RadioGroup } from "@chakra-ui/react";
-
 import TextDisplay from "./phase_expl";
 import {
   GlobalStyle,
@@ -40,6 +38,8 @@ export default function Test() {
   const [record, setRecord] = useState([]);
   const [text, setText] = useState(0);
   const [showButtons, setShowButtons] = useState(false);
+  const [showFirst, setShowFirst] = useState(true);
+  const [showSecond, setShowSecond] = useState(false);
   const [sliderValue, setSliderValue] = useState(100);
   const [alg, setAlg] = useState("1");
 
@@ -107,7 +107,6 @@ export default function Test() {
         );
 
         const index = grid.indexOf(dirtyRows[0]);
-        //console.log(index);
 
         rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows, index);
         sortedPhase = [...rows_phase];
@@ -145,7 +144,7 @@ export default function Test() {
       }
     }
     console.timeEnd("WHOLE TIME");
-    //setArray([...grid]);
+    setArray([...grid]);
     setShowButtons(true);
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
@@ -242,56 +241,100 @@ export default function Test() {
     setAlg(value);
   };
 
+  function go_sort() {
+    sort_First_Alg();
+    setShowFirst(false);
+    setShowSecond(true);
+  }
+
   return (
     <div>
-      <div>
-        <Button id="create" colorScheme="teal" onClick={generateArray}>
-          Create Random
-        </Button>
-        <div className="button-container_b">
-          <>
-            <GlobalStyle />
-            <SliderContainer>
-              <SliderLabel htmlFor="slider">
-                Enter Mesh Dimensions and click CREATE:
-              </SliderLabel>
-              <StyledSlider
-                type="range"
-                id="slider"
-                name="slider"
-                min="2"
-                max="1000"
-                value={sliderValue}
-                step="1"
-                onChange={handleSliderChange}
-              />
-              <p>Current Value: {sliderValue}</p>
-            </SliderContainer>
-          </>
-
-          {showButtons && (
-            <div>
-              <Button colorScheme="green" onClick={sort_First_Alg}>
-                PARALLEL SHEAR
-              </Button>
-              <Button colorScheme="green" onClick={seral_shearsort}>
-                SERIAL SHEAR
-              </Button>
-              <Button colorScheme="green" onClick={sort_Second_Alg}>
-                SHNORR-SHAMMIR
-              </Button>
-
-              <Button colorScheme="red" onClick={clear_states}>
-                CLEAR ARRAY
-              </Button>
-            </div>
-          )}
+      {showFirst && (
+        <div>
+          <Button id="create" colorScheme="teal" onClick={generateArray}>
+            Create Random
+          </Button>
+          <div className="button-container_b">
+            <>
+              <GlobalStyle />
+              <SliderContainer>
+                <SliderLabel className="styled-text" htmlFor="slider">
+                  Enter Mesh Dimensions and click CREATE:
+                </SliderLabel>
+                <StyledSlider
+                  type="range"
+                  id="slider"
+                  name="slider"
+                  min="2"
+                  max="1000"
+                  value={sliderValue}
+                  step="1"
+                  onChange={handleSliderChange}
+                />
+                <p>Current Value: {sliderValue}</p>
+              </SliderContainer>
+            </>
+          </div>
         </div>
+      )}
+      <div>
+        {showFirst && (
+          <div className="container">
+            <div className="left-div">
+              <h1 className="styled-text">CHOOSE ALGORITHM USE. </h1>
+              <ChakraProvider>
+                <VStack spacing={4} align="center">
+                  <Button
+                    size="lg"
+                    width="200px"
+                    colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                    onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                  >
+                    SNOR SHAMMIR
+                  </Button>
+                  <Button
+                    size="lg"
+                    width="200px"
+                    colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                    onClick={() => handleButtonClick("SHEARSHORT")}
+                  >
+                    SHEARSHORT
+                  </Button>
+                </VStack>
+              </ChakraProvider>
+            </div>
+
+            <div className="mesh">
+              <MeshComponent grid={array} />
+            </div>
+            <div className="right-div">
+              <ChakraProvider>
+                <Box textAlign="center" marginTop="40px">
+                  <Button
+                    colorScheme="teal"
+                    rightIcon={<ArrowForwardIcon />}
+                    size="lg"
+                    width="300px"
+                    onClick={go_sort}
+                  >
+                    SORT
+                  </Button>
+                </Box>
+              </ChakraProvider>
+            </div>
+          </div>
+        )}
+      </div>
+      <div>
+        {showSecond && (
+          <div className="container">
+            <div className="mesh">
+              <MeshComponent grid={array} />
+            </div>
+          </div>
+        )}
       </div>
 
-      <div>
-        <MeshComponent grid={array} />
-      </div>
       {showButtons && (
         <div className="button-container">
           <Button
@@ -313,47 +356,6 @@ export default function Test() {
         </div>
       )}
 
-      <div className="button-container">
-        <div>
-          <Button
-            id="button-left"
-            colorScheme="teal"
-            variant="solid"
-            onClick={goBack}
-          >
-            ALGORITHMS INFO
-          </Button>
-        </div>
-
-        <div>
-          <Button
-            id="button-right"
-            colorScheme="teal"
-            variant="solid"
-            onClick={goForward}
-          >
-            CHOOSE ALGORITHM
-          </Button>
-          <ChakraProvider>
-            <VStack spacing={4} align="start">
-              <Button
-                size="lg"
-                colorScheme={setAlg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-              >
-                SNOR SHAMMIR
-              </Button>
-              <Button
-                size="lg"
-                colorScheme={setAlg === "SHEARSHORT" ? "teal" : "gray"}
-                onClick={() => handleButtonClick("SHEARSHORT")}
-              >
-                SHEARSHORT
-              </Button>
-            </VStack>
-          </ChakraProvider>
-        </div>
-      </div>
       <div>
         <TextDisplay text={text} />
       </div>

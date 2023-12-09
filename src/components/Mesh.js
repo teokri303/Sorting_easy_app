@@ -9,18 +9,15 @@ const MeshComponent = ({ grid }) => {
     const ctx = canvas.getContext("2d");
 
     if (!grid || !Array.isArray(grid) || grid.length === 0) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "black";
-      ctx.font = "20px Arial";
-      const text = "No input yet";
-      const textWidth = ctx.measureText(text).width;
-      const x = (canvas.width - textWidth) / 2;
-      const y = canvas.height / 2;
-      ctx.fillText(text, x, y);
+      // Αν το grid δεν έχει οριστεί ή είναι ένα άδειο array, αποκρύπτουμε τον καμβά
+      canvas.style.display = "none";
       return;
+    } else {
+      // Εάν υπάρχει grid, εμφανίζουμε ξανά τον καμβά
+      canvas.style.display = "block";
     }
 
-    const canvasSize = 500;
+    const canvasSize = 480;
     const gridLength = grid.length;
     const boxSize = canvasSize / Math.max(grid[0].length, gridLength);
 
