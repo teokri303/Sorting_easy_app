@@ -24,6 +24,7 @@ import {
 } from "../algorithms/arrays/arrays_correction_SS";
 
 import MeshComponent from "./Mesh";
+import Paginator from "./Paginator";
 import TextDisplay from "./phase_expl";
 import {
   GlobalStyle,
@@ -328,8 +329,9 @@ export default function Test() {
       <div>
         {showSecond && (
           <div className="container">
-            <div className="mesh">
-              <MeshComponent grid={array} />
+            <div className="mesh"></div>
+            <div>
+              <Paginator items={record} />
             </div>
           </div>
         )}
