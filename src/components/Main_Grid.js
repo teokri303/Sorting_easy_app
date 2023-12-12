@@ -2,7 +2,6 @@ import { useState } from "react";
 import React from "react";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
-import { oddEvenSort2D } from "../algorithms/odd_even_sort/odd_even_sort";
 import {
   oddEvenSort_Columns_Parallel,
   oddEvenSort_Rows_Parallel,
@@ -38,9 +37,10 @@ export default function Test() {
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
   const [text, setText] = useState(0);
-  const [showButtons, setShowButtons] = useState(false);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
+  const [sortstate, setSortState] = useState(true);
+  const [choosealg, setChooseAlg] = useState(true);
   const [sliderValue, setSliderValue] = useState(100);
   const [alg, setAlg] = useState("1");
 
@@ -70,18 +70,8 @@ export default function Test() {
     setArray([...randomArray]);
     //console.log("ARRAY CREATED");
     addRecord(randomArray);
+    setChooseAlg(false);
     setText(subtitles[0]);
-  }
-
-  function seral_shearsort() {
-    console.time();
-
-    //test gia taxitita me ton apo kato poy pao na ton kano parallilo
-    let test = oddEvenSort2D(record[0]);
-
-    console.timeEnd();
-
-    //setArray([...test]);
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
@@ -146,7 +136,6 @@ export default function Test() {
     }
     console.timeEnd("WHOLE TIME");
     setArray([...grid]);
-    setShowButtons(true);
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
@@ -198,9 +187,6 @@ export default function Test() {
 
     let final = reshape_to_given(phase_8);
     addRecord(final);
-
-    //setArray([...final]);
-    setShowButtons(true);
   }
 
   //handling small thing functions
@@ -231,7 +217,6 @@ export default function Test() {
     setArray(null);
     setText(0);
     setRecord([]);
-    setShowButtons(false);
   };
 
   const handleSliderChange = (e) => {
@@ -240,6 +225,7 @@ export default function Test() {
 
   const handleButtonClick = (value) => {
     setAlg(value);
+    setSortState(false);
   };
 
   function go_sort() {
@@ -252,8 +238,14 @@ export default function Test() {
     <div>
       {showFirst && (
         <div>
-          <Button id="create" colorScheme="teal" onClick={generateArray}>
-            Create Random
+          <Button
+            id="create"
+            size="lg"
+            width="230px"
+            colorScheme="teal"
+            onClick={generateArray}
+          >
+            CREATE RANDOM MESH
           </Button>
           <div className="button-container_b">
             <>
@@ -290,6 +282,7 @@ export default function Test() {
                     width="200px"
                     colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
                     onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                    isDisabled={choosealg}
                   >
                     SNOR SHAMMIR
                   </Button>
@@ -298,6 +291,7 @@ export default function Test() {
                     width="200px"
                     colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
                     onClick={() => handleButtonClick("SHEARSHORT")}
+                    isDisabled={choosealg}
                   >
                     SHEARSHORT
                   </Button>
@@ -308,6 +302,7 @@ export default function Test() {
             <div className="mesh">
               <MeshComponent grid={array} />
             </div>
+
             <div className="right-div">
               <ChakraProvider>
                 <Box textAlign="center" marginTop="40px">
@@ -317,6 +312,7 @@ export default function Test() {
                     size="lg"
                     width="300px"
                     onClick={go_sort}
+                    isDisabled={sortstate}
                   >
                     SORT
                   </Button>
@@ -335,31 +331,6 @@ export default function Test() {
             </div>
           </div>
         )}
-      </div>
-
-      {showButtons && (
-        <div className="button-container">
-          <Button
-            id="button-left"
-            colorScheme="teal"
-            variant="outline"
-            onClick={goBack}
-          >
-            PREVIOUS PHASE
-          </Button>
-          <Button
-            id="button-right"
-            colorScheme="teal"
-            variant="solid"
-            onClick={goForward}
-          >
-            NEXT PHASE
-          </Button>
-        </div>
-      )}
-
-      <div>
-        <TextDisplay text={text} />
       </div>
     </div>
   );

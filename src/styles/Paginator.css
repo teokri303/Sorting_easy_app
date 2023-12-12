@@ -20,12 +20,11 @@
 .page-number {
   margin: 5px;
   cursor: pointer;
-  width: 40px; /* Τοποθετήστε το επιθυμητό πλάτος για τα κουμπιά σελίδων */
-  height: 40px; /* Τοποθετήστε το επιθυμητό ύψος για τα κουμπιά σελίδων */
+  width: 40px; 
+  height: 40px; 
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Προσθέστε σκιά για εφέ υψομετρικής επίδρασης */
@@ -34,10 +33,17 @@
 .page-number:hover {
   background-color: #f0f0f0; /* Το χρώμα που εμφανίζεται όταν περνάτε το ποντίκι πάνω από το κουμπί */
 }
+.page-number.selected {
+  background-color: #128877; /* Προσαρμόστε το χρώμα όπως επιθυμείτε */
+  color: #fff; 
+}
 
-.arrow-button {
-  width: 60px; /* Τοποθετήστε το επιθυμητό πλάτος για τα κουμπιά με τις βέλος */
-  height: 40px; /* Τοποθετήστε το επιθυμητό ύψος για τα κουμπιά με τις βέλος */
+.arrow-right {
+  margin: 5px;
+  margin-left: 30px;
+  cursor: pointer;
+  width: 80px; 
+  height: 40px; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,9 +51,27 @@
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.arrow-left {
+  margin: 5px;
+  margin-right: 30px;
   cursor: pointer;
+  width: 80px; 
+  height: 40px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .arrow-button:hover {
   background-color: #f0f0f0;
 }
+
+

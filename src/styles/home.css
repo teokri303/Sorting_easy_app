@@ -24,7 +24,6 @@
 
 .container {
   position: relative;
-  height: 100vh; /* Χρησιμοποιείται για να γεμίσει ολόκληρο το ύψος της οθόνης */
 }
 
 .mesh {
