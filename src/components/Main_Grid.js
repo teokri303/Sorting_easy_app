@@ -2,6 +2,8 @@ import { useState } from "react";
 import React from "react";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { CircularProgress } from "@chakra-ui/react";
+
 import {
   oddEvenSort_Columns_Parallel,
   oddEvenSort_Rows_Parallel,
@@ -43,6 +45,7 @@ export default function Test() {
   const [choosealg, setChooseAlg] = useState(true);
   const [sliderValue, setSliderValue] = useState(100);
   const [alg, setAlg] = useState("1");
+  const [loading, setLoading] = useState(true);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -102,9 +105,7 @@ export default function Test() {
         rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows, index);
         sortedPhase = [...rows_phase];
       } else {
-        //console.log(sortedPhase);
         columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
-        //console.log(columns_phase);
 
         sortedPhase = [...columns_phase];
       }
@@ -126,7 +127,6 @@ export default function Test() {
 
       console.log("Phase  " + (i + 1) + " COMPLETED");
 
-      //setArray([...grid]);
       addRecord(grid);
 
       if (sortedPhase.length <= 1) {
@@ -135,7 +135,8 @@ export default function Test() {
       }
     }
     console.timeEnd("WHOLE TIME");
-    setArray([...grid]);
+
+    return grid;
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
@@ -156,7 +157,6 @@ export default function Test() {
     addRecord(phase_2);
 
     //phase 3
-
     const phase_3 = await snakelikeBlocks(phase_2);
     console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
     //console.log(phase_3);
@@ -191,27 +191,6 @@ export default function Test() {
 
   //handling small thing functions
 
-  const goForward = () => {
-    //console.log(record);
-    //console.log(record.length);
-
-    if (currentIndex < record.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setArray([...record[currentIndex + 1]]);
-      setText(subtitles[currentIndex + 1]);
-    }
-    //console.log("CURRENT INDEX :" + currentIndex);
-  };
-
-  const goBack = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      setArray([...record[currentIndex - 1]]);
-      setText(subtitles[currentIndex - 1]);
-    }
-    //console.log("CURRENT INDEX :" + currentIndex);
-  };
-
   const clear_states = () => {
     setCurrentIndex(0);
     setArray(null);
@@ -225,13 +204,23 @@ export default function Test() {
 
   const handleButtonClick = (value) => {
     setAlg(value);
+
     setSortState(false);
   };
 
   function go_sort() {
-    sort_First_Alg();
+    //setLoading(true);
+
+    if (alg === "SHEARSHORT") {
+      sort_First_Alg();
+    } else {
+      console.log("SS");
+    }
+
     setShowFirst(false);
     setShowSecond(true);
+
+    // setLoading(false);
   }
 
   return (
@@ -259,7 +248,7 @@ export default function Test() {
                   id="slider"
                   name="slider"
                   min="2"
-                  max="1000"
+                  max="2000"
                   value={sliderValue}
                   step="1"
                   onChange={handleSliderChange}
