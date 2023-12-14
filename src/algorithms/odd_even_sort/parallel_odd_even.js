@@ -10,7 +10,7 @@ function oddEvenSort_Rows_Parallel(grid, index) {
     numWorkers = 1;
   }
   const chunkSize = Math.ceil(numRows / numWorkers);
-  console.log("Gia  " + grid.length + "  exo  " + chunkSize);
+  //console.log("Gia  " + grid.length + "  exo  " + chunkSize);
 
   const promises = [];
 

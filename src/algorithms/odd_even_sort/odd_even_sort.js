@@ -1,152 +1,59 @@
-function swap(nums, i, j) {
-  const temp = nums[i];
-  nums[i] = nums[j];
-  nums[j] = temp;
-}
+import {
+  oddEvenSort_Columns_Parallel,
+  oddEvenSort_Rows_Parallel,
+} from "../odd_even_sort/parallel_odd_even";
 
-function odd_Even_Sort(nums) {
-  let steps = 0;
-  while (steps < nums.length) {
-    steps++;
-    for (let i = 0; i < nums.length - 1; i += 2) {
-      if (nums[i] > nums[i + 1]) {
-        swap(nums, i, i + 1);
-      }
-    }
-
-    steps++;
-    for (let i = 1; i < nums.length - 1; i += 2) {
-      if (nums[i] > nums[i + 1]) {
-        swap(nums, i, i + 1);
-      }
-    }
-  }
-
-  //console.log("steeeeeeps R " + steps);
-  return nums;
-}
-
-function Reverse_odd_Even_Sort(nums) {
-  let steps = 0;
-
-  while (steps < nums.length) {
-    steps++;
-    for (let i = 0; i < nums.length - 1; i += 2) {
-      if (nums[i] < nums[i + 1]) {
-        swap(nums, i, i + 1);
-      }
-    }
-    steps++;
-    for (let i = 1; i < nums.length - 1; i += 2) {
-      if (nums[i] < nums[i + 1]) {
-        swap(nums, i, i + 1);
-      }
-    }
-  }
-  //console.log("steeeeeeps L " + steps);
-  return nums;
-}
-
-function isEven(number) {
-  return number % 2 === 0;
-}
-
-// Function to perform one iteration of odd-even transposition sort on a column
-function odd_even_cols(grid, columnIndex) {
-  var numRows = grid.length;
-  let steps = 0;
-  var swapped = false;
-
-  while (steps < grid.length) {
-    steps++;
-    for (let i = 0; i < numRows - 1; i += 2) {
-      if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
-        // Swap adjacent rows if they are out of order
-        var temp = grid[i][columnIndex];
-        grid[i][columnIndex] = grid[i + 1][columnIndex];
-        grid[i + 1][columnIndex] = temp;
-        swapped = true;
-      }
-    }
-
-    steps++;
-    for (let i = 1; i < numRows - 1; i += 2) {
-      if (grid[i][columnIndex] > grid[i + 1][columnIndex]) {
-        // Swap adjacent rows if they are out of order
-        let temp = grid[i][columnIndex];
-        grid[i][columnIndex] = grid[i + 1][columnIndex];
-        grid[i + 1][columnIndex] = temp;
-        swapped = true;
-      }
-    }
-  }
-
-  return swapped;
-}
-
-function createEmptySortedGrid(grid) {
-  const sortedGrid = new Array(grid.length)
-    .fill(0)
-    .map(() => new Array(grid.length).fill(0));
-  return sortedGrid;
-}
-
-// Function to sort all columns of the mesh using odd-even transposition sort
-function sortColumns(mesh) {
-  //console.log(mesh);
-  var numColumns = mesh[0].length;
-
-  var sorted = false;
-
-  while (!sorted) {
-    sorted = true;
-    for (var columnIndex = 0; columnIndex < numColumns; columnIndex++) {
-      sorted = !odd_even_cols(mesh, columnIndex) && sorted;
-    }
-  }
-
-  return mesh; // Return the sorted mesh
-}
-
-function oddEvenSort2D(mesh) {
-  //here will be the sorting
-  let numRows = mesh.length;
+async function shearsort(array) {
+  let numRows = array.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
   let evenPhases = Math.log(numRows) / Math.log(2); //columns
-  let Phases = oddPhases + evenPhases;
-  console.log(
-    "Sorting.....with " +
-      oddPhases +
-      " oddPhases and " +
-      evenPhases +
-      " evenPhases"
-  );
+  let Phases = Math.round(oddPhases + evenPhases);
 
-  for (let j = 0; j < Phases; j++) {
-    if (isEven(j)) {
-      for (let i = 0; i < numRows; i++) {
-        if (isEven(i)) {
-          odd_Even_Sort(mesh[i]);
-        } else {
-          Reverse_odd_Even_Sort(mesh[i]);
-        }
-      }
+  let sortedPhase;
+  let grid = array;
+  let rows_phase;
+  let columns_phase;
 
-      console.log("Phase " + (j + 1) + "COMPLETED");
+  for (let i = 0; i < Phases; i++) {
+    if (i % 2 === 0) {
+      // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
+      //tis grammes poy den einai sortarismenes
+      const dirtyRows = grid.filter(
+        (row) => row.includes(0) && row.includes(1)
+      );
+
+      const index = grid.indexOf(dirtyRows[0]);
+
+      rows_phase = await oddEvenSort_Rows_Parallel(dirtyRows, index);
+      sortedPhase = [...rows_phase];
     } else {
-      sortColumns(mesh);
-      console.log("Phase " + (j + 1) + "COMPLETED");
+      columns_phase = await oddEvenSort_Columns_Parallel(sortedPhase);
+
+      sortedPhase = [...columns_phase];
+    }
+
+    let dirtyIndex = 0;
+    let resultGrid = [];
+    for (let j = 0; j < grid.length; j++) {
+      if (grid[j].includes(0) && grid[j].includes(1)) {
+        // Αν η γραμμή είναι dirty, προσθέτει την ταξινομημένη dirty γραμμή
+        resultGrid.push(sortedPhase[dirtyIndex]);
+        dirtyIndex++;
+      } else {
+        // Αλλιώς, προσθέτει την clean γραμμή
+        resultGrid.push([...grid[j]]);
+      }
+    }
+
+    grid = [...resultGrid];
+
+    if (sortedPhase.length <= 1) {
+      //console.log("GRID IS SORTED ");
+      break;
     }
   }
 
-  return mesh;
+  return grid;
 }
 
-export {
-  odd_Even_Sort,
-  Reverse_odd_Even_Sort,
-  sortColumns,
-  swap,
-  isEven,
-  oddEvenSort2D,
-};
+export { shearsort };

@@ -7,10 +7,8 @@ function kWayUnshuffle2D(mesh) {
   // Calculate n^1/4
   const t = Math.pow(n, 1 / 4);
 
-  // Create a new mesh to store the unshuffled result
   const unshuffledMesh = new Array(n);
 
-  // Iterate through the rows of the mesh
   for (let i = 0; i < n; i++) {
     old_pos[i] = i;
     unshuffledMesh[i] = new Array(m);
@@ -21,11 +19,7 @@ function kWayUnshuffle2D(mesh) {
       new_pos[j] = newJ;
     }
   }
-  /*
-  console.log("Columns potitions shuffles: ");
-  for (let i = 0; i < old_pos.length; i++) {
-    console.log(old_pos[i] + " ---> " + new_pos[i]);
-  }*/
+
   return unshuffledMesh;
 }
 

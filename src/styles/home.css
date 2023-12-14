@@ -61,6 +61,19 @@
   margin-bottom: 10px;
 }
 
+#back{
+  position: fixed;
+  top: 100px;
+  left: 40px;
+  padding: 10px;
+  background-color: #404040;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+
+}
+
+
 #create {
   margin-bottom: 10px;
 }

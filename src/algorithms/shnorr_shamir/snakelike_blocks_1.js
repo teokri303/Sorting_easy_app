@@ -1,9 +1,4 @@
-import {
-  isEven,
-  odd_Even_Sort,
-  Reverse_odd_Even_Sort,
-  sortColumns,
-} from "../odd_even_sort/odd_even_sort";
+import { shearsort } from "../odd_even_sort/odd_even_sort";
 
 let gridSize = 0;
 let N = 0;
@@ -67,10 +62,11 @@ async function sortAndPopulateBlocks(grid) {
       }
 
       //edo ginetai i taksinomisi tou kathe block
-      await odd_Even_Sort(block);
+      let mid = await shearsort(block);
+      console.log("Block SORTED ");
 
-      blocks.push(block);
-      //console.log(blocks);
+      blocks.push(mid);
+      //console.log(mid);
     }
   }
 
@@ -79,6 +75,7 @@ async function sortAndPopulateBlocks(grid) {
 
 async function snakelikeBlocks(array) {
   let blocks = await sortAndPopulateBlocks(array);
+
   let sortedGrid = await createSortedGrid(blocks);
 
   //console.log(sortedGrid);

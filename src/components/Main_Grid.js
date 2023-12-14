@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { CircularProgress } from "@chakra-ui/react";
 
 import {
@@ -16,7 +16,7 @@ import {
 import { kWayUnshuffle2D } from "../algorithms/shnorr_shamir/kway_unshuffle_2";
 import { vertical_slices_first } from "../algorithms/shnorr_shamir/vertical_slices_A_5";
 import { vertical_slices_second } from "../algorithms/shnorr_shamir/vertical_slices_B_6";
-import { simple_snakelike } from "../algorithms/shnorr_shamir/simple_snakelike_7";
+import { shearsort } from "../algorithms/odd_even_sort/odd_even_sort";
 import { final_oddEven_steps } from "../algorithms/shnorr_shamir/less_steps_odd_even_8";
 import { generateLeema } from "../algorithms/arrays/generate_arrays";
 import {
@@ -35,7 +35,6 @@ import {
 } from "../styles/slider";
 
 export default function Test() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
   const [text, setText] = useState(0);
@@ -43,9 +42,9 @@ export default function Test() {
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
   const [choosealg, setChooseAlg] = useState(true);
-  const [sliderValue, setSliderValue] = useState(100);
+  const [sliderValue, setSliderValue] = useState(220);
   const [alg, setAlg] = useState("1");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -167,19 +166,19 @@ export default function Test() {
     console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
     addRecord(phase_4);
 
-    const phase_5 = vertical_slices_first(phase_4);
+    const phase_5 = await vertical_slices_first(phase_4);
     console.log("-!-!-!-! PHASE 5 VERTICAL SLICES 1 -DONE  \u2713");
     addRecord(phase_5);
 
-    const phase_6 = vertical_slices_second(phase_5);
+    const phase_6 = await vertical_slices_second(phase_5);
     console.log("-!-!-!-! PHASE 6 VERTICAL SLICES 2 -DONE  \u2713");
     addRecord(phase_6);
 
-    const phase_7 = simple_snakelike(phase_6);
+    const phase_7 = await shearsort(phase_6);
     console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
     addRecord(phase_7);
 
-    const phase_8 = final_oddEven_steps(phase_7);
+    const phase_8 = await final_oddEven_steps(phase_7);
     console.log(
       "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
     );
@@ -192,10 +191,8 @@ export default function Test() {
   //handling small thing functions
 
   const clear_states = () => {
-    setCurrentIndex(0);
     setArray(null);
     setText(0);
-    setRecord([]);
   };
 
   const handleSliderChange = (e) => {
@@ -204,23 +201,29 @@ export default function Test() {
 
   const handleButtonClick = (value) => {
     setAlg(value);
+    if (value === "SHEARSHORT") {
+      setSliderValue(256);
+    }
 
     setSortState(false);
   };
 
   function go_sort() {
-    //setLoading(true);
-
     if (alg === "SHEARSHORT") {
       sort_First_Alg();
     } else {
-      console.log("SS");
+      sort_Second_Alg();
     }
 
     setShowFirst(false);
     setShowSecond(true);
+  }
 
-    // setLoading(false);
+  function go_back() {
+    setShowSecond(false);
+    setShowFirst(true);
+    setRecord([]);
+    addRecord(array);
   }
 
   return (
@@ -314,9 +317,27 @@ export default function Test() {
       <div>
         {showSecond && (
           <div className="container">
-            <div className="mesh"></div>
+            <div>
+              <Button
+                id="back"
+                size="lg"
+                width="180px"
+                colorScheme="red"
+                leftIcon={<ArrowBackIcon />}
+                onClick={go_back}
+              >
+                Back to sort
+              </Button>
+            </div>
             <div>
               <Paginator items={record} />
+              {loading && (
+                <CircularProgress
+                  size="120px"
+                  color="green.400"
+                  isIndeterminate
+                ></CircularProgress>
+              )}
             </div>
           </div>
         )}
