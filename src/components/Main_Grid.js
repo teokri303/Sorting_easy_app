@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import { useEffect } from "react";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { CircularProgress } from "@chakra-ui/react";
@@ -42,7 +43,8 @@ export default function Test() {
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
   const [choosealg, setChooseAlg] = useState(true);
-  const [sliderValue, setSliderValue] = useState(220);
+  const [sliderValue, setSliderValue] = useState(400);
+  const [maxSliderValue, setMaxSliderValue] = useState(2000);
   const [alg, setAlg] = useState("1");
   const [loading, setLoading] = useState(false);
 
@@ -70,10 +72,13 @@ export default function Test() {
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
-    //console.log("ARRAY CREATED");
     addRecord(randomArray);
     setChooseAlg(false);
     setText(subtitles[0]);
+
+    if (alg != 1) {
+      setSortState(false);
+    }
   }
 
   //----------------------------------------------------ODD EVEN TRANSPOTITION-------------------------------------------------
@@ -197,15 +202,25 @@ export default function Test() {
 
   const handleSliderChange = (e) => {
     setSliderValue(parseInt(e.target.value, 10));
+
+    setSortState(true);
   };
 
   const handleButtonClick = (value) => {
     setAlg(value);
-    if (value === "SHEARSHORT") {
-      setSliderValue(256);
+    if (value === "SNOR_SHAMMIR") {
+      setMaxSliderValue(256);
+      setSliderValue(190);
+      if (array.length > 256) {
+        setSortState(true);
+      } else if (array.length <= 256) {
+        setSortState(false);
+      }
+    } else {
+      setMaxSliderValue(2000);
+      setSliderValue(1480);
+      setSortState(false);
     }
-
-    setSortState(false);
   };
 
   function go_sort() {
@@ -230,6 +245,9 @@ export default function Test() {
     <div>
       {showFirst && (
         <div>
+          <SliderLabel className="styled-text" htmlFor="slider">
+            Enter Mesh Dimensions and click CREATE:
+          </SliderLabel>
           <Button
             id="create"
             size="lg"
@@ -243,21 +261,24 @@ export default function Test() {
             <>
               <GlobalStyle />
               <SliderContainer>
-                <SliderLabel className="styled-text" htmlFor="slider">
-                  Enter Mesh Dimensions and click CREATE:
-                </SliderLabel>
+                <p>
+                  Current Slider Value: {sliderValue}X{sliderValue}
+                </p>
                 <StyledSlider
                   type="range"
                   id="slider"
                   name="slider"
                   min="2"
-                  max="2000"
+                  max={maxSliderValue}
                   value={sliderValue}
                   step="1"
                   onChange={handleSliderChange}
                 />
-                <p>Current Value: {sliderValue}</p>
+                <p>4 - {maxSliderValue}</p>
               </SliderContainer>
+              <p id="dimensions-up">
+                Mesh : {array.length} X {array.length}{" "}
+              </p>
             </>
           </div>
         </div>
@@ -272,20 +293,20 @@ export default function Test() {
                   <Button
                     size="lg"
                     width="200px"
-                    colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                    onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-                    isDisabled={choosealg}
-                  >
-                    SNOR SHAMMIR
-                  </Button>
-                  <Button
-                    size="lg"
-                    width="200px"
                     colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
                     onClick={() => handleButtonClick("SHEARSHORT")}
                     isDisabled={choosealg}
                   >
                     SHEARSHORT
+                  </Button>
+                  <Button
+                    size="lg"
+                    width="200px"
+                    colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                    onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                    isDisabled={choosealg}
+                  >
+                    SNOR SHAMMIR
                   </Button>
                 </VStack>
               </ChakraProvider>
@@ -293,16 +314,20 @@ export default function Test() {
 
             <div className="mesh">
               <MeshComponent grid={array} />
+              <div>
+                <p id="dimensions-right">{array.length}</p>
+                <p id="dimensions-down">{array.length}</p>
+              </div>
             </div>
 
             <div className="right-div">
               <ChakraProvider>
-                <Box textAlign="center" marginTop="40px">
+                <Box textAlign="center" marginTop="30px">
                   <Button
                     colorScheme="teal"
                     rightIcon={<ArrowForwardIcon />}
                     size="lg"
-                    width="300px"
+                    width="250px"
                     onClick={go_sort}
                     isDisabled={sortstate}
                   >
