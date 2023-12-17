@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { useEffect } from "react";
+import Modal from "react-modal";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { CircularProgress } from "@chakra-ui/react";
@@ -34,6 +34,7 @@ import {
   SliderLabel,
   StyledSlider,
 } from "../styles/slider";
+import { color } from "framer-motion";
 
 export default function Test() {
   const [array, setArray] = useState("null");
@@ -47,6 +48,8 @@ export default function Test() {
   const [maxSliderValue, setMaxSliderValue] = useState(2000);
   const [alg, setAlg] = useState("1");
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -210,15 +213,19 @@ export default function Test() {
     setAlg(value);
     if (value === "SNOR_SHAMMIR") {
       setMaxSliderValue(256);
-      setSliderValue(190);
+      setSliderValue(100);
       if (array.length > 256) {
         setSortState(true);
       } else if (array.length <= 256) {
         setSortState(false);
       }
+      if (showModal) {
+        setModalIsOpen(true);
+        setShowModal(false);
+      }
     } else {
       setMaxSliderValue(2000);
-      setSliderValue(1480);
+      setSliderValue(800);
       setSortState(false);
     }
   };
@@ -241,44 +248,61 @@ export default function Test() {
     addRecord(array);
   }
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   return (
     <div>
       {showFirst && (
         <div>
-          <SliderLabel className="styled-text" htmlFor="slider">
-            Enter Mesh Dimensions and click CREATE:
-          </SliderLabel>
-          <Button
-            id="create"
-            size="lg"
-            width="230px"
-            colorScheme="teal"
-            onClick={generateArray}
-          >
-            CREATE RANDOM MESH
-          </Button>
+          <div className="input">
+            <div className="left-top">
+              <SliderLabel className="styled-text" htmlFor="slider">
+                Enter Mesh Dimensions and click CREATE:
+              </SliderLabel>
+            </div>
+            <Button
+              id="create"
+              size="lg"
+              width="230px"
+              colorScheme="teal"
+              onClick={generateArray}
+            >
+              CREATE RANDOM MESH
+            </Button>
+          </div>
           <div className="button-container_b">
             <>
               <GlobalStyle />
               <SliderContainer>
-                <p>
-                  Current Slider Value: {sliderValue}X{sliderValue}
-                </p>
-                <StyledSlider
-                  type="range"
-                  id="slider"
-                  name="slider"
-                  min="2"
-                  max={maxSliderValue}
-                  value={sliderValue}
-                  step="1"
-                  onChange={handleSliderChange}
-                />
-                <p>4 - {maxSliderValue}</p>
+                <div className="flex">
+                  <p id="small"> Current Slider Value : </p>
+                  <p
+                    style={{
+                      color: "#e82323",
+                      "font-weight": "bold",
+                      "font-size": "20px",
+                    }}
+                  >
+                    {sliderValue}X{sliderValue}
+                  </p>
+                </div>
+                <div className="flex">
+                  <p>4-</p>
+                  <StyledSlider
+                    type="range"
+                    id="slider"
+                    name="slider"
+                    min="2"
+                    max={maxSliderValue}
+                    value={sliderValue}
+                    step="1"
+                    onChange={handleSliderChange}
+                  />
+                  <p>-{maxSliderValue}</p>
+                </div>
               </SliderContainer>
-              <p id="dimensions-up">
-                Mesh : {array.length} X {array.length}{" "}
-              </p>
             </>
           </div>
         </div>
@@ -306,18 +330,67 @@ export default function Test() {
                     onClick={() => handleButtonClick("SNOR_SHAMMIR")}
                     isDisabled={choosealg}
                   >
-                    SNOR SHAMMIR
+                    SCHNORR SHAMIR
                   </Button>
                 </VStack>
               </ChakraProvider>
+
+              <div>
+                <Modal
+                  isOpen={modalIsOpen}
+                  onRequestClose={closeModal}
+                  style={{
+                    content: {
+                      width: "350px",
+                      height: "500px",
+                      margin: "auto",
+                      textAlign: "center",
+                      borderRadius: "10px",
+                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+                      padding: "20px",
+                    },
+                    overlay: {
+                      backgroundColor: "rgba(0, 0, 0, 0.3)",
+                    },
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <button
+                      onClick={closeModal}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                  <h1 style={{ marginBottom: "15px" }}>
+                    Περιορισμοί του Αλγορίθμου Shnorr Shamir
+                  </h1>
+                  <p>
+                    Ο αλγόριθμος Schnorr Shamir εκτελείτε καλύτερα για ιδανικές
+                    διαστάστεις πλέγματος 16x16 , 256x256 και 65.536x65.536 κλπ
+                    . Για λόγους λειτουργικότητας και πρακτικοτητας αφου σκοπός
+                    της εφαρμογής ειναι η κατανόηση της λειτουργείας του
+                    αλγορίθμου προτείνουμε να εκτελεστεί μόνο σε διαστάσεις
+                    πλέγματος από 4 έως 256. Για την καλύτερη εμπειρία και
+                    ευκρινή αποτελέσματα, συνιστάται να χρησιμοποιείται με
+                    μέγιστες διαστάσεις 256x256.
+                  </p>
+                </Modal>
+              </div>
             </div>
 
             <div className="mesh">
               <MeshComponent grid={array} />
-              <div>
-                <p id="dimensions-right">{array.length}</p>
-                <p id="dimensions-down">{array.length}</p>
-              </div>
+              {!choosealg && (
+                <div>
+                  <p id="dimensions-right">{array.length}</p>
+                  <p id="dimensions-down">{array.length}</p>
+                </div>
+              )}
             </div>
 
             <div className="right-div">

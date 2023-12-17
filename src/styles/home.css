@@ -17,18 +17,20 @@
   flex-direction: column;
 }
 
+
+
 .navbar {
   box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
-  margin-bottom: 20px;
 }
 
 .container {
   position: relative;
+  
 }
 
 .mesh {
   position: absolute;
-  top: 100px;
+  top: 85px;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 
@@ -36,7 +38,7 @@
 
 #dimensions-right{
   position: absolute;
-  top: 100px;
+  top: 85px;
   left: 268px;
   transform: translateX(-50%) translateY(-50%);
   font-weight: bold;
@@ -46,7 +48,7 @@
 
 #dimensions-down{
   position: absolute;
-  top: 366px;
+  top: 346px;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   font-weight: bold;
@@ -56,7 +58,7 @@
 
 #dimensions-up{
   position: absolute;
-  top: 265px;
+  top: 220px;
   left: 47,5%;
 
   font-weight: bold;
@@ -65,9 +67,31 @@
 }
 
 
+.input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 20px auto;
+  
+}
+.flex{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+
+}
+
+.left-top {
+  position: absolute;
+  left: 200px;
+  top: 95px;
+}
+
 .left-div {
   position: absolute;
-  left: 50px;
+  left: 80px;
   top: 60px;
 }
 .right-div {
@@ -80,8 +104,6 @@
 .button-container_b {
   display: flex;
   justify-content: center;
-  
-  margin-top: 10px;
   margin-bottom: 40px;
 }
 
@@ -118,6 +140,16 @@
 #button-right {
   margin-right: 80px;
 }
+
+#red{
+  color: #e82323;
+  font-weight: bold;
+  font-size: 20px;
+}
+#small{
+  font-size: 14px;
+}
+
 
 @media (max-width: 600px) {
   .button-container {
