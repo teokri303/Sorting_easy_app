@@ -1,35 +1,48 @@
-import React from "react";
-
+import React, { useEffect, useRef } from "react";
 import "../styles/MeshComponent.css";
 
 const MeshComponent = ({ grid }) => {
-  if (!grid || !Array.isArray(grid) || grid.length === 0) {
-    return <div>No input yet.</div>;
-  }
+  const canvasRef = useRef(null);
 
-  const gridLength = grid.length;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
 
-  const boxSize = gridLength <= 60 ? 8 : 2;
-  const marginSize = gridLength <= 60 ? 1 : 0.1;
-  // Render the mesh
+    if (!grid || !Array.isArray(grid) || grid.length === 0) {
+      // Αν το grid δεν έχει οριστεί ή είναι ένα άδειο array, αποκρύπτουμε τον καμβά
+      canvas.style.display = "none";
+      return;
+    } else {
+      // Εάν υπάρχει grid, εμφανίζουμε ξανά τον καμβά
+      canvas.style.display = "block";
+    }
+
+    const canvasSize = 480;
+    const gridLength = grid.length;
+    const boxSize = canvasSize / Math.max(grid[0].length, gridLength);
+
+    // Set canvas size
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Render the mesh
+    grid.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        ctx.fillStyle = cell === 0 ? "black" : "white";
+        ctx.fillRect(cellIndex * boxSize, rowIndex * boxSize, boxSize, boxSize);
+      });
+    });
+  }, [grid]);
+
   return (
-    <div className="mesh">
-      {grid.map((row, rowIndex) => (
-        <div key={rowIndex} className="row">
-          {row.map((cell, cellIndex) => (
-            <div
-              key={cellIndex}
-              className={`box ${cell === 0 ? "black" : "white"}`}
-              style={{
-                width: `${boxSize}px`,
-                height: `${boxSize}px`,
-                margin: `${marginSize}px`,
-              }}
-            ></div>
-          ))}
-        </div>
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="mesh"
+      style={{ border: "1px solid #000", margin: "auto", display: "block" }}
+    ></canvas>
   );
 };
 

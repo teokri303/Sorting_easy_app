@@ -38,7 +38,7 @@ export default function Navbar() {
 
   return (
     <>
-      <Box px={10}>
+      <Box className="navbar" px={10}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -64,7 +64,7 @@ export default function Navbar() {
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
-            <Button variant={"solid"} colorScheme={"red"} size={"sm"} mr={4}>
+            <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4}>
               Your Feedback
             </Button>
           </Flex>
