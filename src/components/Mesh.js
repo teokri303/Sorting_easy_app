@@ -38,11 +38,13 @@ const MeshComponent = ({ grid }) => {
   }, [grid]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="mesh"
-      style={{ border: "1px solid #000", margin: "auto", display: "block" }}
-    ></canvas>
+    <div>
+      <canvas
+        ref={canvasRef}
+        className="mesh"
+        style={{ border: "1px solid #000", margin: "auto", display: "block" }}
+      ></canvas>
+    </div>
   );
 };
 

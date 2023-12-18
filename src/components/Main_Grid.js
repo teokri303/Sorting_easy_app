@@ -3,7 +3,7 @@ import React from "react";
 import Modal from "react-modal";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import { CircularProgress } from "@chakra-ui/react";
+import { Progress, CircularProgress } from "@chakra-ui/react";
 
 import {
   oddEvenSort_Columns_Parallel,
@@ -34,7 +34,6 @@ import {
   SliderLabel,
   StyledSlider,
 } from "../styles/slider";
-import { color } from "framer-motion";
 
 export default function Test() {
   const [array, setArray] = useState("null");
@@ -47,7 +46,7 @@ export default function Test() {
   const [sliderValue, setSliderValue] = useState(400);
   const [maxSliderValue, setMaxSliderValue] = useState(2000);
   const [alg, setAlg] = useState("1");
-  const [loading, setLoading] = useState(false);
+  const [loadingbar, setLoadingbar] = useState(false);
   const [showModal, setShowModal] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -97,6 +96,7 @@ export default function Test() {
     let grid = record[0];
     let rows_phase;
     let columns_phase;
+    setLoadingbar(true);
 
     console.time("WHOLE TIME");
     for (let i = 0; i < Phases; i++) {
@@ -143,6 +143,8 @@ export default function Test() {
     }
     console.timeEnd("WHOLE TIME");
 
+    setLoadingbar(false);
+
     return grid;
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
@@ -152,6 +154,8 @@ export default function Test() {
     addRecord(grid);
     //setArray([...grid]);
     calculate_vars(grid);
+
+    setLoadingbar(true);
 
     //phase 1
     const phase_1 = await snakelikeBlocks(grid);
@@ -194,6 +198,7 @@ export default function Test() {
 
     let final = reshape_to_given(phase_8);
     addRecord(final);
+    setLoadingbar(false);
   }
 
   //handling small thing functions
@@ -385,6 +390,7 @@ export default function Test() {
 
             <div className="mesh">
               <MeshComponent grid={array} />
+
               {!choosealg && (
                 <div>
                   <p id="dimensions-right">{array.length}</p>
@@ -429,12 +435,10 @@ export default function Test() {
             </div>
             <div>
               <Paginator items={record} />
-              {loading && (
-                <CircularProgress
-                  size="120px"
-                  color="green.400"
-                  isIndeterminate
-                ></CircularProgress>
+              {loadingbar && (
+                <div id="bar">
+                  <Progress size="md" colorScheme="teal" isIndeterminate />
+                </div>
               )}
             </div>
           </div>
