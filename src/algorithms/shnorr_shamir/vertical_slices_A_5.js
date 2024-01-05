@@ -2,15 +2,11 @@ import { shearsort } from "../odd_even_sort/odd_even_sort";
 
 let gridSize = 0;
 let N = 0;
-let blocks_Sum = 0;
-let elemenets_in_blocks = 0;
 let blockSize = 0;
 
 function calculate_vars(array) {
   gridSize = array.length;
   N = gridSize * gridSize;
-  blocks_Sum = Math.pow(N, 1 / 4);
-  elemenets_in_blocks = Math.pow(blocks_Sum, 3);
   blockSize = Math.pow(N, 1 / 8);
   blockSize = Math.pow(blockSize, 3);
 }

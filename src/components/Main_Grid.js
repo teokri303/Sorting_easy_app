@@ -1,9 +1,8 @@
 import { useState } from "react";
 import React from "react";
-import Modal from "react-modal";
 import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import { Progress, CircularProgress } from "@chakra-ui/react";
+import { Progress } from "@chakra-ui/react";
 
 import {
   oddEvenSort_Columns_Parallel,
@@ -76,7 +75,7 @@ export default function Test() {
     setChooseAlg(false);
     setText(subtitles[0]);
 
-    if (alg != 1) {
+    if (alg !== 1) {
       setSortState(false);
     }
   }
