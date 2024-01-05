@@ -47,8 +47,6 @@ export default function Test() {
   const [maxSliderValue, setMaxSliderValue] = useState(2000);
   const [alg, setAlg] = useState("1");
   const [loadingbar, setLoadingbar] = useState(false);
-  const [showModal, setShowModal] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -150,63 +148,71 @@ export default function Test() {
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   async function sort_Second_Alg() {
-    let grid = reshapeArray(array);
-    addRecord(grid);
+    let sorted = false;
+
+    let grid = [];
+    console.log(array.length);
+    if (array.length === 16 || array.length === 256) {
+      grid = array;
+    } else {
+      grid = reshapeArray(array);
+      addRecord(grid);
+    }
+
     //setArray([...grid]);
     calculate_vars(grid);
 
     setLoadingbar(true);
 
-    //phase 1
-    const phase_1 = await snakelikeBlocks(grid);
-    console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
-    addRecord(phase_1);
+    while (sorted === false) {
+      //phase 1
+      const phase_1 = await snakelikeBlocks(grid);
+      addRecord(phase_1);
 
-    //phase 2
-    const phase_2 = kWayUnshuffle2D(phase_1);
-    console.log("-!-!-!-! PHASE 2 SHUFFLE: -DONE  \u2713 ");
-    addRecord(phase_2);
+      //phase 2
+      const phase_2 = kWayUnshuffle2D(phase_1);
+      addRecord(phase_2);
 
-    //phase 3
-    const phase_3 = await snakelikeBlocks(phase_2);
-    console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
-    //console.log(phase_3);
-    addRecord(phase_3);
+      //phase 3
+      const phase_3 = await snakelikeBlocks(phase_2);
+      addRecord(phase_3);
 
-    //phase 4
-    const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
-    console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
-    addRecord(phase_4);
+      //phase 4
+      const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
+      addRecord(phase_4);
+      console.log(record);
 
-    const phase_5 = await vertical_slices_first(phase_4);
-    console.log("-!-!-!-! PHASE 5 VERTICAL SLICES 1 -DONE  \u2713");
-    addRecord(phase_5);
+      //phase 5
+      const phase_5 = await vertical_slices_first(phase_4);
+      addRecord(phase_5);
 
-    const phase_6 = await vertical_slices_second(phase_5);
-    console.log("-!-!-!-! PHASE 6 VERTICAL SLICES 2 -DONE  \u2713");
-    addRecord(phase_6);
+      //phase 6
+      const phase_6 = await vertical_slices_second(phase_5);
+      addRecord(phase_6);
 
-    const phase_7 = await shearsort(phase_6);
-    console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
-    addRecord(phase_7);
+      //phase 7
+      const phase_7 = await shearsort(phase_6);
+      addRecord(phase_7);
 
-    const phase_8 = await final_oddEven_steps(phase_7);
-    console.log(
-      "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
-    );
-    addRecord(phase_8);
+      //phase 8
+      const phase_8 = await final_oddEven_steps(phase_7);
+      addRecord(phase_8);
 
-    let final = reshape_to_given(phase_8);
-    addRecord(final);
+      if (array.length === 16 || array.length === 256) {
+        console.log("no need for reshape");
+      } else {
+        console.log("NEED FOR reshape");
+        let final = reshape_to_given(phase_8);
+        addRecord(final);
+      }
+
+      sorted = true;
+    }
+
     setLoadingbar(false);
   }
 
   //handling small thing functions
-
-  const clear_states = () => {
-    setArray(null);
-    setText(0);
-  };
 
   const handleSliderChange = (e) => {
     setSliderValue(parseInt(e.target.value, 10));
@@ -223,10 +229,6 @@ export default function Test() {
         setSortState(true);
       } else if (array.length <= 256) {
         setSortState(false);
-      }
-      if (showModal) {
-        setModalIsOpen(true);
-        setShowModal(false);
       }
     } else {
       setMaxSliderValue(2000);
@@ -252,10 +254,6 @@ export default function Test() {
     setRecord([]);
     addRecord(array);
   }
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
 
   return (
     <div>
@@ -286,8 +284,8 @@ export default function Test() {
                   <p
                     style={{
                       color: "#e82323",
-                      "font-weight": "bold",
-                      "font-size": "20px",
+                      fontWeight: "bold",
+                      fontSize: "20px",
                     }}
                   >
                     {sliderValue}X{sliderValue}
@@ -339,53 +337,6 @@ export default function Test() {
                   </Button>
                 </VStack>
               </ChakraProvider>
-
-              <div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onRequestClose={closeModal}
-                  style={{
-                    content: {
-                      width: "350px",
-                      height: "500px",
-                      margin: "auto",
-                      textAlign: "center",
-                      borderRadius: "10px",
-                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-                      padding: "20px",
-                    },
-                    overlay: {
-                      backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    },
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button
-                      onClick={closeModal}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      X
-                    </button>
-                  </div>
-                  <h1 style={{ marginBottom: "15px" }}>
-                    Περιορισμοί του Αλγορίθμου Shnorr Shamir
-                  </h1>
-                  <p>
-                    Ο αλγόριθμος Schnorr Shamir εκτελείτε καλύτερα για ιδανικές
-                    διαστάστεις πλέγματος 16x16 , 256x256 και 65.536x65.536 κλπ
-                    . Για λόγους λειτουργικότητας και πρακτικοτητας αφου σκοπός
-                    της εφαρμογής ειναι η κατανόηση της λειτουργείας του
-                    αλγορίθμου προτείνουμε να εκτελεστεί μόνο σε διαστάσεις
-                    πλέγματος από 4 έως 256. Για την καλύτερη εμπειρία και
-                    ευκρινή αποτελέσματα, συνιστάται να χρησιμοποιείται με
-                    μέγιστες διαστάσεις 256x256.
-                  </p>
-                </Modal>
-              </div>
             </div>
 
             <div className="mesh">

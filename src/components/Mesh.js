@@ -33,6 +33,17 @@ const MeshComponent = ({ grid }) => {
       row.forEach((cell, cellIndex) => {
         ctx.fillStyle = cell === 0 ? "black" : "white";
         ctx.fillRect(cellIndex * boxSize, rowIndex * boxSize, boxSize, boxSize);
+
+        if (grid.length <= 16) {
+          ctx.strokeStyle = "grey"; // Set the border color
+          ctx.lineWidth = 0.8; // Set the border width
+          ctx.strokeRect(
+            cellIndex * boxSize,
+            rowIndex * boxSize,
+            boxSize,
+            boxSize
+          );
+        }
       });
     });
   }, [grid]);

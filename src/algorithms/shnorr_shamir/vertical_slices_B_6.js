@@ -140,11 +140,9 @@ async function vertical_slices_second(grid) {
   calculate_vars(grid);
 
   if (gridSize === 16) {
-    console.log("Gridsize <= 16 so has no Phase_6. ");
     return grid;
   } else {
     let blocks = await vertical_slices_sort(grid);
-    console.log(blocks.length + " vertical slices");
     let sorted = await assemble_slices(blocks);
 
     //console.log(sorted);

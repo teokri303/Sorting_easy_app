@@ -10,6 +10,8 @@ const Paginator = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
 
+  console.log(items);
+
   const handlePageClick = (pageNumber) => {
     setCurrentIndex(pageNumber - 1);
     setSelectedPage(pageNumber);

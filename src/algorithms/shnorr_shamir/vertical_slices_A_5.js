@@ -87,7 +87,6 @@ async function vertical_slices_sort(grid) {
         }
 
         let mid = await shearsort(block);
-        console.log("vertical A block SORTED ");
 
         blocks.push(mid);
         //console.log(blocks);
@@ -125,14 +124,10 @@ async function vertical_slices_sort(grid) {
 }
 
 async function vertical_slices_first(grid) {
-  console.log(grid);
   calculate_vars(grid);
 
   let blocks = await vertical_slices_sort(grid);
-  console.log(blocks.length + " vertical slices");
   let sorted = await assemble_slices(blocks);
-
-  //console.log(sorted);
 
   return sorted;
 }
