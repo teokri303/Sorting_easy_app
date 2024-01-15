@@ -19,14 +19,19 @@
 
 
 
-.navbar {
-  box-shadow: 3px 3px 5px 0 rgba(0, 0, 0, 0.5);
-}
-
 .container {
   position: relative;
   
 }
+
+.left{
+  display: flex;
+}
+
+.flex{
+  display: flex;
+}
+
 
 .mesh {
   position: absolute;
@@ -68,7 +73,7 @@
 
 #bar{
   position: absolute;
-  top: 360px;
+  top: 650px;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   
@@ -108,23 +113,7 @@
   top: 95px;
 }
 
-.left-div {
-  position: absolute;
-  left: 80px;
-  top: 60px;
-}
-.right-div {
-  position: absolute;
-  right: 50px;
-  top: 120px;
-}
 
-
-.button-container_b {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-}
 
 
 

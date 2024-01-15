@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import "../styles/MeshComponent.css";
 
 const MeshComponent = ({ grid }) => {
   const canvasRef = useRef(null);
@@ -52,7 +51,6 @@ const MeshComponent = ({ grid }) => {
     <div>
       <canvas
         ref={canvasRef}
-        className="mesh"
         style={{ border: "1px solid #000", margin: "auto", display: "block" }}
       ></canvas>
     </div>

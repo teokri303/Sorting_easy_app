@@ -258,8 +258,8 @@ export default function Test() {
     <div>
       {showFirst && (
         <div>
-          <div className="input">
-            <div className="left-top">
+          <div>
+            <div>
               <SliderLabel className="styled-text" htmlFor="slider">
                 Enter Mesh Dimensions and click CREATE:
               </SliderLabel>
@@ -274,7 +274,7 @@ export default function Test() {
               CREATE RANDOM MESH
             </Button>
           </div>
-          <div className="button-container_b">
+          <div>
             <>
               <GlobalStyle />
               <SliderContainer>
@@ -307,67 +307,59 @@ export default function Test() {
               </SliderContainer>
             </>
           </div>
-        </div>
-      )}
-      <div>
-        {showFirst && (
-          <div className="container">
-            <div className="left-div">
-              <h1 className="styled-text">CHOOSE ALGORITHM USE. </h1>
-              <ChakraProvider>
-                <VStack spacing={4} align="center">
-                  <Button
-                    size="lg"
-                    width="200px"
-                    colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                    onClick={() => handleButtonClick("SHEARSHORT")}
-                    isDisabled={choosealg}
-                  >
-                    SHEARSHORT
-                  </Button>
-                  <Button
-                    size="lg"
-                    width="200px"
-                    colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                    onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-                    isDisabled={choosealg}
-                  >
-                    SCHNORR SHAMIR
-                  </Button>
-                </VStack>
-              </ChakraProvider>
-            </div>
 
-            <div className="mesh">
-              <MeshComponent grid={array} />
+          <div>
+            <div className="container">
+              <div>
+                <h1 className="styled-text">CHOOSE ALGORITHM USE. </h1>
+                <ChakraProvider>
+                  <VStack spacing={4} align="center">
+                    <Button
+                      size="lg"
+                      width="200px"
+                      colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                      onClick={() => handleButtonClick("SHEARSHORT")}
+                      isDisabled={choosealg}
+                    >
+                      SHEARSHORT
+                    </Button>
+                    <Button
+                      size="lg"
+                      width="200px"
+                      colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                      onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                      isDisabled={choosealg}
+                    >
+                      SCHNORR SHAMIR
+                    </Button>
+                  </VStack>
+                </ChakraProvider>
+              </div>
 
-              {!choosealg && (
-                <div>
-                  <p id="dimensions-right">{array.length}</p>
-                  <p id="dimensions-down">{array.length}</p>
-                </div>
-              )}
-            </div>
-
-            <div className="right-div">
-              <ChakraProvider>
-                <Box textAlign="center" marginTop="30px">
-                  <Button
-                    colorScheme="teal"
-                    rightIcon={<ArrowForwardIcon />}
-                    size="lg"
-                    width="250px"
-                    onClick={go_sort}
-                    isDisabled={sortstate}
-                  >
-                    SORT
-                  </Button>
-                </Box>
-              </ChakraProvider>
+              <div>
+                <ChakraProvider>
+                  <Box textAlign="center" marginTop="30px">
+                    <Button
+                      colorScheme="teal"
+                      rightIcon={<ArrowForwardIcon />}
+                      size="lg"
+                      width="250px"
+                      onClick={go_sort}
+                      isDisabled={sortstate}
+                    >
+                      SORT
+                    </Button>
+                  </Box>
+                </ChakraProvider>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+          <div className="flex">
+            <MeshComponent grid={array} />
+          </div>
+        </div>
+      )}
+
       <div>
         {showSecond && (
           <div className="container">

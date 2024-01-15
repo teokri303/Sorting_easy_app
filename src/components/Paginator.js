@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
-import { Progress } from "@chakra-ui/react";
 
 import MeshComponent from "./Mesh";
 import "../styles/Paginator.css"; // Δημιουργήστε ένα αρχείο CSS (π.χ., Paginator.css) και εισάγετέ το εδώ
@@ -37,7 +36,6 @@ const Paginator = ({ items }) => {
       <div className="mesh-container">
         <MeshComponent grid={items[currentIndex]} />
       </div>
-      <Progress size="xs" isIndeterminate />
 
       <div className="page-numbers-container">
         <div className="arrow-left" onClick={() => handleArrowClick("left")}>
