@@ -18,58 +18,24 @@
 }
 
 
-
 .container {
+  display: flex;
+  align-items: center;
+  height: 100vh; /* 100% του ύψους της οθόνης */
+}
+
+.container-paginator {
   position: relative;
   
 }
 
-.left{
-  display: flex;
-}
-
-.flex{
-  display: flex;
+.left-div, .right-div {
+  flex: 1; /* Κατανομή ισομερούς χώρου μεταξύ των δύο divs */
+  border: 0.2px solid #ccc; /* Προσθήκη περιγράμματος για καλύτερη ορατότητα */
 }
 
 
-.mesh {
-  position: absolute;
-  top: 85px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
 
-}
-
-#dimensions-right{
-  position: absolute;
-  top: 85px;
-  left: 268px;
-  transform: translateX(-50%) translateY(-50%);
-  font-weight: bold;
-  font-size: 20px;
-  color: #ffffff;
-}
-
-#dimensions-down{
-  position: absolute;
-  top: 346px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  font-weight: bold;
-  font-size: 20px;
-  color: #ffffff;
-}
-
-#dimensions-up{
-  position: absolute;
-  top: 220px;
-  left: 47,5%;
-
-  font-weight: bold;
-  font-size: 20px;
-  color: #ffffff;
-}
 
 #bar{
   position: absolute;

@@ -15,7 +15,7 @@ function Welcome_message() {
           <Image src="/media/logo.png" />
         </Box>
       </div>
-      <h1>Welcome to 2D Array Sorter</h1>
+      <h1>Welcome to 2D Array Parallel Sorting</h1>
       <div>
         <Button
           onClick={navigateToHome}

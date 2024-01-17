@@ -1,6 +1,16 @@
 import { useState } from "react";
 import React from "react";
-import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  VStack,
+  Button,
+  Image,
+  Box,
+  Select,
+  Text,
+  CSSReset,
+  extendTheme,
+} from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Progress } from "@chakra-ui/react";
 
@@ -41,11 +51,10 @@ export default function Test() {
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
-  const [choosealg, setChooseAlg] = useState(true);
-  const [sliderValue, setSliderValue] = useState(400);
-  const [maxSliderValue, setMaxSliderValue] = useState(2000);
-  const [alg, setAlg] = useState("1");
+  const [createstate, setCreateState] = useState(true);
+  const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -66,13 +75,12 @@ export default function Test() {
   ];
 
   function generateArray() {
-    const gridsize = sliderValue;
+    const gridsize = selectedValue;
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
     addRecord(randomArray);
-    setChooseAlg(false);
     setText(subtitles[0]);
 
     if (alg !== 1) {
@@ -213,26 +221,15 @@ export default function Test() {
 
   //handling small thing functions
 
-  const handleSliderChange = (e) => {
-    setSliderValue(parseInt(e.target.value, 10));
-
-    setSortState(true);
-  };
-
   const handleButtonClick = (value) => {
     setAlg(value);
     if (value === "SNOR_SHAMMIR") {
-      setMaxSliderValue(256);
-      setSliderValue(100);
-      if (array.length > 256) {
+      setOptions(options_SS);
+      if (selectedValue !== 256 || selectedValue !== 16) {
         setSortState(true);
-      } else if (array.length <= 256) {
-        setSortState(false);
       }
     } else {
-      setMaxSliderValue(2000);
-      setSliderValue(800);
-      setSortState(false);
+      setOptions(options_shear);
     }
   };
 
@@ -254,88 +251,116 @@ export default function Test() {
     addRecord(array);
   }
 
+  const handleSelectChange = (value) => {
+    if (createstate === true) {
+      setCreateState(false);
+    }
+    setSelectedValue(value);
+  };
+
+  const options_shear = [
+    10, 20, 30, 50, 75, 100, 200, 300, 500, 750, 1000, 1500,
+  ];
+  const options_SS = [16, 256];
+  const [options, setOptions] = useState(options_shear);
+
   return (
     <div>
       {showFirst && (
         <div>
-          <div>
-            <div>
-              <SliderLabel className="styled-text" htmlFor="slider">
-                Enter Mesh Dimensions and click CREATE:
-              </SliderLabel>
-            </div>
-            <Button
-              id="create"
-              size="lg"
-              width="230px"
-              colorScheme="teal"
-              onClick={generateArray}
-            >
-              CREATE RANDOM MESH
-            </Button>
-          </div>
-          <div>
-            <>
-              <GlobalStyle />
-              <SliderContainer>
-                <div className="flex">
-                  <p id="small"> Current Slider Value : </p>
-                  <p
-                    style={{
-                      color: "#e82323",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    {sliderValue}X{sliderValue}
-                  </p>
-                </div>
-                <div className="flex">
-                  <p>4-</p>
-                  <StyledSlider
-                    type="range"
-                    id="slider"
-                    name="slider"
-                    min="2"
-                    max={maxSliderValue}
-                    value={sliderValue}
-                    step="1"
-                    onChange={handleSliderChange}
-                  />
-                  <p>-{maxSliderValue}</p>
-                </div>
-              </SliderContainer>
-            </>
-          </div>
-
-          <div>
-            <div className="container">
+          <div className="container">
+            <div className="left-div">
               <div>
-                <h1 className="styled-text">CHOOSE ALGORITHM USE. </h1>
-                <ChakraProvider>
-                  <VStack spacing={4} align="center">
-                    <Button
-                      size="lg"
-                      width="200px"
-                      colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                      onClick={() => handleButtonClick("SHEARSHORT")}
-                      isDisabled={choosealg}
-                    >
-                      SHEARSHORT
-                    </Button>
-                    <Button
-                      size="lg"
-                      width="200px"
-                      colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                      onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-                      isDisabled={choosealg}
-                    >
-                      SCHNORR SHAMIR
-                    </Button>
-                  </VStack>
-                </ChakraProvider>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <Box boxSize="100px">
+                    <Image src="/media/onlylogo.png" />
+                  </Box>
+                </div>
+                <div>
+                  <SliderLabel className="styled-text" htmlFor="slider">
+                    Enter Mesh Dimensions and click CREATE:
+                  </SliderLabel>
+                </div>
+                <div>
+                  <ChakraProvider
+                    theme={extendTheme({
+                      styles: { global: { body: { bg: "gray.100" } } },
+                    })}
+                  >
+                    <CSSReset />
+                    <Box p={4} maxW="md" mx="auto">
+                      <Select
+                        placeholder="Select mesh dimensions"
+                        onChange={(e) => handleSelectChange(e.target.value)}
+                        textAlign="center"
+                      >
+                        {options.map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </Select>
+                    </Box>
+                  </ChakraProvider>
+                </div>
+                <Button
+                  id="create"
+                  size="lg"
+                  width="230px"
+                  colorScheme="teal"
+                  onClick={generateArray}
+                  isDisabled={createstate}
+                >
+                  CREATE RANDOM MESH
+                </Button>
               </div>
-
+              <div>
+                <div>
+                  <div>
+                    <h1 className="styled-text">CHOOSE ALGORITHM. </h1>
+                    <ChakraProvider>
+                      <VStack spacing={4} align="center">
+                        <Button
+                          size="lg"
+                          width="200px"
+                          colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                          onClick={() => handleButtonClick("SHEARSHORT")}
+                        >
+                          SHEARSHORT
+                        </Button>
+                        <Button
+                          size="lg"
+                          width="200px"
+                          colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                          onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                        >
+                          SCHNORR SHAMIR
+                        </Button>
+                      </VStack>
+                    </ChakraProvider>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="right-div">
+              <Box mt={4}>
+                <Text fontSize="lg" fontWeight="bold">
+                  Current array dimensions:
+                </Text>
+                <Text fontSize="xl">
+                  {array.length === 4
+                    ? "Καμία επιλογή"
+                    : array.length + " X " + array.length}
+                </Text>
+              </Box>
+              <MeshComponent grid={array} />
               <div>
                 <ChakraProvider>
                   <Box textAlign="center" marginTop="30px">
@@ -354,15 +379,12 @@ export default function Test() {
               </div>
             </div>
           </div>
-          <div className="flex">
-            <MeshComponent grid={array} />
-          </div>
         </div>
       )}
 
       <div>
         {showSecond && (
-          <div className="container">
+          <div className="container-paginator">
             <div>
               <Button
                 id="back"
