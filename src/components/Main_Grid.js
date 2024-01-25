@@ -37,17 +37,11 @@ import {
 import MeshComponent from "./Mesh";
 import Paginator from "./Paginator";
 import TextDisplay from "./phase_expl";
-import {
-  GlobalStyle,
-  SliderContainer,
-  SliderLabel,
-  StyledSlider,
-} from "../styles/slider";
+import { SliderLabel } from "../styles/slider";
 
 export default function Test() {
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
-  const [text, setText] = useState(0);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
@@ -60,20 +54,6 @@ export default function Test() {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
 
-  const subtitles = [
-    "RANDOM ARRAY",
-    "NORMALIZATION TO OPTIMAL STATE (16-256) IF IT WASNT",
-    "PHASE 1 SNAKELIKE BLOCKS",
-    "PHASE 2 K-WAY UNSHUFFLE",
-    "PHASE 3 SNAKELIKE BLOCKS",
-    "PHASE 4 SHORT COLUMNS",
-    "PHASE 5 VERTICAL SLICES SORT (1-2...)",
-    "PHASE 6 VERTICAL SLICES SORT (2-3...)",
-    "PHASE 7 ROWS SORT SNAKELIKE",
-    "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
-    "RESHAPE TO GIVEN DIMENTIONS  FINAL SORTED ARRAY ",
-  ];
-
   function generateArray() {
     const gridsize = selectedValue;
 
@@ -81,7 +61,6 @@ export default function Test() {
     setRecord([]);
     setArray([...randomArray]);
     addRecord(randomArray);
-    setText(subtitles[0]);
 
     if (alg !== 1) {
       setSortState(false);
@@ -225,11 +204,13 @@ export default function Test() {
     setAlg(value);
     if (value === "SNOR_SHAMMIR") {
       setOptions(options_SS);
+      setAlgText(SS_text);
       if (selectedValue !== 256 || selectedValue !== 16) {
         setSortState(true);
       }
     } else {
       setOptions(options_shear);
+      setAlgText(shear_text);
     }
   };
 
@@ -263,6 +244,12 @@ export default function Test() {
   ];
   const options_SS = [16, 256];
   const [options, setOptions] = useState(options_shear);
+
+  const shear_text =
+    "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.";
+  const SS_text =
+    "The parallel sorting algorithm of Schnorr and Shamir for large N values. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.";
+  const [alg_text, setAlgText] = useState(shear_text);
 
   return (
     <div>
@@ -346,6 +333,7 @@ export default function Test() {
                       </VStack>
                     </ChakraProvider>
                   </div>
+                  <TextDisplay text={alg_text} />
                 </div>
               </div>
             </div>
@@ -401,7 +389,7 @@ export default function Test() {
               <Paginator items={record} />
               {loadingbar && (
                 <div id="bar">
-                  <Progress size="md" colorScheme="teal" isIndeterminate />
+                  <Progress height="34px" colorScheme="teal" isIndeterminate />
                 </div>
               )}
             </div>
