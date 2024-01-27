@@ -5,13 +5,13 @@ import TextDisplay from "./phase_expl";
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 
 import MeshComponent from "./Mesh";
-import "../styles/Paginator.css"; // Δημιουργήστε ένα αρχείο CSS (π.χ., Paginator.css) και εισάγετέ το εδώ
+import "../styles/Paginator.css";
 
-const Paginator = ({ items }) => {
+const Paginator = ({ items, algorithm }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
 
-  const subtitles = [
+  const ss_subs = [
     "RANDOM ARRAY",
     "PHASE 1 SNAKELIKE BLOCKS",
     "PHASE 2 K-WAY UNSHUFFLE",
@@ -23,23 +23,57 @@ const Paginator = ({ items }) => {
     "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
   ];
 
-  const [text, setText] = useState(subtitles[0]);
+  const shearsort_subs = [
+    "RANDOM ARRAY",
+    "PARALLEL SORTING ROWS SNAKELIKE ORDER",
+    "PARALLEL SORTING COLUMNS",
+  ];
+
+  const [text, setText] = useState(shearsort_subs[0]);
 
   const handlePageClick = (pageNumber) => {
     setCurrentIndex(pageNumber - 1);
     setSelectedPage(pageNumber);
-    setText(subtitles[pageNumber - 1]);
+    if (algorithm === "SHEARSHORT") {
+      if (pageNumber % 2 === 0) {
+        setText(shearsort_subs[1]);
+      } else if (pageNumber === 1) {
+        setText(shearsort_subs[0]);
+      } else {
+        setText(shearsort_subs[2]);
+      }
+    } else {
+      setText(ss_subs[pageNumber - 1]);
+    }
   };
 
   const handleArrowClick = (direction) => {
     if (direction === "right" && currentIndex < items.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setSelectedPage(selectedPage + 1);
-      setText(subtitles[currentIndex + 1]);
+      if (algorithm === "SHEARSHORT") {
+        if (currentIndex % 2 === 0) {
+          setText(shearsort_subs[1]);
+        } else {
+          setText(shearsort_subs[2]);
+        }
+      } else {
+        setText(ss_subs[currentIndex + 1]);
+      }
     } else if (direction === "left" && currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setSelectedPage(selectedPage - 1);
-      setText(subtitles[currentIndex - 1]);
+      if (algorithm === "SHEARSHORT") {
+        if (currentIndex % 2 === 0) {
+          setText(shearsort_subs[1]);
+        } else if (currentIndex === 1) {
+          setText(shearsort_subs[0]);
+        } else {
+          setText(shearsort_subs[2]);
+        }
+      } else {
+        setText(ss_subs[currentIndex - 1]);
+      }
     }
   };
 

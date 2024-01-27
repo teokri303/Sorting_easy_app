@@ -333,7 +333,15 @@ export default function Test() {
                       </VStack>
                     </ChakraProvider>
                   </div>
-                  <TextDisplay text={alg_text} />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <TextDisplay text={alg_text} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -386,7 +394,7 @@ export default function Test() {
               </Button>
             </div>
             <div>
-              <Paginator items={record} />
+              <Paginator items={record} algorithm={alg} />
               {loadingbar && (
                 <div id="bar">
                   <Progress height="34px" colorScheme="teal" isIndeterminate />
