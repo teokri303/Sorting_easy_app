@@ -38,6 +38,7 @@ import MeshComponent from "./Mesh";
 import Paginator from "./Paginator";
 import TextDisplay from "./phase_expl";
 import { SliderLabel } from "../styles/slider";
+import CanvasMesh from "./Input_canvas";
 
 export default function Test() {
   const [array, setArray] = useState("null");
@@ -374,6 +375,9 @@ export default function Test() {
                 </ChakraProvider>
               </div>
             </div>
+          </div>
+          <div>
+            <CanvasMesh gridSize={10} />
           </div>
         </div>
       )}
