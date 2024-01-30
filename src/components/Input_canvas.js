@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { Button } from "@chakra-ui/react";
 
-const CanvasMesh = () => {
+const CanvasMesh = ({ onPrintValues }) => {
   const rows = 16;
   const cols = 16;
 
-  const initialGrid = Array.from({ length: rows }, () => Array(cols).fill(0));
+  const initialGrid = Array.from({ length: rows }, () => Array(cols).fill(1));
   const [grid, setGrid] = useState(initialGrid);
 
   const toggleColor = (row, col) => {
@@ -18,7 +19,7 @@ const CanvasMesh = () => {
   };
 
   const printValues = () => {
-    console.log(grid);
+    onPrintValues(grid);
   };
 
   return (
@@ -26,16 +27,18 @@ const CanvasMesh = () => {
       <style>
         {`
           .cont {
+        
             width: 480px;
             height: 480px;
             display: flex;
             flex-wrap: wrap;
+            
           }
 
           .cell {
             width: 30px;
             height: 30px;
-            border: 1px solid #000;
+            border: 0.8px solid #C0C0C0;
             box-sizing: border-box;
           }
 
@@ -48,19 +51,28 @@ const CanvasMesh = () => {
           }
         `}
       </style>
+
       <div className="cont">
         {grid.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className={`cell ${cell === 0 ? "white" : "black"}`}
+              className={`cell ${cell === 1 ? "white" : "black"}`}
               onClick={() => toggleColor(rowIndex, colIndex)}
             />
           ))
         )}
       </div>
       <button onClick={resetGrid}>Επαναφορά</button>
-      <button onClick={printValues}>Εκτύπωση Τιμών</button>
+      <Button
+        size="lg"
+        width="200px"
+        margin="10px"
+        marginBottom="20px"
+        onClick={printValues}
+      >
+        Input Mesh Ready
+      </Button>
     </div>
   );
 };

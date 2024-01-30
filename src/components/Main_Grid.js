@@ -2,7 +2,6 @@ import { useState } from "react";
 import React from "react";
 import {
   ChakraProvider,
-  VStack,
   Button,
   Image,
   Box,
@@ -45,8 +44,9 @@ export default function Test() {
   const [record, setRecord] = useState([]);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
+  const [showmyMesh, setShowmyMesh] = useState(false);
   const [sortstate, setSortState] = useState(true);
-  const [createstate, setCreateState] = useState(true);
+  const [random_or_own, setRandom_Own] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
@@ -55,8 +55,8 @@ export default function Test() {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
 
-  function generateArray() {
-    const gridsize = selectedValue;
+  function generateArray(value) {
+    const gridsize = value;
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
@@ -212,6 +212,7 @@ export default function Test() {
     } else {
       setOptions(options_shear);
       setAlgText(shear_text);
+      setSortState(false);
     }
   };
 
@@ -234,10 +235,27 @@ export default function Test() {
   }
 
   const handleSelectChange = (value) => {
-    if (createstate === true) {
-      setCreateState(false);
-    }
     setSelectedValue(value);
+    generateArray(value);
+  };
+
+  function your_own() {
+    setRandom_Own("own");
+    setSortState(true);
+    setRecord([]);
+  }
+
+  function random_mesh() {
+    setRandom_Own("random");
+    generateArray(16);
+  }
+
+  const handlePrintValues = (grid) => {
+    console.log(grid);
+    setRecord([]);
+    setArray([...grid]);
+    addRecord(grid);
+    setSortState(false);
   };
 
   const options_shear = [
@@ -273,7 +291,7 @@ export default function Test() {
                 </div>
                 <div>
                   <SliderLabel className="styled-text" htmlFor="slider">
-                    Enter Mesh Dimensions and click CREATE:
+                    Select Mesh Dimensions :
                   </SliderLabel>
                 </div>
                 <div>
@@ -285,9 +303,10 @@ export default function Test() {
                     <CSSReset />
                     <Box p={4} maxW="md" mx="auto">
                       <Select
-                        placeholder="Select mesh dimensions"
+                        placeholder="Random mesh dimensions"
                         onChange={(e) => handleSelectChange(e.target.value)}
                         textAlign="center"
+                        isDisabled={random_or_own === "own"}
                       >
                         {options.map((value) => (
                           <option key={value} value={value}>
@@ -298,41 +317,55 @@ export default function Test() {
                     </Box>
                   </ChakraProvider>
                 </div>
-                <Button
-                  id="create"
-                  size="lg"
-                  width="230px"
-                  colorScheme="teal"
-                  onClick={generateArray}
-                  isDisabled={createstate}
-                >
-                  CREATE RANDOM MESH
-                </Button>
+
+                <div>
+                  <Button
+                    size="lg"
+                    width="200px"
+                    margin="10px"
+                    marginBottom="20px"
+                    colorScheme={random_or_own === "random" ? "teal" : "gray"}
+                    onClick={() => random_mesh()}
+                  >
+                    Random Mesh
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    width="200px"
+                    margin="10px"
+                    marginBottom="20px"
+                    colorScheme={random_or_own === "own" ? "teal" : "gray"}
+                    onClick={() => your_own()}
+                  >
+                    Your own Mesh
+                  </Button>
+                </div>
               </div>
               <div>
                 <div>
                   <div>
                     <h1 className="styled-text">CHOOSE ALGORITHM. </h1>
-                    <ChakraProvider>
-                      <VStack spacing={4} align="center">
-                        <Button
-                          size="lg"
-                          width="200px"
-                          colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                          onClick={() => handleButtonClick("SHEARSHORT")}
-                        >
-                          SHEARSHORT
-                        </Button>
-                        <Button
-                          size="lg"
-                          width="200px"
-                          colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                          onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-                        >
-                          SCHNORR SHAMIR
-                        </Button>
-                      </VStack>
-                    </ChakraProvider>
+                    <div>
+                      <Button
+                        size="lg"
+                        width="200px"
+                        margin="10px"
+                        colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                        onClick={() => handleButtonClick("SHEARSHORT")}
+                      >
+                        SHEARSHORT
+                      </Button>
+                      <Button
+                        size="lg"
+                        width="200px"
+                        margin="10px"
+                        colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                        onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                      >
+                        SCHNORR SHAMIR
+                      </Button>
+                    </div>
                   </div>
                   <div
                     style={{
@@ -357,7 +390,11 @@ export default function Test() {
                     : array.length + " X " + array.length}
                 </Text>
               </Box>
-              <MeshComponent grid={array} />
+              {random_or_own === "random" && <MeshComponent grid={array} />}
+              {random_or_own === "own" && (
+                <CanvasMesh onPrintValues={handlePrintValues} />
+              )}
+
               <div>
                 <ChakraProvider>
                   <Box textAlign="center" marginTop="30px">
@@ -375,9 +412,6 @@ export default function Test() {
                 </ChakraProvider>
               </div>
             </div>
-          </div>
-          <div>
-            <CanvasMesh gridSize={10} />
           </div>
         </div>
       )}
