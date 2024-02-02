@@ -63,7 +63,7 @@ async function sortAndPopulateBlocks(grid) {
 
       //edo ginetai i taksinomisi tou kathe block
       let mid = await shearsort(block);
-      console.log("Block SORTED ");
+      //console.log("Block SORTED ");
 
       blocks.push(mid);
       //console.log(mid);

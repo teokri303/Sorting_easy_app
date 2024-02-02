@@ -88,6 +88,7 @@ export default function Test() {
       if (i % 2 === 0) {
         // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
         //tis grammes poy den einai sortarismenes
+
         const dirtyRows = grid.filter(
           (row) => row.includes(0) && row.includes(1)
         );
@@ -207,12 +208,18 @@ export default function Test() {
       setOptions(options_SS);
       setAlgText(SS_text);
       if (selectedValue !== 256 || selectedValue !== 16) {
-        setSortState(true);
+        if (random_or_own === "own") {
+        } else {
+          setSortState(false);
+        }
       }
     } else {
       setOptions(options_shear);
       setAlgText(shear_text);
-      setSortState(false);
+      if (random_or_own === "own") {
+      } else {
+        setSortState(false);
+      }
     }
   };
 
@@ -228,10 +235,17 @@ export default function Test() {
   }
 
   function go_back() {
-    setShowSecond(false);
-    setShowFirst(true);
-    setRecord([]);
-    addRecord(array);
+    if (random_or_own === "own") {
+      setShowSecond(false);
+      setShowFirst(true);
+      setRecord([]);
+      setSortState(true);
+    } else {
+      setShowSecond(false);
+      setShowFirst(true);
+      setRecord([]);
+      addRecord(array);
+    }
   }
 
   const handleSelectChange = (value) => {
@@ -251,7 +265,6 @@ export default function Test() {
   }
 
   const handlePrintValues = (grid) => {
-    console.log(grid);
     setRecord([]);
     setArray([...grid]);
     addRecord(grid);
@@ -392,7 +405,10 @@ export default function Test() {
               </Box>
               {random_or_own === "random" && <MeshComponent grid={array} />}
               {random_or_own === "own" && (
-                <CanvasMesh onPrintValues={handlePrintValues} />
+                <CanvasMesh
+                  onPrintValues={handlePrintValues}
+                  onResetGrid={go_back}
+                />
               )}
 
               <div>

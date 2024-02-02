@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "@chakra-ui/react";
 
-const CanvasMesh = ({ onPrintValues }) => {
+const CanvasMesh = ({ onPrintValues, onResetGrid }) => {
   const rows = 16;
   const cols = 16;
 
   const initialGrid = Array.from({ length: rows }, () => Array(cols).fill(1));
   const [grid, setGrid] = useState(initialGrid);
+  const [input_ready, setInputReady] = useState(true);
+  const [sorted, setSorted] = useState(false);
 
   const toggleColor = (row, col) => {
     const newGrid = [...grid];
@@ -15,10 +17,19 @@ const CanvasMesh = ({ onPrintValues }) => {
   };
 
   const resetGrid = () => {
+    onResetGrid();
     setGrid(initialGrid);
+    setSorted(false);
+    setInputReady(true);
   };
 
   const printValues = () => {
+    if (input_ready === false && sorted === false) {
+      setInputReady(true);
+    } else {
+      setInputReady(false);
+    }
+    setSorted(true);
     onPrintValues(grid);
   };
 
@@ -63,12 +74,21 @@ const CanvasMesh = ({ onPrintValues }) => {
           ))
         )}
       </div>
-      <button onClick={resetGrid}>Επαναφορά</button>
+      <Button
+        size="lg"
+        width="110px"
+        margin="10px"
+        marginBottom="20px"
+        onClick={resetGrid}
+      >
+        Reset Grid
+      </Button>
       <Button
         size="lg"
         width="200px"
         margin="10px"
         marginBottom="20px"
+        colorScheme={input_ready === false ? "teal" : "gray"}
         onClick={printValues}
       >
         Input Mesh Ready
