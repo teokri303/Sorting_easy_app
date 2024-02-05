@@ -170,17 +170,22 @@ export default function Test() {
       const phase_1 = await snakelikeBlocks(grid, random_or_own);
       addRecord(phase_1);
 
+      if (isSnakelikeOrder(phase_1)) {
+        break;
+      }
+
       //phase 2
       const phase_2 = kWayUnshuffle2D(phase_1);
       addRecord(phase_2);
 
-      check_break(phase_1, phase_2);
-
+      if (isSnakelikeOrder(phase_2)) {
+        break;
+      }
       //phase 3
       const phase_3 = await snakelikeBlocks(phase_2, random_or_own);
       addRecord(phase_3);
 
-      if (check_break(phase_2, phase_3)) {
+      if (isSnakelikeOrder(phase_3)) {
         break;
       }
 
@@ -188,7 +193,7 @@ export default function Test() {
       const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
       addRecord(phase_4);
 
-      if (check_break(phase_3, phase_4)) {
+      if (isSnakelikeOrder(phase_4)) {
         break;
       }
 
@@ -196,29 +201,29 @@ export default function Test() {
       const phase_5 = await vertical_slices_first(phase_4);
       addRecord(phase_5);
 
-      /*if (check_break(phase_4, phase_5)) {
+      if (isSnakelikeOrder(phase_5)) {
         break;
-      }*/
+      }
 
       //phase 6
       const phase_6 = await vertical_slices_second(phase_5);
       addRecord(phase_6);
 
-      /*if (check_break(phase_5, phase_6)) {
+      if (isSnakelikeOrder(phase_6)) {
         break;
-      }*/
+      }
 
       //phase 7
       const phase_7 = await shearsort(phase_6);
       addRecord(phase_7);
 
-      if (check_break(phase_6, phase_7)) {
+      if (isSnakelikeOrder(phase_7)) {
         break;
       }
 
       //phase 8
       const phase_8 = await final_oddEven_steps(phase_7);
-      if (check_break(phase_7, phase_8)) {
+      if (isSnakelikeOrder(phase_8)) {
         break;
       }
       addRecord(phase_8);
@@ -262,12 +267,18 @@ export default function Test() {
     return true;
   }
 
-  function check_break(arr1, arr2) {
-    const areArraysEqual = are2DArraysEqual(arr1, arr2);
-    if (areArraysEqual) {
-      console.log("Οι πίνακες είναι ίδιοι.");
-      return true;
+  function isSnakelikeOrder(matrix) {
+    function isSorted(arr) {
+      return arr.slice(1).every((item, i) => item >= arr[i]);
     }
+
+    // Αποθήκευση των γραμμών ως flat πίνακα
+    const flattenedArray = matrix.flatMap((row, index) =>
+      index % 2 === 0 ? row : row.reverse()
+    );
+
+    // Ελέγχουμε αν ο flat πίνακας είναι ταξινομημένος
+    return isSorted(flattenedArray);
   }
 
   const handleButtonClick = (value) => {
