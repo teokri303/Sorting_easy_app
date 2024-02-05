@@ -3,7 +3,30 @@ import {
   oddEvenSort_Rows_Parallel,
 } from "../odd_even_sort/parallel_odd_even";
 
-async function shearsort(array) {
+function are2DArraysEqual(arr1, arr2) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    const innerArr1 = arr1[i];
+    const innerArr2 = arr2[i];
+
+    if (innerArr1.length !== innerArr2.length) {
+      return false;
+    }
+
+    for (let j = 0; j < innerArr1.length; j++) {
+      if (innerArr1[j] !== innerArr2[j]) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+async function shearsort(array, random_or_own) {
   let numRows = array.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
   let evenPhases = Math.log(numRows) / Math.log(2); //columns
@@ -18,9 +41,13 @@ async function shearsort(array) {
     if (i % 2 === 0) {
       // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
       //tis grammes poy den einai sortarismenes
-      const dirtyRows = grid.filter(
-        (row) => row.includes(0) && row.includes(1)
-      );
+      let dirtyRows;
+
+      if (random_or_own === "random") {
+        dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
+      } else {
+        dirtyRows = [...grid];
+      }
 
       const index = grid.indexOf(dirtyRows[0]);
 
@@ -45,7 +72,18 @@ async function shearsort(array) {
       }
     }
 
-    grid = [...resultGrid];
+    if (random_or_own === "random") {
+      grid = [...resultGrid];
+    } else {
+      const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
+
+      if (areArraysEqual && i !== 0) {
+        //console.log("Οι πίνακες είναι ίδιοι.");
+        break;
+      }
+
+      grid = [...sortedPhase];
+    }
 
     if (sortedPhase.length <= 1) {
       //console.log("GRID IS SORTED ");

@@ -44,7 +44,6 @@ export default function Test() {
   const [record, setRecord] = useState([]);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
-  const [showmyMesh, setShowmyMesh] = useState(false);
   const [sortstate, setSortState] = useState(true);
   const [random_or_own, setRandom_Own] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
@@ -75,7 +74,7 @@ export default function Test() {
     let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
     let evenPhases = Math.log(numRows) / Math.log(2); //columns
     let Phases = Math.round(oddPhases + evenPhases);
-    console.log("PHASESSSSS : " + Phases);
+    console.log("PHASES : " + Phases);
 
     let sortedPhase;
     let grid = record[0];
@@ -89,9 +88,13 @@ export default function Test() {
         // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
         //tis grammes poy den einai sortarismenes
 
-        const dirtyRows = grid.filter(
-          (row) => row.includes(0) && row.includes(1)
-        );
+        let dirtyRows;
+
+        if (random_or_own === "random") {
+          dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
+        } else {
+          dirtyRows = [...grid];
+        }
 
         const index = grid.indexOf(dirtyRows[0]);
 
@@ -116,9 +119,20 @@ export default function Test() {
         }
       }
 
-      grid = [...resultGrid];
+      if (random_or_own === "random") {
+        grid = [...resultGrid];
+      } else {
+        const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
 
-      console.log("Phase  " + (i + 1) + " COMPLETED");
+        if (areArraysEqual && i !== 0) {
+          //console.log("Οι πίνακες είναι ίδιοι.");
+          break;
+        }
+
+        grid = [...sortedPhase];
+      }
+
+      //console.log("Phase  " + (i + 1) + " COMPLETED");
 
       addRecord(grid);
 
@@ -147,43 +161,66 @@ export default function Test() {
       addRecord(grid);
     }
 
-    //setArray([...grid]);
     calculate_vars(grid);
 
     setLoadingbar(true);
 
     while (sorted === false) {
       //phase 1
-      const phase_1 = await snakelikeBlocks(grid);
+      const phase_1 = await snakelikeBlocks(grid, random_or_own);
       addRecord(phase_1);
 
       //phase 2
       const phase_2 = kWayUnshuffle2D(phase_1);
       addRecord(phase_2);
 
+      check_break(phase_1, phase_2);
+
       //phase 3
-      const phase_3 = await snakelikeBlocks(phase_2);
+      const phase_3 = await snakelikeBlocks(phase_2, random_or_own);
       addRecord(phase_3);
+
+      if (check_break(phase_2, phase_3)) {
+        break;
+      }
 
       //phase 4
       const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
       addRecord(phase_4);
-      console.log(record);
+
+      if (check_break(phase_3, phase_4)) {
+        break;
+      }
 
       //phase 5
       const phase_5 = await vertical_slices_first(phase_4);
       addRecord(phase_5);
 
+      /*if (check_break(phase_4, phase_5)) {
+        break;
+      }*/
+
       //phase 6
       const phase_6 = await vertical_slices_second(phase_5);
       addRecord(phase_6);
+
+      /*if (check_break(phase_5, phase_6)) {
+        break;
+      }*/
 
       //phase 7
       const phase_7 = await shearsort(phase_6);
       addRecord(phase_7);
 
+      if (check_break(phase_6, phase_7)) {
+        break;
+      }
+
       //phase 8
       const phase_8 = await final_oddEven_steps(phase_7);
+      if (check_break(phase_7, phase_8)) {
+        break;
+      }
       addRecord(phase_8);
 
       if (array.length === 16 || array.length === 256) {
@@ -201,6 +238,37 @@ export default function Test() {
   }
 
   //handling small thing functions
+
+  function are2DArraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+
+    for (let i = 0; i < arr1.length; i++) {
+      const innerArr1 = arr1[i];
+      const innerArr2 = arr2[i];
+
+      if (innerArr1.length !== innerArr2.length) {
+        return false;
+      }
+
+      for (let j = 0; j < innerArr1.length; j++) {
+        if (innerArr1[j] !== innerArr2[j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function check_break(arr1, arr2) {
+    const areArraysEqual = are2DArraysEqual(arr1, arr2);
+    if (areArraysEqual) {
+      console.log("Οι πίνακες είναι ίδιοι.");
+      return true;
+    }
+  }
 
   const handleButtonClick = (value) => {
     setAlg(value);
