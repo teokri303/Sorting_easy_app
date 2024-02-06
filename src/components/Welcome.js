@@ -15,12 +15,8 @@ function Welcome_message() {
           <Image src="/media/logo.png" />
         </Box>
       </div>
-      <h1>Welcome to 2D Array Sorter</h1>
+      <h1>Welcome to 2D Array Parallel Sorting</h1>
       <div>
-        <p className="introduction">
-          Here, you can learn about 2D arrays and sort them to your heart's
-          content!
-        </p>
         <Button
           onClick={navigateToHome}
           variant="outline"
@@ -29,11 +25,6 @@ function Welcome_message() {
         >
           Continue
         </Button>
-        <div id="papalogo">
-          <Box boxSize="200px">
-            <Image src="/media/papa.png" />
-          </Box>
-        </div>
       </div>
     </div>
   );

@@ -112,10 +112,6 @@ function final_oddEven_steps(mesh) {
   let steps = Math.pow(N, 1 / 8);
   steps = Math.pow(steps, 3) * 2;
 
-  console.log(
-    "STEPS--------------------------------------------------" + steps
-  );
-
   for (let i = 0; i < Phases; i++) {
     if (isEven(i)) {
       for (let i = 0; i < numRows; i++) {

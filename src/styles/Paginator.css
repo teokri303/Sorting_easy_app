@@ -4,12 +4,16 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  margin-top: 190px;
+
 }
 
 .mesh-container {
-  margin-bottom: 20px;
+  align-items: center;
+    display: flex;
+    margin-bottom: 10px;
 }
+
+
 
 .page-numbers-container {
   display: flex;

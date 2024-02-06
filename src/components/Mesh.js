@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import "../styles/MeshComponent.css";
 
 const MeshComponent = ({ grid }) => {
   const canvasRef = useRef(null);
@@ -33,16 +32,28 @@ const MeshComponent = ({ grid }) => {
       row.forEach((cell, cellIndex) => {
         ctx.fillStyle = cell === 0 ? "black" : "white";
         ctx.fillRect(cellIndex * boxSize, rowIndex * boxSize, boxSize, boxSize);
+
+        if (grid.length <= 70) {
+          ctx.strokeStyle = "grey"; // Set the border color
+          ctx.lineWidth = 0.8; // Set the border width
+          ctx.strokeRect(
+            cellIndex * boxSize,
+            rowIndex * boxSize,
+            boxSize,
+            boxSize
+          );
+        }
       });
     });
   }, [grid]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="mesh"
-      style={{ border: "1px solid #000", margin: "auto", display: "block" }}
-    ></canvas>
+    <div>
+      <canvas
+        ref={canvasRef}
+        style={{ border: "1px solid #000", margin: "auto", display: "block" }}
+      ></canvas>
+    </div>
   );
 };
 

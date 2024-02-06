@@ -35,13 +35,6 @@ function reshapeArray(inputArray) {
     }
   }
 
-  console.log("OPTIMAL STATE ACHIEVED : ");
-  //console.log(outputArray);
-  console.log(
-    "We added : ",
-    counter,
-    " aces to bring it to an optimal state. "
-  );
   return outputArray;
 }
 
@@ -53,7 +46,6 @@ function removeAces(matrix) {
   // Προσδιορίζουμε την αρχική θέση για αφαίρεση (κάτω αριστερά)
   let rowIndex = gridSize - 1;
   let colIndex = 0;
-  console.log(numberOfAcesToRemove + " Aces to remove.");
   while (numberOfAcesToRemove > 0) {
     // Εάν έχουμε φτάσει στο τέλος της γραμμής, πηγαίνουμε στην επόμενη γραμμή από πάνω
     if (colIndex === gridSize) {
@@ -111,7 +103,6 @@ function flattenTo2DArray(arr) {
 }
 
 function reshape_to_given(sorted) {
-  console.log(sorted);
   let mesh = sorted.map((row) => [...row]);
   let removed_aces_array = removeAces(mesh);
   let final = flattenTo2DArray(removed_aces_array);

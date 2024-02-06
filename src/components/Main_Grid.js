@@ -1,7 +1,15 @@
 import { useState } from "react";
 import React from "react";
-import Modal from "react-modal";
-import { ChakraProvider, VStack, Button, Box } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Button,
+  Image,
+  Box,
+  Select,
+  Text,
+  CSSReset,
+  extendTheme,
+} from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { CircularProgress } from "@chakra-ui/react";
 
@@ -28,58 +36,32 @@ import {
 import MeshComponent from "./Mesh";
 import Paginator from "./Paginator";
 import TextDisplay from "./phase_expl";
-import {
-  GlobalStyle,
-  SliderContainer,
-  SliderLabel,
-  StyledSlider,
-} from "../styles/slider";
-import { color } from "framer-motion";
+import { SliderLabel } from "../styles/slider";
+import CanvasMesh from "./Input_canvas";
 
 export default function Test() {
   const [array, setArray] = useState("null");
   const [record, setRecord] = useState([]);
-  const [text, setText] = useState(0);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
-  const [choosealg, setChooseAlg] = useState(true);
-  const [sliderValue, setSliderValue] = useState(400);
-  const [maxSliderValue, setMaxSliderValue] = useState(2000);
-  const [alg, setAlg] = useState("1");
-  const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [random_or_own, setRandom_Own] = useState("random");
+  const [alg, setAlg] = useState("SHEARSHORT");
+  const [loadingbar, setLoadingbar] = useState(false);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
 
-  const subtitles = [
-    "RANDOM ARRAY",
-    "NORMALIZATION TO OPTIMAL STATE (16-256) IF IT WASNT",
-    "PHASE 1 SNAKELIKE BLOCKS",
-    "PHASE 2 K-WAY UNSHUFFLE",
-    "PHASE 3 SNAKELIKE BLOCKS",
-    "PHASE 4 SHORT COLUMNS",
-    "PHASE 5 VERTICAL SLICES SORT (1-2...)",
-    "PHASE 6 VERTICAL SLICES SORT (2-3...)",
-    "PHASE 7 ROWS SORT SNAKELIKE",
-    "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
-    "RESHAPE TO GIVEN DIMENTIONS  FINAL SORTED ARRAY ",
-  ];
-
-  function generateArray() {
-    const gridsize = sliderValue;
+  function generateArray(value) {
+    const gridsize = value;
 
     let randomArray = generateLeema(gridsize);
     setRecord([]);
     setArray([...randomArray]);
     addRecord(randomArray);
-    setChooseAlg(false);
-    setText(subtitles[0]);
 
-    if (alg != 1) {
+    if (alg !== 1) {
       setSortState(false);
     }
   }
@@ -91,21 +73,27 @@ export default function Test() {
     let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
     let evenPhases = Math.log(numRows) / Math.log(2); //columns
     let Phases = Math.round(oddPhases + evenPhases);
-    console.log("PHASESSSSS : " + Phases);
+    console.log("PHASES : " + Phases);
 
     let sortedPhase;
     let grid = record[0];
     let rows_phase;
     let columns_phase;
+    setLoadingbar(true);
 
     console.time("WHOLE TIME");
     for (let i = 0; i < Phases; i++) {
       if (i % 2 === 0) {
         // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
         //tis grammes poy den einai sortarismenes
-        const dirtyRows = grid.filter(
-          (row) => row.includes(0) && row.includes(1)
-        );
+
+        let dirtyRows;
+
+        if (random_or_own === "random") {
+          dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
+        } else {
+          dirtyRows = [...grid];
+        }
 
         const index = grid.indexOf(dirtyRows[0]);
 
@@ -130,9 +118,20 @@ export default function Test() {
         }
       }
 
-      grid = [...resultGrid];
+      if (random_or_own === "random") {
+        grid = [...resultGrid];
+      } else {
+        const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
 
-      console.log("Phase  " + (i + 1) + " COMPLETED");
+        if (areArraysEqual && i !== 0) {
+          //console.log("Οι πίνακες είναι ίδιοι.");
+          break;
+        }
+
+        grid = [...sortedPhase];
+      }
+
+      //console.log("Phase  " + (i + 1) + " COMPLETED");
 
       addRecord(grid);
 
@@ -143,90 +142,164 @@ export default function Test() {
     }
     console.timeEnd("WHOLE TIME");
 
+    setLoadingbar(false);
+
     return grid;
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
 
   async function sort_Second_Alg() {
-    let grid = reshapeArray(array);
-    addRecord(grid);
-    //setArray([...grid]);
+    let sorted = false;
+
+    let grid = [];
+    console.log(array.length);
+    if (array.length === 16 || array.length === 256) {
+      grid = array;
+    } else {
+      grid = reshapeArray(array);
+      addRecord(grid);
+    }
+
     calculate_vars(grid);
 
-    //phase 1
-    const phase_1 = await snakelikeBlocks(grid);
-    console.log("-!-!-!-! PHASE 1 SNAKE: -DONE  \u2713 ");
-    addRecord(phase_1);
+    setLoadingbar(true);
 
-    //phase 2
-    const phase_2 = kWayUnshuffle2D(phase_1);
-    console.log("-!-!-!-! PHASE 2 SHUFFLE: -DONE  \u2713 ");
-    addRecord(phase_2);
+    while (sorted === false) {
+      //phase 1
+      const phase_1 = await snakelikeBlocks(grid, random_or_own);
+      addRecord(phase_1);
 
-    //phase 3
-    const phase_3 = await snakelikeBlocks(phase_2);
-    console.log("-!-!-!-! PHASE 3 SNAKE -DONE  \u2713");
-    //console.log(phase_3);
-    addRecord(phase_3);
+      if (isSnakelikeOrder(phase_1)) {
+        break;
+      }
 
-    //phase 4
-    const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
-    console.log("-!-!-!-! PHASE 4 COLUMNS -DONE  \u2713");
-    addRecord(phase_4);
+      //phase 2
+      const phase_2 = kWayUnshuffle2D(phase_1);
+      addRecord(phase_2);
 
-    const phase_5 = await vertical_slices_first(phase_4);
-    console.log("-!-!-!-! PHASE 5 VERTICAL SLICES 1 -DONE  \u2713");
-    addRecord(phase_5);
+      if (isSnakelikeOrder(phase_2)) {
+        break;
+      }
+      //phase 3
+      const phase_3 = await snakelikeBlocks(phase_2, random_or_own);
+      addRecord(phase_3);
 
-    const phase_6 = await vertical_slices_second(phase_5);
-    console.log("-!-!-!-! PHASE 6 VERTICAL SLICES 2 -DONE  \u2713");
-    addRecord(phase_6);
+      if (isSnakelikeOrder(phase_3)) {
+        break;
+      }
 
-    const phase_7 = await shearsort(phase_6);
-    console.log("-!-!-!-! PHASE 7 SIMPLE SNAKELIKE 2 -DONE  \u2713");
-    addRecord(phase_7);
+      //phase 4
+      const phase_4 = await oddEvenSort_Columns_Parallel(phase_3);
+      addRecord(phase_4);
 
-    const phase_8 = await final_oddEven_steps(phase_7);
-    console.log(
-      "-!-!-!-! PHASE 8 SIMPLE 2N^3/8 STEPS OF ODD-EVEN -DONE  \u2713"
-    );
-    addRecord(phase_8);
+      if (isSnakelikeOrder(phase_4)) {
+        break;
+      }
 
-    let final = reshape_to_given(phase_8);
-    addRecord(final);
+      //phase 5
+      const phase_5 = await vertical_slices_first(phase_4);
+      addRecord(phase_5);
+
+      if (isSnakelikeOrder(phase_5)) {
+        break;
+      }
+
+      //phase 6
+      const phase_6 = await vertical_slices_second(phase_5);
+      addRecord(phase_6);
+
+      if (isSnakelikeOrder(phase_6)) {
+        break;
+      }
+
+      //phase 7
+      const phase_7 = await shearsort(phase_6);
+      addRecord(phase_7);
+
+      if (isSnakelikeOrder(phase_7)) {
+        break;
+      }
+
+      //phase 8
+      const phase_8 = await final_oddEven_steps(phase_7);
+      if (isSnakelikeOrder(phase_8)) {
+        break;
+      }
+      addRecord(phase_8);
+
+      if (array.length === 16 || array.length === 256) {
+        console.log("no need for reshape");
+      } else {
+        console.log("NEED FOR reshape");
+        let final = reshape_to_given(phase_8);
+        addRecord(final);
+      }
+
+      sorted = true;
+    }
+
+    setLoadingbar(false);
   }
 
   //handling small thing functions
 
-  const clear_states = () => {
-    setArray(null);
-    setText(0);
-  };
+  function are2DArraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
 
-  const handleSliderChange = (e) => {
-    setSliderValue(parseInt(e.target.value, 10));
+    for (let i = 0; i < arr1.length; i++) {
+      const innerArr1 = arr1[i];
+      const innerArr2 = arr2[i];
 
-    setSortState(true);
-  };
+      if (innerArr1.length !== innerArr2.length) {
+        return false;
+      }
+
+      for (let j = 0; j < innerArr1.length; j++) {
+        if (innerArr1[j] !== innerArr2[j]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function isSnakelikeOrder(matrix) {
+    function isSorted(arr) {
+      return arr.slice(1).every((item, i) => item >= arr[i]);
+    }
+
+    // Αποθήκευση των γραμμών ως flat πίνακα
+    const flattenedArray = matrix.flatMap((row, index) =>
+      index % 2 === 0 ? row : row.reverse()
+    );
+
+    // Ελέγχουμε αν ο flat πίνακας είναι ταξινομημένος
+    return isSorted(flattenedArray);
+  }
 
   const handleButtonClick = (value) => {
     setAlg(value);
     if (value === "SNOR_SHAMMIR") {
-      setMaxSliderValue(256);
-      setSliderValue(100);
-      if (array.length > 256) {
-        setSortState(true);
-      } else if (array.length <= 256) {
+      setOptions(options_SS);
+      setAlgText(SS_text);
+
+      if (random_or_own === "own") {
+      } else {
+        if (array.length !== 16) {
+          generateArray(16);
+        }
         setSortState(false);
       }
-      if (showModal) {
-        setModalIsOpen(true);
-        setShowModal(false);
-      }
     } else {
-      setMaxSliderValue(2000);
-      setSliderValue(800);
-      setSortState(false);
+      setOptions(options_shear);
+      setAlgText(shear_text);
+      if (random_or_own === "own") {
+      } else {
+        setSortState(false);
+      }
     }
   };
 
@@ -242,179 +315,205 @@ export default function Test() {
   }
 
   function go_back() {
-    setShowSecond(false);
-    setShowFirst(true);
-    setRecord([]);
-    addRecord(array);
+    if (random_or_own === "own") {
+      setShowSecond(false);
+      setShowFirst(true);
+      setRecord([]);
+      setSortState(true);
+    } else {
+      setShowSecond(false);
+      setShowFirst(true);
+      setRecord([]);
+      addRecord(array);
+    }
   }
 
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const handleSelectChange = (value) => {
+    generateArray(value);
   };
+
+  function your_own() {
+    setRandom_Own("own");
+    setSortState(true);
+    setRecord([]);
+  }
+
+  function random_mesh() {
+    setRandom_Own("random");
+    generateArray(16);
+  }
+
+  const handlePrintValues = (grid) => {
+    setRecord([]);
+    setArray([...grid]);
+    addRecord(grid);
+    setSortState(false);
+  };
+
+  const options_shear = [
+    10, 20, 30, 50, 75, 100, 200, 300, 500, 750, 1000, 1500,
+  ];
+  const options_SS = [16, 256];
+  const [options, setOptions] = useState(options_shear);
+
+  const shear_text =
+    "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.";
+  const SS_text =
+    "The parallel sorting algorithm of Schnorr and Shamir for large N values. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.";
+  const [alg_text, setAlgText] = useState(shear_text);
 
   return (
     <div>
       {showFirst && (
         <div>
-          <div className="input">
-            <div className="left-top">
-              <SliderLabel className="styled-text" htmlFor="slider">
-                Enter Mesh Dimensions and click CREATE:
-              </SliderLabel>
-            </div>
-            <Button
-              id="create"
-              size="lg"
-              width="230px"
-              colorScheme="teal"
-              onClick={generateArray}
-            >
-              CREATE RANDOM MESH
-            </Button>
-          </div>
-          <div className="button-container_b">
-            <>
-              <GlobalStyle />
-              <SliderContainer>
-                <div className="flex">
-                  <p id="small"> Current Slider Value : </p>
-                  <p
+          <div className="container">
+            <div className="left-div">
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "30px",
+                  }}
+                >
+                  <Box boxSize="100px">
+                    <Image src="/media/onlylogo.png" />
+                  </Box>
+                </div>
+                <div>
+                  <SliderLabel className="styled-text" htmlFor="slider">
+                    Select Mesh Dimensions :
+                  </SliderLabel>
+                </div>
+                <div>
+                  <ChakraProvider
+                    theme={extendTheme({
+                      styles: { global: { body: { bg: "gray.100" } } },
+                    })}
+                  >
+                    <CSSReset />
+                    <Box p={4} maxW="md" mx="auto">
+                      <Select
+                        placeholder="Random mesh dimensions"
+                        onChange={(e) => handleSelectChange(e.target.value)}
+                        textAlign="center"
+                        isDisabled={random_or_own === "own"}
+                      >
+                        {options.map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </Select>
+                    </Box>
+                  </ChakraProvider>
+                </div>
+
+                <div>
+                  <Button
+                    size="lg"
+                    width="200px"
+                    margin="10px"
+                    marginBottom="20px"
+                    colorScheme={random_or_own === "random" ? "teal" : "gray"}
+                    onClick={() => random_mesh()}
+                  >
+                    Random Mesh
+                  </Button>
+
+                  <Button
+                    size="lg"
+                    width="200px"
+                    margin="10px"
+                    marginBottom="20px"
+                    colorScheme={random_or_own === "own" ? "teal" : "gray"}
+                    onClick={() => your_own()}
+                  >
+                    Your own Mesh
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <div>
+                  <div>
+                    <h1 className="styled-text">CHOOSE ALGORITHM. </h1>
+                    <div>
+                      <Button
+                        size="lg"
+                        width="200px"
+                        margin="10px"
+                        colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                        onClick={() => handleButtonClick("SHEARSHORT")}
+                      >
+                        SHEARSHORT
+                      </Button>
+                      <Button
+                        size="lg"
+                        width="200px"
+                        margin="10px"
+                        colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
+                        onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                      >
+                        SCHNORR SHAMIR
+                      </Button>
+                    </div>
+                  </div>
+                  <div
                     style={{
-                      color: "#e82323",
-                      "font-weight": "bold",
-                      "font-size": "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    {sliderValue}X{sliderValue}
-                  </p>
+                    <TextDisplay text={alg_text} />
+                  </div>
                 </div>
-                <div className="flex">
-                  <p>4-</p>
-                  <StyledSlider
-                    type="range"
-                    id="slider"
-                    name="slider"
-                    min="2"
-                    max={maxSliderValue}
-                    value={sliderValue}
-                    step="1"
-                    onChange={handleSliderChange}
-                  />
-                  <p>-{maxSliderValue}</p>
-                </div>
-              </SliderContainer>
-            </>
+              </div>
+            </div>
+            <div className="right-div">
+              <Box mt={4}>
+                <Text fontSize="lg" fontWeight="bold">
+                  Current array dimensions:
+                </Text>
+                <Text fontSize="xl">
+                  {array.length === 4
+                    ? "Καμία επιλογή"
+                    : array.length + " X " + array.length}
+                </Text>
+              </Box>
+              {random_or_own === "random" && <MeshComponent grid={array} />}
+              {random_or_own === "own" && (
+                <CanvasMesh
+                  onPrintValues={handlePrintValues}
+                  onResetGrid={go_back}
+                />
+              )}
+
+              <div>
+                <ChakraProvider>
+                  <Box textAlign="center" marginTop="30px">
+                    <Button
+                      colorScheme="teal"
+                      rightIcon={<ArrowForwardIcon />}
+                      size="lg"
+                      width="250px"
+                      onClick={go_sort}
+                      isDisabled={sortstate}
+                    >
+                      SORT
+                    </Button>
+                  </Box>
+                </ChakraProvider>
+              </div>
+            </div>
           </div>
         </div>
       )}
-      <div>
-        {showFirst && (
-          <div className="container">
-            <div className="left-div">
-              <h1 className="styled-text">CHOOSE ALGORITHM USE. </h1>
-              <ChakraProvider>
-                <VStack spacing={4} align="center">
-                  <Button
-                    size="lg"
-                    width="200px"
-                    colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                    onClick={() => handleButtonClick("SHEARSHORT")}
-                    isDisabled={choosealg}
-                  >
-                    SHEARSHORT
-                  </Button>
-                  <Button
-                    size="lg"
-                    width="200px"
-                    colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                    onClick={() => handleButtonClick("SNOR_SHAMMIR")}
-                    isDisabled={choosealg}
-                  >
-                    SCHNORR SHAMIR
-                  </Button>
-                </VStack>
-              </ChakraProvider>
 
-              <div>
-                <Modal
-                  isOpen={modalIsOpen}
-                  onRequestClose={closeModal}
-                  style={{
-                    content: {
-                      width: "350px",
-                      height: "500px",
-                      margin: "auto",
-                      textAlign: "center",
-                      borderRadius: "10px",
-                      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
-                      padding: "20px",
-                    },
-                    overlay: {
-                      backgroundColor: "rgba(0, 0, 0, 0.3)",
-                    },
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <button
-                      onClick={closeModal}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      X
-                    </button>
-                  </div>
-                  <h1 style={{ marginBottom: "15px" }}>
-                    Περιορισμοί του Αλγορίθμου Shnorr Shamir
-                  </h1>
-                  <p>
-                    Ο αλγόριθμος Schnorr Shamir εκτελείτε καλύτερα για ιδανικές
-                    διαστάστεις πλέγματος 16x16 , 256x256 και 65.536x65.536 κλπ
-                    . Για λόγους λειτουργικότητας και πρακτικοτητας αφου σκοπός
-                    της εφαρμογής ειναι η κατανόηση της λειτουργείας του
-                    αλγορίθμου προτείνουμε να εκτελεστεί μόνο σε διαστάσεις
-                    πλέγματος από 4 έως 256. Για την καλύτερη εμπειρία και
-                    ευκρινή αποτελέσματα, συνιστάται να χρησιμοποιείται με
-                    μέγιστες διαστάσεις 256x256.
-                  </p>
-                </Modal>
-              </div>
-            </div>
-
-            <div className="mesh">
-              <MeshComponent grid={array} />
-              {!choosealg && (
-                <div>
-                  <p id="dimensions-right">{array.length}</p>
-                  <p id="dimensions-down">{array.length}</p>
-                </div>
-              )}
-            </div>
-
-            <div className="right-div">
-              <ChakraProvider>
-                <Box textAlign="center" marginTop="30px">
-                  <Button
-                    colorScheme="teal"
-                    rightIcon={<ArrowForwardIcon />}
-                    size="lg"
-                    width="250px"
-                    onClick={go_sort}
-                    isDisabled={sortstate}
-                  >
-                    SORT
-                  </Button>
-                </Box>
-              </ChakraProvider>
-            </div>
-          </div>
-        )}
-      </div>
       <div>
         {showSecond && (
-          <div className="container">
+          <div className="container-paginator">
             <div>
               <Button
                 id="back"
@@ -428,13 +527,16 @@ export default function Test() {
               </Button>
             </div>
             <div>
-              <Paginator items={record} />
-              {loading && (
-                <CircularProgress
-                  size="120px"
-                  color="green.400"
-                  isIndeterminate
-                ></CircularProgress>
+              <Paginator items={record} algorithm={alg} />
+              {loadingbar && (
+                <div id="bar">
+                  <CircularProgress
+                    size="420px"
+                    color="teal"
+                    thickness="5px"
+                    isIndeterminate
+                  />
+                </div>
               )}
             </div>
           </div>
