@@ -479,6 +479,8 @@ export default function Test() {
                 <Text fontSize="xl">
                   {array.length === 4
                     ? "Καμία επιλογή"
+                    : random_or_own === "own"
+                    ? "16 X 16"
                     : array.length + " X " + array.length}
                 </Text>
               </Box>
