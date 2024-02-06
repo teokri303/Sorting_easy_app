@@ -11,7 +11,7 @@ import {
   extendTheme,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
-import { Progress } from "@chakra-ui/react";
+import { CircularProgress } from "@chakra-ui/react";
 
 import {
   oddEvenSort_Columns_Parallel,
@@ -48,7 +48,6 @@ export default function Test() {
   const [random_or_own, setRandom_Own] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -286,11 +285,13 @@ export default function Test() {
     if (value === "SNOR_SHAMMIR") {
       setOptions(options_SS);
       setAlgText(SS_text);
-      if (selectedValue !== 256 || selectedValue !== 16) {
-        if (random_or_own === "own") {
-        } else {
-          setSortState(false);
+
+      if (random_or_own === "own") {
+      } else {
+        if (array.length !== 16) {
+          generateArray(16);
         }
+        setSortState(false);
       }
     } else {
       setOptions(options_shear);
@@ -328,7 +329,6 @@ export default function Test() {
   }
 
   const handleSelectChange = (value) => {
-    setSelectedValue(value);
     generateArray(value);
   };
 
@@ -530,7 +530,12 @@ export default function Test() {
               <Paginator items={record} algorithm={alg} />
               {loadingbar && (
                 <div id="bar">
-                  <Progress height="34px" colorScheme="teal" isIndeterminate />
+                  <CircularProgress
+                    size="420px"
+                    color="teal"
+                    thickness="5px"
+                    isIndeterminate
+                  />
                 </div>
               )}
             </div>

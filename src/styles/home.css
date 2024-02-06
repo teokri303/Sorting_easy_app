@@ -31,7 +31,7 @@
 
 .left-div, .right-div {
   flex: 1; /* Κατανομή ισομερούς χώρου μεταξύ των δύο divs */
-  border: 0.2px solid #ccc; /* Προσθήκη περιγράμματος για καλύτερη ορατότητα */
+ 
   display: grid;
   place-items: center;
 
@@ -41,12 +41,13 @@
 
 
 #bar{
+
   position: absolute;
-  top: 640px;
+  top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
   
-  width: 800px;
+  width: 100%;
 
 
 }

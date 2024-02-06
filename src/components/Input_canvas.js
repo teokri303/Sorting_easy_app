@@ -75,8 +75,8 @@ const CanvasMesh = ({ onPrintValues, onResetGrid }) => {
         )}
       </div>
       <Button
-        size="lg"
-        width="110px"
+        size="md"
+        width="90px"
         margin="10px"
         marginBottom="20px"
         onClick={resetGrid}
@@ -91,7 +91,7 @@ const CanvasMesh = ({ onPrintValues, onResetGrid }) => {
         colorScheme={input_ready === false ? "teal" : "gray"}
         onClick={printValues}
       >
-        Input Mesh Ready
+        Ready to sort
       </Button>
     </div>
   );
