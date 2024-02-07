@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Button } from "@chakra-ui/react";
 
-const CanvasMesh = ({ onPrintValues, onResetGrid }) => {
-  const rows = 16;
-  const cols = 16;
+const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
+  const rows = size;
+  const cols = size;
 
   const initialGrid = Array.from({ length: rows }, () => Array(cols).fill(1));
   const [grid, setGrid] = useState(initialGrid);
   const [input_ready, setInputReady] = useState(true);
   const [sorted, setSorted] = useState(false);
+
+  const cellSize = 480 / Math.max(rows, cols); // Υπολογισμός μεγέθους κελιών βάσει του grid
 
   const toggleColor = (row, col) => {
     const newGrid = [...grid];
@@ -38,17 +40,15 @@ const CanvasMesh = ({ onPrintValues, onResetGrid }) => {
       <style>
         {`
           .cont {
-        
             width: 480px;
             height: 480px;
             display: flex;
             flex-wrap: wrap;
-            
           }
 
           .cell {
-            width: 30px;
-            height: 30px;
+            width: ${cellSize}px;
+            height: ${cellSize}px;
             border: 0.8px solid #C0C0C0;
             box-sizing: border-box;
           }

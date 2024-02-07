@@ -13,6 +13,7 @@ const Paginator = ({ items, algorithm }) => {
 
   const ss_subs = [
     "RANDOM ARRAY",
+    "Reshape array to optimal dimentions",
     "PHASE 1 SNAKELIKE BLOCKS",
     "PHASE 2 K-WAY UNSHUFFLE",
     "PHASE 3 SNAKELIKE BLOCKS",
@@ -22,7 +23,17 @@ const Paginator = ({ items, algorithm }) => {
     "PHASE 7 ROWS SORT SNAKELIKE",
     "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
   ];
-
+  const ss_subs_optimal = [
+    "RANDOM ARRAY",
+    "PHASE 1 SNAKELIKE BLOCKS",
+    "PHASE 2 K-WAY UNSHUFFLE",
+    "PHASE 3 SNAKELIKE BLOCKS",
+    "PHASE 4 SHORT COLUMNS",
+    "PHASE 5 VERTICAL SLICES SORT (1-2...)",
+    "PHASE 6 VERTICAL SLICES SORT (2-3...)",
+    "PHASE 7 ROWS SORT SNAKELIKE",
+    "PHASE 8  2N^3/8 STEPS OF ODD-EVEN TRANSPOTITION  ",
+  ];
   const shearsort_subs = [
     "RANDOM ARRAY",
     "PARALLEL SORTING ROWS SNAKELIKE ORDER",
@@ -43,7 +54,11 @@ const Paginator = ({ items, algorithm }) => {
         setText(shearsort_subs[2]);
       }
     } else {
-      setText(ss_subs[pageNumber - 1]);
+      if (items[0].length === 16 || items[0].length === 256) {
+        setText(ss_subs_optimal[pageNumber - 1]);
+      } else {
+        setText(ss_subs[pageNumber - 1]);
+      }
     }
   };
 
@@ -58,7 +73,11 @@ const Paginator = ({ items, algorithm }) => {
           setText(shearsort_subs[2]);
         }
       } else {
-        setText(ss_subs[currentIndex + 1]);
+        if (items[0].length === 16 || items[0].length === 256) {
+          setText(ss_subs_optimal[currentIndex + 1]);
+        } else {
+          setText(ss_subs[currentIndex + 1]);
+        }
       }
     } else if (direction === "left" && currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
@@ -72,7 +91,11 @@ const Paginator = ({ items, algorithm }) => {
           setText(shearsort_subs[2]);
         }
       } else {
-        setText(ss_subs[currentIndex - 1]);
+        if (items[0].length === 16 || items[0].length === 256) {
+          setText(ss_subs_optimal[currentIndex - 1]);
+        } else {
+          setText(ss_subs[currentIndex - 1]);
+        }
       }
     }
   };
@@ -85,6 +108,7 @@ const Paginator = ({ items, algorithm }) => {
   return (
     <div className="paginator-container">
       <div className="mesh-container">
+        <h1>{algorithm === "SNOR_SHAMMIR" ? "Schnorr Sammir" : "Shearsort"}</h1>
         <MeshComponent grid={items[currentIndex]} />
       </div>
       <div>

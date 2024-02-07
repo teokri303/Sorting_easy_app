@@ -28,6 +28,7 @@ function createEmptySortedGrid() {
 
 // Λειτουργία για τον πλήρη υπολογισμό του ταξινομημένου πλέγματος.
 function createSortedGrid(blocks) {
+  console.log(blocks);
   const sortedGrid = createEmptySortedGrid();
   let blockIndex = 0;
 
@@ -41,7 +42,7 @@ function createSortedGrid(blocks) {
       }
     }
   }
-
+  console.log(sortedGrid);
   return sortedGrid;
 }
 //xorizetai to mesh se blocks kai ta sortarei ena ena me odd even
@@ -64,7 +65,7 @@ async function sortAndPopulateBlocks(grid, random_or_own) {
       //console.log("Block SORTED ");
 
       blocks.push(mid);
-      //console.log(mid);
+      // console.log(mid);
     }
   }
 
@@ -72,6 +73,7 @@ async function sortAndPopulateBlocks(grid, random_or_own) {
 }
 
 async function snakelikeBlocks(array, random_or_own) {
+  calculate_vars(array);
   let blocks = await sortAndPopulateBlocks(array, random_or_own);
 
   let sortedGrid = await createSortedGrid(blocks);

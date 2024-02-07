@@ -26,14 +26,30 @@ function are2DArraysEqual(arr1, arr2) {
   return true;
 }
 
-async function shearsort(array, random_or_own) {
-  let numRows = array.length;
+function isSnakelikeOrder(matrix) {
+  function isSorted(arr) {
+    return arr.slice(1).every((item, i) => item >= arr[i]);
+  }
+
+  // Αποθήκευση των γραμμών ως flat πίνακα
+  const flattenedArray = matrix.flatMap((row, index) =>
+    index % 2 === 0 ? row : row.reverse()
+  );
+
+  // Ελέγχουμε αν ο flat πίνακας είναι ταξινομημένος
+  return isSorted(flattenedArray);
+}
+
+async function shearsort(grid, random_or_own) {
+  let numRows = grid.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
   let evenPhases = Math.log(numRows) / Math.log(2); //columns
   let Phases = Math.round(oddPhases + evenPhases);
 
+  //console.log(array);
+
   let sortedPhase;
-  let grid = array;
+
   let rows_phase;
   let columns_phase;
 
@@ -86,10 +102,12 @@ async function shearsort(array, random_or_own) {
     }
 
     if (sortedPhase.length <= 1) {
-      //console.log("GRID IS SORTED ");
+      //console.log("BLOCK IS SORTED ");
       break;
     }
   }
+
+  // console.log(grid);
 
   return grid;
 }

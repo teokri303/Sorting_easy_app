@@ -20,8 +20,10 @@
 
 .container {
   display: flex;
+  position: relative;
   align-items: center;
   height: 100vh; /* 100% του ύψους της οθόνης */
+  
 }
 
 .container-paginator {
@@ -29,9 +31,15 @@
   
 }
 
+.navbarstyle {
+  
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .left-div, .right-div {
-  flex: 1; /* Κατανομή ισομερούς χώρου μεταξύ των δύο divs */
- 
+  flex: 1; 
   display: grid;
   place-items: center;
 
@@ -41,15 +49,11 @@
 
 
 #bar{
-
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  
+  transform: translateX(-50%) translateY(-50%);  
   width: 100%;
-
-
 }
 
 
@@ -74,9 +78,6 @@
   left: 200px;
   top: 95px;
 }
-
-
-
 
 
 .styled-text {
@@ -111,18 +112,12 @@
   margin-right: 80px;
 }
 
-#red{
-  color: #e82323;
-  font-weight: bold;
-  font-size: 20px;
-}
-#small{
-  font-size: 14px;
-}
+
+
 
 
 @media (max-width: 600px) {
-  .button-container {
+  .container {
     width: 100%;
     position: relative;
     top: 90%;
