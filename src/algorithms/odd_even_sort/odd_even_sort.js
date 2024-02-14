@@ -26,20 +26,6 @@ function are2DArraysEqual(arr1, arr2) {
   return true;
 }
 
-function isSnakelikeOrder(matrix) {
-  function isSorted(arr) {
-    return arr.slice(1).every((item, i) => item >= arr[i]);
-  }
-
-  // Αποθήκευση των γραμμών ως flat πίνακα
-  const flattenedArray = matrix.flatMap((row, index) =>
-    index % 2 === 0 ? row : row.reverse()
-  );
-
-  // Ελέγχουμε αν ο flat πίνακας είναι ταξινομημένος
-  return isSorted(flattenedArray);
-}
-
 async function shearsort(grid, random_or_own) {
   let numRows = grid.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
@@ -59,10 +45,10 @@ async function shearsort(grid, random_or_own) {
       //tis grammes poy den einai sortarismenes
       let dirtyRows;
 
-      if (random_or_own === "random") {
-        dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
-      } else {
+      if (i === 0) {
         dirtyRows = [...grid];
+      } else {
+        dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
       }
 
       const index = grid.indexOf(dirtyRows[0]);
@@ -78,7 +64,7 @@ async function shearsort(grid, random_or_own) {
     let dirtyIndex = 0;
     let resultGrid = [];
     for (let j = 0; j < grid.length; j++) {
-      if (grid[j].includes(0) && grid[j].includes(1)) {
+      if ((grid[j].includes(0) && grid[j].includes(1)) || i < 2) {
         // Αν η γραμμή είναι dirty, προσθέτει την ταξινομημένη dirty γραμμή
         resultGrid.push(sortedPhase[dirtyIndex]);
         dirtyIndex++;

@@ -20,15 +20,15 @@ function calculate_vars(array) {
 
 // Λειτουργία για δημιουργία ενός κενού ταξινομημένου πλέγματος.
 function createEmptySortedGrid() {
-  const sortedGrid = new Array(gridSize)
+  const empty = new Array(gridSize)
     .fill(0)
     .map(() => new Array(gridSize).fill(0));
-  return sortedGrid;
+  console.log(empty);
+  return empty;
 }
 
 // Λειτουργία για τον πλήρη υπολογισμό του ταξινομημένου πλέγματος.
 function createSortedGrid(blocks) {
-  console.log(blocks);
   const sortedGrid = createEmptySortedGrid();
   let blockIndex = 0;
 
@@ -74,12 +74,12 @@ async function sortAndPopulateBlocks(grid, random_or_own) {
 
 async function snakelikeBlocks(array, random_or_own) {
   calculate_vars(array);
+
   let blocks = await sortAndPopulateBlocks(array, random_or_own);
 
   let sortedGrid = await createSortedGrid(blocks);
 
   //console.log(sortedGrid);
-
   return sortedGrid;
 }
 

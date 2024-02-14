@@ -87,13 +87,12 @@ export default function Test() {
       if (i % 2 === 0) {
         // xrisimopoioume ta dirtyrows gia na epeksergazomaste kathe fora
         //tis grammes poy den einai sortarismenes
-
         let dirtyRows;
 
-        if (random_or_own === "random") {
-          dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
-        } else {
+        if (i === 0) {
           dirtyRows = [...grid];
+        } else {
+          dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
         }
 
         const index = grid.indexOf(dirtyRows[0]);
@@ -109,7 +108,7 @@ export default function Test() {
       let dirtyIndex = 0;
       let resultGrid = [];
       for (let j = 0; j < grid.length; j++) {
-        if (grid[j].includes(0) && grid[j].includes(1)) {
+        if ((grid[j].includes(0) && grid[j].includes(1)) || i < 2) {
           // Αν η γραμμή είναι dirty, προσθέτει την ταξινομημένη dirty γραμμή
           resultGrid.push(sortedPhase[dirtyIndex]);
           dirtyIndex++;
@@ -118,6 +117,7 @@ export default function Test() {
           resultGrid.push([...grid[j]]);
         }
       }
+      console.log(resultGrid);
 
       if (random_or_own === "random") {
         grid = [...resultGrid];
@@ -270,12 +270,17 @@ export default function Test() {
   }
 
   function isSnakelikeOrder(matrix) {
+    function deepCopyArray(arr) {
+      return arr.map((innerArr) => [...innerArr]);
+    }
     function isSorted(arr) {
       return arr.slice(1).every((item, i) => item >= arr[i]);
     }
 
+    const testMatrix = deepCopyArray(matrix);
+
     // Αποθήκευση των γραμμών ως flat πίνακα
-    const flattenedArray = matrix.flatMap((row, index) =>
+    const flattenedArray = testMatrix.flatMap((row, index) =>
       index % 2 === 0 ? row : row.reverse()
     );
 
@@ -328,9 +333,6 @@ export default function Test() {
 
   function change_celected(value) {
     setSelectedValue(value);
-    if (value <= 32) {
-      setInputSize(value);
-    }
   }
 
   const handleSelectChange = (value) => {
@@ -338,7 +340,10 @@ export default function Test() {
       change_celected(value);
       generateArray(value);
     } else {
-      change_celected(value);
+      setSelectedValue(value);
+      if (value <= 32) {
+        setInputSize(value);
+      }
     }
   };
 
@@ -353,7 +358,7 @@ export default function Test() {
     generateArray(selectedValue);
   }
 
-  const handlePrintValues = (grid) => {
+  const set_grid_ready = (grid) => {
     setRecord([]);
     setArray([...grid]);
     addRecord(grid);
@@ -389,7 +394,8 @@ export default function Test() {
                         <Button
                           size="md"
                           width="400px"
-                          margin="10px"
+                          height="50px"
+                          marginBottom="10px"
                           colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
                           onClick={() => handleButtonClick("SHEARSHORT")}
                         >
@@ -428,8 +434,7 @@ export default function Test() {
                         <Button
                           size="lg"
                           width="200px"
-                          margin="10px"
-                          marginBottom="20px"
+                          height="40px"
                           isDisabled={alg === "SNOR_SHAMMIR"}
                           colorScheme={
                             random_or_own === "random" ? "teal" : "gray"
@@ -442,8 +447,8 @@ export default function Test() {
                         <Button
                           size="lg"
                           width="200px"
-                          margin="10px"
-                          marginBottom="20px"
+                          height="40px"
+                          marginLeft="10px"
                           isDisabled={alg === "SNOR_SHAMMIR"}
                           colorScheme={
                             random_or_own === "own" ? "teal" : "gray"
@@ -470,7 +475,8 @@ export default function Test() {
                         <Button
                           size="md"
                           width="400px"
-                          margin="10px"
+                          height="50px"
+                          marginBottom="10px"
                           colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
                           onClick={() => handleButtonClick("SNOR_SHAMMIR")}
                         >
@@ -509,8 +515,7 @@ export default function Test() {
                         <Button
                           size="lg"
                           width="200px"
-                          margin="10px"
-                          marginBottom="20px"
+                          height="40px"
                           isDisabled={alg === "SHEARSHORT"}
                           colorScheme={
                             random_or_own === "random" ? "teal" : "gray"
@@ -523,8 +528,8 @@ export default function Test() {
                         <Button
                           size="lg"
                           width="200px"
-                          margin="10px"
-                          marginBottom="20px"
+                          height="40px"
+                          marginLeft="10px"
                           isDisabled={alg === "SHEARSHORT"}
                           colorScheme={
                             random_or_own === "own" ? "teal" : "gray"
@@ -557,7 +562,7 @@ export default function Test() {
                 {random_or_own === "random" && <MeshComponent grid={array} />}
                 {random_or_own === "own" && (
                   <CanvasMesh
-                    onPrintValues={handlePrintValues}
+                    onPrintValues={set_grid_ready}
                     onResetGrid={go_back}
                     size={input_size}
                   />
