@@ -325,14 +325,17 @@ export default function Test() {
       setShowSecond(false);
       setShowFirst(true);
       setRecord([]);
+      setArray("null");
       setSortState(true);
       setSelectedValue(null);
+      setRandom_Own("random");
     } else {
       setShowSecond(false);
       setShowFirst(true);
       setRecord([]);
-      addRecord(array);
+      setArray("null");
       setSelectedValue(null);
+      setSortState(true);
     }
   }
 
@@ -459,7 +462,7 @@ export default function Test() {
                           size="lg"
                           width="200px"
                           height="40px"
-                          marginLeft="10px"
+                          margin="5px"
                           isDisabled={
                             alg === "SNOR_SHAMMIR" ||
                             selectedValue === null ||
@@ -546,7 +549,7 @@ export default function Test() {
                           size="lg"
                           width="200px"
                           height="40px"
-                          marginLeft="10px"
+                          margin="5px"
                           isDisabled={
                             alg === "SHEARSHORT" ||
                             selectedValue === null ||
@@ -575,34 +578,34 @@ export default function Test() {
                     Current array dimensions:
                   </Text>
                   <Text fontSize="md">
-                    {array.length === 4
+                    {array === "null"
                       ? "No configurations made"
                       : selectedValue + " X " + selectedValue}
                   </Text>
                 </Box>
-                {random_or_own === "random" && <MeshComponent grid={array} />}
-                {random_or_own === "own" && input_size !== null && (
-                  <CanvasMesh
-                    onPrintValues={set_grid_ready}
-                    size={input_size}
-                  />
-                )}
+                <div>
+                  {random_or_own === "random" && <MeshComponent grid={array} />}
+                  {random_or_own === "own" && input_size !== null && (
+                    <CanvasMesh
+                      onPrintValues={set_grid_ready}
+                      size={input_size}
+                    />
+                  )}
+                </div>
 
                 <div>
-                  <ChakraProvider>
-                    <Box textAlign="center" marginTop="30px">
-                      <Button
-                        colorScheme="teal"
-                        rightIcon={<ArrowForwardIcon />}
-                        size="lg"
-                        width="250px"
-                        onClick={go_sort}
-                        isDisabled={sortstate}
-                      >
-                        SORT
-                      </Button>
-                    </Box>
-                  </ChakraProvider>
+                  <Box textAlign="center">
+                    <Button
+                      colorScheme="teal"
+                      rightIcon={<ArrowForwardIcon />}
+                      size="lg"
+                      width="250px"
+                      onClick={go_sort}
+                      isDisabled={sortstate}
+                    >
+                      SORT
+                    </Button>
+                  </Box>
                 </div>
               </div>
             </div>
@@ -612,13 +615,13 @@ export default function Test() {
 
       <div>
         {showSecond && (
-          <div className="container-paginator">
+          <div>
             <div>
               <Button
-                id="back"
                 size="lg"
                 width="180px"
                 colorScheme="red"
+                backgroundColor="#404040"
                 leftIcon={<ArrowBackIcon />}
                 onClick={go_back}
               >

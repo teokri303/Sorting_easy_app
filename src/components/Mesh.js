@@ -51,7 +51,7 @@ const MeshComponent = ({ grid }) => {
     <div>
       <canvas
         ref={canvasRef}
-        style={{ border: "1px solid #000", margin: "auto", display: "block" }}
+        style={{ border: "1px solid #000", display: "block" }}
       ></canvas>
     </div>
   );

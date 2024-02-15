@@ -126,15 +126,18 @@ const Paginator = ({ items, algorithm }) => {
   );
 
   return (
-    <div className="paginator-container">
-      <div className="mesh-container">
-        <h1>{algorithm === "SNOR_SHAMMIR" ? "Schnorr Sammir" : "Shearsort"}</h1>
-        <MeshComponent grid={items[currentIndex]} />
+    <div>
+      <div className="paginator-container">
+        <div>
+          <h1>
+            {algorithm === "SNOR_SHAMMIR" ? "Schnorr Sammir" : "Shearsort"}
+          </h1>
+          <MeshComponent grid={items[currentIndex]} />
+        </div>
+        <div>
+          <TextDisplay text={text} />
+        </div>
       </div>
-      <div>
-        <TextDisplay text={text} />
-      </div>
-
       <div className="page-numbers-container">
         <div className="arrow-left" onClick={() => handleArrowClick("left")}>
           <ArrowLeftIcon />{" "}
