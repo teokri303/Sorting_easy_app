@@ -74,17 +74,13 @@ async function shearsort(grid, random_or_own) {
       }
     }
 
-    if (random_or_own === "random") {
-      grid = [...resultGrid];
+    const areArraysEqual = are2DArraysEqual(grid, resultGrid);
+
+    if (areArraysEqual && i !== 0) {
+      //console.log("Οι πίνακες είναι ίδιοι.");
+      break;
     } else {
-      const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
-
-      if (areArraysEqual && i !== 0) {
-        //console.log("Οι πίνακες είναι ίδιοι.");
-        break;
-      }
-
-      grid = [...sortedPhase];
+      grid = [...resultGrid];
     }
 
     if (sortedPhase.length <= 1) {

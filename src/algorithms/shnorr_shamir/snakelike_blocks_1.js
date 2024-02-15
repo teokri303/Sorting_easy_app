@@ -23,7 +23,6 @@ function createEmptySortedGrid() {
   const empty = new Array(gridSize)
     .fill(0)
     .map(() => new Array(gridSize).fill(0));
-  console.log(empty);
   return empty;
 }
 
@@ -42,7 +41,6 @@ function createSortedGrid(blocks) {
       }
     }
   }
-  console.log(sortedGrid);
   return sortedGrid;
 }
 //xorizetai to mesh se blocks kai ta sortarei ena ena me odd even
@@ -74,7 +72,6 @@ async function sortAndPopulateBlocks(grid, random_or_own) {
 
 async function snakelikeBlocks(array, random_or_own) {
   calculate_vars(array);
-
   let blocks = await sortAndPopulateBlocks(array, random_or_own);
 
   let sortedGrid = await createSortedGrid(blocks);

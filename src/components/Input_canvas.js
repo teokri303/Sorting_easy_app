@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@chakra-ui/react";
 
-const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
+const CanvasMesh = ({ onPrintValues, size }) => {
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
+  const [ready_to_sort, setReadytoSort] = useState(false);
 
   const cellSize = 480 / size;
 
@@ -35,13 +36,15 @@ const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
     const y = event.clientY - rect.top;
     const row = Math.floor(y / cellSize);
     const col = Math.floor(x / cellSize);
+
     ctx.fillStyle = "black";
     ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
     ctx.strokeStyle = "grey";
     ctx.strokeRect(col * cellSize, row * cellSize, cellSize, cellSize);
   };
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (event) => {
+    toggleColor(event);
     setIsDrawing(true);
   };
 
@@ -60,12 +63,9 @@ const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
         ctx.strokeRect(j * cellSize, i * cellSize, cellSize, cellSize); // Σχεδιάστε το περίγραμμα του κελιού
       }
     }
-    onResetGrid(); // Εκτέλεση της λειτουργίας onResetGrid
   };
 
   const createGridFromArray = () => {
-    console.log("print values");
-
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
@@ -84,15 +84,20 @@ const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
 
         // Έλεγχος αν το χρώμα είναι μαύρο (0, 0, 0)
         if (red === 0 && green === 0 && blue === 0) {
-          row.push(1); // Έχει μαύρο χρώμα, οπότε είναι 1
+          row.push(0); // Έχει μαύρο χρώμα, οπότε είναι 1
         } else {
-          row.push(0); // Έχει άλλο χρώμα, οπότε είναι 0
+          row.push(1); // Έχει άλλο χρώμα, οπότε είναι 0
         }
       }
+
       newGrid.push(row);
     }
 
-    console.log(newGrid);
+    if (ready_to_sort === false) {
+      setReadytoSort(true);
+    }
+
+    onPrintValues(newGrid);
   };
 
   return (
@@ -124,6 +129,7 @@ const CanvasMesh = ({ onPrintValues, onResetGrid, size }) => {
         width="200px"
         margin="10px"
         marginBottom="20px"
+        colorScheme={ready_to_sort ? "teal" : "gray"}
         onClick={createGridFromArray}
       >
         Ready to sort

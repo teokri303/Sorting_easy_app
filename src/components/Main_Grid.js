@@ -74,7 +74,7 @@ export default function Test() {
     let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
     let evenPhases = Math.log(numRows) / Math.log(2); //columns
     let Phases = Math.round(oddPhases + evenPhases);
-    console.log("PHASES : " + Phases);
+    //console.log("PHASES : " + Phases);
 
     let sortedPhase;
     let grid = record[0];
@@ -117,19 +117,14 @@ export default function Test() {
           resultGrid.push([...grid[j]]);
         }
       }
-      console.log(resultGrid);
 
-      if (random_or_own === "random") {
-        grid = [...resultGrid];
+      const areArraysEqual = are2DArraysEqual(grid, resultGrid);
+
+      if (areArraysEqual && i !== 0) {
+        //console.log("Οι πίνακες είναι ίδιοι.");
+        break;
       } else {
-        const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
-
-        if (areArraysEqual && i !== 0) {
-          //console.log("Οι πίνακες είναι ίδιοι.");
-          break;
-        }
-
-        grid = [...sortedPhase];
+        grid = [...resultGrid];
       }
 
       //console.log("Phase  " + (i + 1) + " COMPLETED");
@@ -137,7 +132,7 @@ export default function Test() {
       addRecord(grid);
 
       if (sortedPhase.length <= 1) {
-        console.log("GRID IS SORTED ");
+        //console.log("GRID IS SORTED ");
         break;
       }
     }
@@ -170,6 +165,7 @@ export default function Test() {
       addRecord(phase_1);
 
       if (isSnakelikeOrder(phase_1)) {
+        check_reshape(phase_1);
         break;
       }
 
@@ -178,6 +174,7 @@ export default function Test() {
       addRecord(phase_2);
 
       if (isSnakelikeOrder(phase_2)) {
+        check_reshape(phase_2);
         break;
       }
       //phase 3
@@ -185,6 +182,7 @@ export default function Test() {
       addRecord(phase_3);
 
       if (isSnakelikeOrder(phase_3)) {
+        check_reshape(phase_3);
         break;
       }
 
@@ -193,6 +191,7 @@ export default function Test() {
       addRecord(phase_4);
 
       if (isSnakelikeOrder(phase_4)) {
+        check_reshape(phase_4);
         break;
       }
 
@@ -201,6 +200,7 @@ export default function Test() {
       addRecord(phase_5);
 
       if (isSnakelikeOrder(phase_5)) {
+        check_reshape(phase_5);
         break;
       }
 
@@ -209,6 +209,7 @@ export default function Test() {
       addRecord(phase_6);
 
       if (isSnakelikeOrder(phase_6)) {
+        check_reshape(phase_6);
         break;
       }
 
@@ -230,9 +231,9 @@ export default function Test() {
 
       function check_reshape(mesh) {
         if (array.length === 16 || array.length === 256) {
-          console.log("no need for reshape");
+          //console.log("no need for reshape");
         } else {
-          console.log("NEED FOR reshape");
+          //console.log("NEED FOR reshape");
           let final = reshape_to_given(mesh);
           addRecord(final);
         }
@@ -292,9 +293,11 @@ export default function Test() {
     setAlg(value);
     if (value === "SNOR_SHAMMIR") {
       if (random_or_own === "own") {
+        setInputSize(selectedValue);
       } else {
         if (array.length > 256) {
           generateArray(256);
+          setSelectedValue(256);
         }
         setSortState(false);
       }
@@ -323,11 +326,13 @@ export default function Test() {
       setShowFirst(true);
       setRecord([]);
       setSortState(true);
+      setSelectedValue(null);
     } else {
       setShowSecond(false);
       setShowFirst(true);
       setRecord([]);
       addRecord(array);
+      setSelectedValue(null);
     }
   }
 
@@ -340,8 +345,8 @@ export default function Test() {
       change_celected(value);
       generateArray(value);
     } else {
-      setSelectedValue(value);
-      if (value <= 32) {
+      if (value <= 64) {
+        setSelectedValue(value);
         setInputSize(value);
       }
     }
@@ -351,6 +356,9 @@ export default function Test() {
     setRandom_Own("own");
     setSortState(true);
     setRecord([]);
+    if (selectedValue <= 64) {
+      setInputSize(selectedValue);
+    }
   }
 
   function random_mesh() {
@@ -367,6 +375,7 @@ export default function Test() {
 
   const options_shear = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
+  const options_for_own = [4, 8, 16, 32, 64];
 
   const shear_text =
     "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.";
@@ -435,7 +444,9 @@ export default function Test() {
                           size="lg"
                           width="200px"
                           height="40px"
-                          isDisabled={alg === "SNOR_SHAMMIR"}
+                          isDisabled={
+                            alg === "SNOR_SHAMMIR" || selectedValue === null
+                          }
                           colorScheme={
                             random_or_own === "random" ? "teal" : "gray"
                           }
@@ -449,7 +460,11 @@ export default function Test() {
                           width="200px"
                           height="40px"
                           marginLeft="10px"
-                          isDisabled={alg === "SNOR_SHAMMIR"}
+                          isDisabled={
+                            alg === "SNOR_SHAMMIR" ||
+                            selectedValue === null ||
+                            selectedValue > 64
+                          }
                           colorScheme={
                             random_or_own === "own" ? "teal" : "gray"
                           }
@@ -516,7 +531,9 @@ export default function Test() {
                           size="lg"
                           width="200px"
                           height="40px"
-                          isDisabled={alg === "SHEARSHORT"}
+                          isDisabled={
+                            alg === "SHEARSHORT" || selectedValue === null
+                          }
                           colorScheme={
                             random_or_own === "random" ? "teal" : "gray"
                           }
@@ -530,7 +547,11 @@ export default function Test() {
                           width="200px"
                           height="40px"
                           marginLeft="10px"
-                          isDisabled={alg === "SHEARSHORT"}
+                          isDisabled={
+                            alg === "SHEARSHORT" ||
+                            selectedValue === null ||
+                            selectedValue > 64
+                          }
                           colorScheme={
                             random_or_own === "own" ? "teal" : "gray"
                           }
@@ -560,10 +581,9 @@ export default function Test() {
                   </Text>
                 </Box>
                 {random_or_own === "random" && <MeshComponent grid={array} />}
-                {random_or_own === "own" && (
+                {random_or_own === "own" && input_size !== null && (
                   <CanvasMesh
                     onPrintValues={set_grid_ready}
-                    onResetGrid={go_back}
                     size={input_size}
                   />
                 )}
