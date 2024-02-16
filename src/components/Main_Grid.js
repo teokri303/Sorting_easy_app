@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import {
   ChakraProvider,
@@ -37,18 +37,26 @@ import Paginator from "./Paginator";
 import TextDisplay from "./phase_expl";
 import CanvasMesh from "./Input_canvas";
 import Navbar from "./Navbar";
+import { Icon } from "@chakra-ui/react";
+import { MdNotStarted } from "react-icons/md";
 
 export default function Test() {
-  const [array, setArray] = useState("null");
+  const [array, setArray] = useState(null);
   const [record, setRecord] = useState([]);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
   const [random_or_own, setRandom_Own] = useState("random");
+  const [random_or_own_shear, setRandom_Own_shear] = useState("random");
+  const [random_or_own_ss, setRandom_Own_ss] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue_shear, setSelectedValue_shear] = useState(null);
+  const [selectedValue_ss, setSelectedValue_ss] = useState(null);
   const [input_size, setInputSize] = useState(null);
+  const [shear_grid_size, setShear_size] = useState(null);
+  const [ss_grid_size, setSSsize] = useState(null);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -61,10 +69,6 @@ export default function Test() {
     setRecord([]);
     setArray([...randomArray]);
     addRecord(randomArray);
-
-    if (alg !== 1) {
-      setSortState(false);
-    }
   }
 
   //----------------------------------------------------SHEARSORT ODD EVEN TRANSPOTITION-------------------------------------------------
@@ -289,26 +293,6 @@ export default function Test() {
     return isSorted(flattenedArray);
   }
 
-  const handleButtonClick = (value) => {
-    setAlg(value);
-    if (value === "SNOR_SHAMMIR") {
-      if (random_or_own === "own") {
-        setInputSize(selectedValue);
-      } else {
-        if (array.length > 256) {
-          generateArray(256);
-          setSelectedValue(256);
-        }
-        setSortState(false);
-      }
-    } else {
-      if (random_or_own === "own") {
-      } else {
-        setSortState(false);
-      }
-    }
-  };
-
   function go_sort() {
     if (alg === "SHEARSHORT") {
       sort_First_Alg();
@@ -321,52 +305,89 @@ export default function Test() {
   }
 
   function go_back() {
-    if (random_or_own === "own") {
-      setShowSecond(false);
-      setShowFirst(true);
-      setRecord([]);
-      setArray("null");
-      setSortState(true);
-      setSelectedValue(null);
-      setRandom_Own("random");
-    } else {
-      setShowSecond(false);
-      setShowFirst(true);
-      setRecord([]);
-      setArray("null");
-      setSelectedValue(null);
-      setSortState(true);
-    }
-  }
-
-  function change_celected(value) {
-    setSelectedValue(value);
+    setShowSecond(false);
+    setShowFirst(true);
+    setRecord([]);
+    setArray(null);
+    setSortState(true);
+    setSelectedValue(null);
+    setSelectedValue_shear(null);
+    setSelectedValue_ss(null);
+    setShear_size(null);
+    setSSsize(null);
+    setInputSize(null);
+    setRandom_Own("random");
+    setRandom_Own_shear("random");
+    setRandom_Own_ss("random");
+    setAlg("SHEARSHORT");
   }
 
   const handleSelectChange = (value) => {
-    if (random_or_own === "random") {
-      change_celected(value);
-      generateArray(value);
+    if (alg === "SHEARSHORT") {
+      setSelectedValue_shear(value);
     } else {
-      if (value <= 64) {
-        setSelectedValue(value);
-        setInputSize(value);
-      }
+      setSelectedValue_ss(value);
     }
   };
 
-  function your_own() {
-    setRandom_Own("own");
+  function collectNcreate(value) {
     setSortState(true);
-    setRecord([]);
-    if (selectedValue <= 64) {
-      setInputSize(selectedValue);
+    console.log(value);
+    setAlg(value);
+
+    if (value === "SHEARSHORT") {
+      if (random_or_own_shear === "random") {
+        generateArray(selectedValue_shear);
+        setShear_size(selectedValue_shear);
+        setRandom_Own("random");
+        if (selectedValue_shear > 0) {
+          setSortState(false);
+        }
+      } else {
+        if (selectedValue_shear <= 64) {
+          setInputSize(selectedValue_shear);
+          setShear_size(selectedValue_shear);
+          setRandom_Own("own");
+          setSortState(true);
+        }
+      }
+    } else {
+      if (random_or_own_ss === "random") {
+        generateArray(selectedValue_ss);
+        setSSsize(selectedValue_ss);
+        setRandom_Own("random");
+        if (selectedValue_ss > 0) {
+          setSortState(false);
+        }
+      } else {
+        if (selectedValue_ss <= 64) {
+          setInputSize(selectedValue_ss);
+          setSSsize(selectedValue_ss);
+          setRandom_Own("own");
+          setSortState(true);
+        }
+      }
+    }
+  }
+
+  function your_own() {
+    if (alg === "SHEARSHORT") {
+      setRandom_Own_shear("own");
+      setRecord([]);
+    } else {
+      setRandom_Own_ss("own");
+      setRecord([]);
     }
   }
 
   function random_mesh() {
-    setRandom_Own("random");
-    generateArray(selectedValue);
+    if (alg === "SHEARSHORT") {
+      setRandom_Own_shear("random");
+      setRecord([]);
+    } else {
+      setRandom_Own_ss("random");
+      setRecord([]);
+    }
   }
 
   const set_grid_ready = (grid) => {
@@ -378,7 +399,6 @@ export default function Test() {
 
   const options_shear = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
-  const options_for_own = [4, 8, 16, 32, 64];
 
   const shear_text =
     "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.";
@@ -401,6 +421,7 @@ export default function Test() {
                       border={alg === "SHEARSHORT" ? "5px solid" : "1px solid"}
                       borderColor={alg === "SHEARSHORT" ? "teal" : "#ccc"}
                       p="20px"
+                      position="relative"
                     >
                       <div>
                         <Button
@@ -409,7 +430,7 @@ export default function Test() {
                           height="50px"
                           marginBottom="10px"
                           colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                          onClick={() => handleButtonClick("SHEARSHORT")}
+                          onClick={() => collectNcreate("SHEARSHORT")}
                         >
                           Shearsort algorithm
                         </Button>
@@ -448,10 +469,11 @@ export default function Test() {
                           width="200px"
                           height="40px"
                           isDisabled={
-                            alg === "SNOR_SHAMMIR" || selectedValue === null
+                            alg === "SNOR_SHAMMIR" ||
+                            selectedValue_shear === null
                           }
                           colorScheme={
-                            random_or_own === "random" ? "teal" : "gray"
+                            random_or_own_shear === "random" ? "teal" : "gray"
                           }
                           onClick={() => random_mesh()}
                         >
@@ -465,17 +487,36 @@ export default function Test() {
                           margin="5px"
                           isDisabled={
                             alg === "SNOR_SHAMMIR" ||
-                            selectedValue === null ||
-                            selectedValue > 64
+                            selectedValue_shear === null ||
+                            selectedValue_shear > 64
                           }
                           colorScheme={
-                            random_or_own === "own" ? "teal" : "gray"
+                            random_or_own_shear === "own" ? "teal" : "gray"
                           }
                           onClick={() => your_own()}
                         >
                           Your own Mesh
                         </Button>
                       </div>
+                      <Icon
+                        as={MdNotStarted}
+                        w={14}
+                        h={14}
+                        color={
+                          alg === "SNOR_SHAMMIR" ? "transparent" : "red.500"
+                        }
+                        style={{
+                          position: "absolute",
+                          bottom: 15,
+                          right: 15,
+                          cursor: "pointer",
+                        }}
+                        onClick={
+                          alg === "SNOR_SHAMMIR"
+                            ? null
+                            : () => collectNcreate(alg)
+                        }
+                      />
                     </Box>
                   </div>
 
@@ -488,6 +529,7 @@ export default function Test() {
                       borderColor={alg === "SNOR_SHAMMIR" ? "teal" : "#ccc"}
                       marginTop="10px"
                       p="20px"
+                      position="relative"
                     >
                       <div>
                         <Button
@@ -496,7 +538,7 @@ export default function Test() {
                           height="50px"
                           marginBottom="10px"
                           colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                          onClick={() => handleButtonClick("SNOR_SHAMMIR")}
+                          onClick={() => collectNcreate("SNOR_SHAMMIR")}
                         >
                           Schnorr - Shamir algorithm
                         </Button>
@@ -535,10 +577,10 @@ export default function Test() {
                           width="200px"
                           height="40px"
                           isDisabled={
-                            alg === "SHEARSHORT" || selectedValue === null
+                            alg === "SHEARSHORT" || selectedValue_ss === null
                           }
                           colorScheme={
-                            random_or_own === "random" ? "teal" : "gray"
+                            random_or_own_ss === "random" ? "teal" : "gray"
                           }
                           onClick={() => random_mesh()}
                         >
@@ -552,17 +594,34 @@ export default function Test() {
                           margin="5px"
                           isDisabled={
                             alg === "SHEARSHORT" ||
-                            selectedValue === null ||
-                            selectedValue > 64
+                            selectedValue_ss === null ||
+                            selectedValue_ss > 64
                           }
                           colorScheme={
-                            random_or_own === "own" ? "teal" : "gray"
+                            random_or_own_ss === "own" ? "teal" : "gray"
                           }
                           onClick={() => your_own()}
                         >
                           Your own Mesh
                         </Button>
                       </div>
+                      <Icon
+                        as={MdNotStarted}
+                        w={14}
+                        h={14}
+                        color={alg === "SHEARSHORT" ? "transparent" : "red.500"}
+                        style={{
+                          position: "absolute",
+                          bottom: 15,
+                          right: 15,
+                          cursor: "pointer",
+                        }}
+                        onClick={
+                          alg === "SHEARSHORT"
+                            ? null
+                            : () => collectNcreate(alg)
+                        }
+                      />
                     </Box>
                   </div>
                 </div>
@@ -572,15 +631,25 @@ export default function Test() {
                   </div>
                 </div>
               </div>
+
               <div className="right-div">
-                <Box mt={4}>
+                <Box
+                  //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
+                  mt={4}
+                >
                   <Text fontSize="lg" fontWeight="bold">
                     Current array dimensions:
                   </Text>
                   <Text fontSize="md">
-                    {array === "null"
+                    {array === null
                       ? "No configurations made"
-                      : selectedValue + " X " + selectedValue}
+                      : alg === "SHEARSHORT" &&
+                        (array.length > 0 || input_size !== null)
+                      ? shear_grid_size + " X " + shear_grid_size
+                      : alg === "SNOR_SHAMMIR" &&
+                        (array.length > 0 || input_size !== null)
+                      ? ss_grid_size + " X " + ss_grid_size
+                      : "No configurations made"}
                   </Text>
                 </Box>
                 <div>
