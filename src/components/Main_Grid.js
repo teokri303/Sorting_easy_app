@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 import {
   ChakraProvider,
@@ -51,7 +51,6 @@ export default function Test() {
   const [random_or_own_ss, setRandom_Own_ss] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
-  const [selectedValue, setSelectedValue] = useState(null);
   const [selectedValue_shear, setSelectedValue_shear] = useState(null);
   const [selectedValue_ss, setSelectedValue_ss] = useState(null);
   const [input_size, setInputSize] = useState(null);
@@ -310,7 +309,6 @@ export default function Test() {
     setRecord([]);
     setArray(null);
     setSortState(true);
-    setSelectedValue(null);
     setSelectedValue_shear(null);
     setSelectedValue_ss(null);
     setShear_size(null);
