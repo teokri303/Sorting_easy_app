@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { Button } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
+
 import TextDisplay from "./phase_expl";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
@@ -7,9 +10,10 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 import MeshComponent from "./Mesh";
 import "../styles/Paginator.css";
 
-const Paginator = ({ items, algorithm }) => {
+const Paginator = ({ items, algorithm, on_go_back }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
+  const [dimensions, setDimensions] = useState(null);
 
   const ss_subs = [
     "Random array",
@@ -125,17 +129,27 @@ const Paginator = ({ items, algorithm }) => {
     (_, index) => index + 1
   );
 
+  function handle_back_click() {
+    on_go_back();
+  }
+
   return (
     <div>
       <div className="paginator-container">
         <div>
-          <h1>
-            {algorithm === "SNOR_SHAMMIR" ? "Schnorr Sammir" : "Shearsort"}
+          <h1 className="title_text">
+            {algorithm === "SNOR_SHAMMIR"
+              ? "Schnorr Sammir algorithm"
+              : "Shearsort algorithm"}
           </h1>
+          <p>
+            {items[currentIndex].length} X {items[currentIndex].length}{" "}
+          </p>
+
           <MeshComponent grid={items[currentIndex]} />
         </div>
-        <div>
-          <TextDisplay text={text} />
+        <div className="phase_text">
+          <p>{text}</p>
         </div>
       </div>
       <div className="page-numbers-container">
@@ -156,6 +170,18 @@ const Paginator = ({ items, algorithm }) => {
         <div className="arrow-right" onClick={() => handleArrowClick("right")}>
           <ArrowRightIcon />
         </div>
+      </div>
+      <div>
+        <Button
+          size="lg"
+          width="180px"
+          colorScheme="red"
+          backgroundColor="#404040"
+          leftIcon={<ArrowBackIcon />}
+          onClick={handle_back_click}
+        >
+          Back to sort
+        </Button>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Image } from "@chakra-ui/react";
 
-const Navbar = ({ onLogoClick, onTextClick }) => {
+const Navbar = ({ onLogoClick }) => {
   return (
     <div className="navbarstyle">
       <span
@@ -14,10 +14,19 @@ const Navbar = ({ onLogoClick, onTextClick }) => {
         }}
         onClick={onLogoClick}
       >
-        <Box boxSize="50px" marginRight="10px" marginLeft="20px">
+        <Box boxSize="60px" marginRight="10px" marginLeft="20px">
           <Image src="/media/onlylogo.png" />
         </Box>
-        <p>Sorting easy</p>
+        <div>
+          <p> Sorting easy </p>
+          <p
+            style={{
+              fontSize: "15px",
+            }}
+          >
+            Parallel sorting algorithm simulator.
+          </p>
+        </div>
       </span>
     </div>
   );

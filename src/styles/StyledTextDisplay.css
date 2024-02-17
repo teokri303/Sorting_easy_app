@@ -1,6 +1,7 @@
 .text-display-container {
   max-width: 600px;
   text-align: left;
+  margin-top: 10px;
 }
 
 .main-text {

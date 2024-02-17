@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
 import {
   ChakraProvider,
@@ -9,7 +9,6 @@ import {
   CSSReset,
   extendTheme,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { CircularProgress } from "@chakra-ui/react";
 
 import {
@@ -46,11 +45,15 @@ export default function Test() {
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const [sortstate, setSortState] = useState(true);
+  const [sortstate_shear, setSortState_shear] = useState(true);
+  const [sortstate_ss, setSortState_ss] = useState(true);
   const [random_or_own, setRandom_Own] = useState("random");
   const [random_or_own_shear, setRandom_Own_shear] = useState("random");
   const [random_or_own_ss, setRandom_Own_ss] = useState("random");
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(null);
+
   const [selectedValue_shear, setSelectedValue_shear] = useState(null);
   const [selectedValue_ss, setSelectedValue_ss] = useState(null);
   const [input_size, setInputSize] = useState(null);
@@ -60,6 +63,8 @@ export default function Test() {
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
+
+  let canvas_cr_size = 0;
 
   function generateArray(value) {
     const gridsize = value;
@@ -309,6 +314,8 @@ export default function Test() {
     setRecord([]);
     setArray(null);
     setSortState(true);
+    setSortState_shear(true);
+    setSortState_ss(true);
     setSelectedValue_shear(null);
     setSelectedValue_ss(null);
     setShear_size(null);
@@ -328,45 +335,61 @@ export default function Test() {
     }
   };
 
+  const change_box = (value) => {
+    if (value === "SHEARSHORT") {
+      setAlg(value);
+    } else {
+      setAlg("SNOR_SHAMMIR");
+    }
+  };
+
   function collectNcreate(value) {
-    setSortState(true);
-    console.log(value);
     setAlg(value);
 
     if (value === "SHEARSHORT") {
       if (random_or_own_shear === "random") {
         generateArray(selectedValue_shear);
         setShear_size(selectedValue_shear);
+        setSelectedValue(selectedValue_shear);
+
         setRandom_Own("random");
         if (selectedValue_shear > 0) {
-          setSortState(false);
+          setSortState_shear(false);
         }
       } else {
         if (selectedValue_shear <= 64) {
           setInputSize(selectedValue_shear);
           setShear_size(selectedValue_shear);
+          setSelectedValue(selectedValue_shear);
+
           setRandom_Own("own");
-          setSortState(true);
+          setSortState_shear(true);
         }
       }
     } else {
       if (random_or_own_ss === "random") {
         generateArray(selectedValue_ss);
         setSSsize(selectedValue_ss);
+        setSelectedValue(selectedValue_ss);
         setRandom_Own("random");
         if (selectedValue_ss > 0) {
-          setSortState(false);
+          setSortState_ss(false);
         }
       } else {
         if (selectedValue_ss <= 64) {
           setInputSize(selectedValue_ss);
           setSSsize(selectedValue_ss);
+          setSelectedValue(selectedValue_ss);
           setRandom_Own("own");
-          setSortState(true);
+          setSortState_ss(true);
         }
       }
     }
   }
+
+  useEffect(() => {
+    generateArray(input_size);
+  }, [input_size]);
 
   function your_own() {
     if (alg === "SHEARSHORT") {
@@ -392,7 +415,11 @@ export default function Test() {
     setRecord([]);
     setArray([...grid]);
     addRecord(grid);
-    setSortState(false);
+    if (alg === "SHEARSHORT") {
+      setSortState_shear(false);
+    } else {
+      setSortState_ss(false);
+    }
   };
 
   const options_shear = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
@@ -417,104 +444,121 @@ export default function Test() {
                   <div>
                     <Box
                       border={alg === "SHEARSHORT" ? "5px solid" : "1px solid"}
-                      borderColor={alg === "SHEARSHORT" ? "teal" : "#ccc"}
-                      p="20px"
+                      borderColor={alg === "SHEARSHORT" ? "teal" : "black"}
+                      p=" 10px"
                       position="relative"
+                      onClick={() => {
+                        change_box("SHEARSHORT");
+                      }}
+                      cursor={alg === "SHEARSHORT" ? null : "pointer"}
                     >
-                      <div>
-                        <Button
-                          size="md"
-                          width="400px"
-                          height="50px"
-                          marginBottom="10px"
-                          colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                          onClick={() => collectNcreate("SHEARSHORT")}
-                        >
-                          Shearsort algorithm
-                        </Button>
+                      <div className="text">
+                        <p>Shearsort algorithm</p>
                       </div>
-                      <div>
-                        <TextDisplay text={shear_text} />
-                      </div>
-                      <div>
-                        <ChakraProvider
-                          theme={extendTheme({
-                            styles: { global: { body: { bg: "gray.100" } } },
-                          })}
-                        >
-                          <CSSReset />
-                          <Box p={4} maxW="md" mx="auto">
-                            <Select
-                              placeholder="Enter mesh dimensions"
-                              onChange={(e) =>
-                                handleSelectChange(e.target.value)
-                              }
-                              textAlign="center"
-                              isDisabled={alg === "SNOR_SHAMMIR"}
-                            >
-                              {options_shear.map((value) => (
-                                <option key={value} value={value}>
-                                  {value}
-                                </option>
-                              ))}
-                            </Select>
-                          </Box>
-                        </ChakraProvider>
-                      </div>
-                      <div>
-                        <Button
-                          size="lg"
-                          width="200px"
-                          height="40px"
-                          isDisabled={
-                            alg === "SNOR_SHAMMIR" ||
-                            selectedValue_shear === null
-                          }
-                          colorScheme={
-                            random_or_own_shear === "random" ? "teal" : "gray"
-                          }
-                          onClick={() => random_mesh()}
-                        >
-                          Random Mesh
-                        </Button>
-
-                        <Button
-                          size="lg"
-                          width="200px"
-                          height="40px"
-                          margin="5px"
-                          isDisabled={
-                            alg === "SNOR_SHAMMIR" ||
-                            selectedValue_shear === null ||
-                            selectedValue_shear > 64
-                          }
-                          colorScheme={
-                            random_or_own_shear === "own" ? "teal" : "gray"
-                          }
-                          onClick={() => your_own()}
-                        >
-                          Your own Mesh
-                        </Button>
-                      </div>
-                      <Icon
-                        as={MdNotStarted}
-                        w={14}
-                        h={14}
-                        color={
-                          alg === "SNOR_SHAMMIR" ? "transparent" : "red.500"
-                        }
+                      <div
                         style={{
-                          position: "absolute",
-                          bottom: 15,
-                          right: 15,
-                          cursor: "pointer",
+                          filter: alg === "SNOR_SHAMMIR" ? "blur(1px)" : "none",
                         }}
-                        onClick={
-                          alg === "SNOR_SHAMMIR"
-                            ? null
-                            : () => collectNcreate(alg)
-                        }
-                      />
+                      >
+                        <div>
+                          <ChakraProvider
+                            theme={extendTheme({
+                              styles: { global: { body: { bg: "gray.100" } } },
+                            })}
+                          >
+                            <CSSReset />
+                            <Box p={4} maxW="md" mx="auto">
+                              <Select
+                                placeholder="Enter mesh dimensions"
+                                onChange={(e) =>
+                                  handleSelectChange(e.target.value)
+                                }
+                                textAlign="center"
+                                isDisabled={alg === "SNOR_SHAMMIR"}
+                              >
+                                {options_shear.map((value) => (
+                                  <option key={value} value={value}>
+                                    {value}
+                                  </option>
+                                ))}
+                              </Select>
+                            </Box>
+                          </ChakraProvider>
+                        </div>
+                        <div>
+                          <Button
+                            size="lg"
+                            width="180px"
+                            height="38px"
+                            isDisabled={
+                              alg === "SNOR_SHAMMIR" ||
+                              selectedValue_shear === null
+                            }
+                            colorScheme={
+                              random_or_own_shear === "random" ? "teal" : "gray"
+                            }
+                            onClick={() => random_mesh()}
+                          >
+                            Random array
+                          </Button>
+
+                          <Button
+                            size="lg"
+                            width="180px"
+                            height="38px"
+                            margin="5px"
+                            isDisabled={
+                              alg === "SNOR_SHAMMIR" ||
+                              selectedValue_shear === null ||
+                              selectedValue_shear > 64
+                            }
+                            colorScheme={
+                              random_or_own_shear === "own" ? "teal" : "gray"
+                            }
+                            onClick={() => your_own()}
+                          >
+                            Your own array
+                          </Button>
+
+                          <Icon
+                            as={MdNotStarted}
+                            w={14}
+                            h={14}
+                            color={
+                              alg === "SNOR_SHAMMIR" ? "transparent" : "red.500"
+                            }
+                            style={{
+                              cursor: "pointer",
+                              position: "absolute",
+                              right: "3%", // Τερμα αριστερά μέσα στο Box
+                              top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
+                              transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
+                            }}
+                            onClick={
+                              alg === "SNOR_SHAMMIR"
+                                ? null
+                                : () => collectNcreate(alg)
+                            }
+                          />
+                        </div>
+
+                        <div>
+                          <TextDisplay text={shear_text} />
+                        </div>
+                        <div>
+                          <Button
+                            size="md"
+                            width="100px"
+                            height="40px"
+                            margin="5px"
+                            colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
+                            isDisabled={sortstate_shear}
+                            onClick={go_sort}
+                          >
+                            Sort
+                          </Button>
+                        </div>
+                      </div>
                     </Box>
                   </div>
 
@@ -524,108 +568,125 @@ export default function Test() {
                       border={
                         alg === "SNOR_SHAMMIR" ? "5px solid" : "1px solid"
                       }
-                      borderColor={alg === "SNOR_SHAMMIR" ? "teal" : "#ccc"}
+                      borderColor={alg === "SNOR_SHAMMIR" ? "teal" : "black"}
                       marginTop="10px"
-                      p="20px"
+                      p="10px"
                       position="relative"
+                      onClick={() => {
+                        change_box("SNOR_SHAMMIR");
+                      }}
+                      cursor={alg === "SNOR_SHAMMIR" ? null : "pointer"}
                     >
-                      <div>
-                        <Button
-                          size="md"
-                          width="400px"
-                          height="50px"
-                          marginBottom="10px"
-                          colorScheme={alg === "SNOR_SHAMMIR" ? "teal" : "gray"}
-                          onClick={() => collectNcreate("SNOR_SHAMMIR")}
-                        >
-                          Schnorr - Shamir algorithm
-                        </Button>
+                      <div className="text">
+                        <p>Schnorr Shamir algorithm</p>
                       </div>
-                      <div>
-                        <TextDisplay text={SS_text} />
-                      </div>
-                      <div>
-                        <ChakraProvider
-                          theme={extendTheme({
-                            styles: { global: { body: { bg: "gray.100" } } },
-                          })}
-                        >
-                          <CSSReset />
-                          <Box p={4} maxW="md" mx="auto">
-                            <Select
-                              placeholder="Enter mesh dimensions"
-                              onChange={(e) =>
-                                handleSelectChange(e.target.value)
-                              }
-                              textAlign="center"
-                              isDisabled={alg === "SHEARSHORT"}
-                            >
-                              {options_SS.map((value) => (
-                                <option key={value} value={value}>
-                                  {value}
-                                </option>
-                              ))}
-                            </Select>
-                          </Box>
-                        </ChakraProvider>
-                      </div>
-                      <div>
-                        <Button
-                          size="lg"
-                          width="200px"
-                          height="40px"
-                          isDisabled={
-                            alg === "SHEARSHORT" || selectedValue_ss === null
-                          }
-                          colorScheme={
-                            random_or_own_ss === "random" ? "teal" : "gray"
-                          }
-                          onClick={() => random_mesh()}
-                        >
-                          Random Mesh
-                        </Button>
-
-                        <Button
-                          size="lg"
-                          width="200px"
-                          height="40px"
-                          margin="5px"
-                          isDisabled={
-                            alg === "SHEARSHORT" ||
-                            selectedValue_ss === null ||
-                            selectedValue_ss > 64
-                          }
-                          colorScheme={
-                            random_or_own_ss === "own" ? "teal" : "gray"
-                          }
-                          onClick={() => your_own()}
-                        >
-                          Your own Mesh
-                        </Button>
-                      </div>
-                      <Icon
-                        as={MdNotStarted}
-                        w={14}
-                        h={14}
-                        color={alg === "SHEARSHORT" ? "transparent" : "red.500"}
+                      <div
                         style={{
-                          position: "absolute",
-                          bottom: 15,
-                          right: 15,
-                          cursor: "pointer",
+                          filter: alg === "SHEARSHORT" ? "blur(1px)" : "none",
                         }}
-                        onClick={
-                          alg === "SHEARSHORT"
-                            ? null
-                            : () => collectNcreate(alg)
-                        }
-                      />
+                      >
+                        <div>
+                          <ChakraProvider
+                            theme={extendTheme({
+                              styles: { global: { body: { bg: "gray.100" } } },
+                            })}
+                          >
+                            <CSSReset />
+                            <Box p={4} maxW="md" mx="auto">
+                              <Select
+                                placeholder="Enter mesh dimensions"
+                                onChange={(e) =>
+                                  handleSelectChange(e.target.value)
+                                }
+                                textAlign="center"
+                                isDisabled={alg === "SHEARSHORT"}
+                              >
+                                {options_SS.map((value) => (
+                                  <option key={value} value={value}>
+                                    {value}
+                                  </option>
+                                ))}
+                              </Select>
+                            </Box>
+                          </ChakraProvider>
+                        </div>
+
+                        <div>
+                          <Button
+                            size="lg"
+                            width="180px"
+                            height="38px"
+                            isDisabled={
+                              alg === "SHEARSHORT" || selectedValue_ss === null
+                            }
+                            colorScheme={
+                              random_or_own_ss === "random" ? "teal" : "gray"
+                            }
+                            onClick={() => random_mesh()}
+                          >
+                            Random array
+                          </Button>
+
+                          <Button
+                            size="lg"
+                            width="200px"
+                            height="40px"
+                            margin="5px"
+                            isDisabled={
+                              alg === "SHEARSHORT" ||
+                              selectedValue_ss === null ||
+                              selectedValue_ss > 64
+                            }
+                            colorScheme={
+                              random_or_own_ss === "own" ? "teal" : "gray"
+                            }
+                            onClick={() => your_own()}
+                          >
+                            Your own array
+                          </Button>
+                          <div>
+                            <Icon
+                              as={MdNotStarted}
+                              w={14}
+                              h={14}
+                              color={
+                                alg === "SHEARSHORT" ? "transparent" : "red.500"
+                              }
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: "3%", // Τερμα αριστερά μέσα στο Box
+                                top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
+                                transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
+                              }}
+                              onClick={
+                                alg === "SHEARSHORT"
+                                  ? null
+                                  : () => collectNcreate(alg)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <TextDisplay text={SS_text} />
+                        </div>
+                        <div>
+                          <Button
+                            size="md"
+                            width="100px"
+                            height="40px"
+                            margin="5px"
+                            colorScheme={
+                              alg === "SNOR_SHAMMIR" ? "teal" : "gray"
+                            }
+                            isDisabled={sortstate_ss}
+                            onClick={go_sort}
+                          >
+                            Sort
+                          </Button>
+                        </div>
+                      </div>
                     </Box>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <div></div>
                   </div>
                 </div>
               </div>
@@ -641,12 +702,10 @@ export default function Test() {
                   <Text fontSize="md">
                     {array === null
                       ? "No configurations made"
-                      : alg === "SHEARSHORT" &&
-                        (array.length > 0 || input_size !== null)
-                      ? shear_grid_size + " X " + shear_grid_size
-                      : alg === "SNOR_SHAMMIR" &&
-                        (array.length > 0 || input_size !== null)
-                      ? ss_grid_size + " X " + ss_grid_size
+                      : alg === "SHEARSHORT" && array.length > 0
+                      ? selectedValue + " X " + selectedValue
+                      : alg === "SNOR_SHAMMIR" && array.length > 0
+                      ? selectedValue + " X " + selectedValue
                       : "No configurations made"}
                   </Text>
                 </Box>
@@ -659,21 +718,6 @@ export default function Test() {
                     />
                   )}
                 </div>
-
-                <div>
-                  <Box textAlign="center">
-                    <Button
-                      colorScheme="teal"
-                      rightIcon={<ArrowForwardIcon />}
-                      size="lg"
-                      width="250px"
-                      onClick={go_sort}
-                      isDisabled={sortstate}
-                    >
-                      SORT
-                    </Button>
-                  </Box>
-                </div>
               </div>
             </div>
           </div>
@@ -684,19 +728,7 @@ export default function Test() {
         {showSecond && (
           <div>
             <div>
-              <Button
-                size="lg"
-                width="180px"
-                colorScheme="red"
-                backgroundColor="#404040"
-                leftIcon={<ArrowBackIcon />}
-                onClick={go_back}
-              >
-                Back to sort
-              </Button>
-            </div>
-            <div>
-              <Paginator items={record} algorithm={alg} />
+              <Paginator items={record} algorithm={alg} on_go_back={go_back} />
               {loadingbar && (
                 <div id="bar">
                   <CircularProgress

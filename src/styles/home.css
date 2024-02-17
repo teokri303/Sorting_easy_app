@@ -27,10 +27,31 @@
 
 
 .navbarstyle {
-  
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  border: 100px;
+}
+.text{
+  display: grid;
+  text-align: center; 
+  font-size: 20px;
+  font-weight: bold;
+        
+}
+.phase_text{
+  display: grid;
+  text-align: center; 
+  font-size: 25px;
+  margin-top: 10px;
+        
+}
+.title_text{
+  display: grid;
+  text-align: center; 
+  font-size: 30px;
+  font-weight: bold;
+        
 }
 
 .left-div, .right-div {
@@ -63,7 +84,7 @@
 
 #bar{
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);  
   width: 100%;
