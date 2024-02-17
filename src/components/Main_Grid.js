@@ -44,7 +44,6 @@ export default function Test() {
   const [record, setRecord] = useState([]);
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
-  const [sortstate, setSortState] = useState(true);
   const [sortstate_shear, setSortState_shear] = useState(true);
   const [sortstate_ss, setSortState_ss] = useState(true);
   const [random_or_own, setRandom_Own] = useState("random");
@@ -57,14 +56,10 @@ export default function Test() {
   const [selectedValue_shear, setSelectedValue_shear] = useState(null);
   const [selectedValue_ss, setSelectedValue_ss] = useState(null);
   const [input_size, setInputSize] = useState(null);
-  const [shear_grid_size, setShear_size] = useState(null);
-  const [ss_grid_size, setSSsize] = useState(null);
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
   };
-
-  let canvas_cr_size = 0;
 
   function generateArray(value) {
     const gridsize = value;
@@ -313,13 +308,10 @@ export default function Test() {
     setShowFirst(true);
     setRecord([]);
     setArray(null);
-    setSortState(true);
     setSortState_shear(true);
     setSortState_ss(true);
     setSelectedValue_shear(null);
     setSelectedValue_ss(null);
-    setShear_size(null);
-    setSSsize(null);
     setInputSize(null);
     setRandom_Own("random");
     setRandom_Own_shear("random");
@@ -349,7 +341,6 @@ export default function Test() {
     if (value === "SHEARSHORT") {
       if (random_or_own_shear === "random") {
         generateArray(selectedValue_shear);
-        setShear_size(selectedValue_shear);
         setSelectedValue(selectedValue_shear);
 
         setRandom_Own("random");
@@ -359,7 +350,6 @@ export default function Test() {
       } else {
         if (selectedValue_shear <= 64) {
           setInputSize(selectedValue_shear);
-          setShear_size(selectedValue_shear);
           setSelectedValue(selectedValue_shear);
 
           setRandom_Own("own");
@@ -369,7 +359,6 @@ export default function Test() {
     } else {
       if (random_or_own_ss === "random") {
         generateArray(selectedValue_ss);
-        setSSsize(selectedValue_ss);
         setSelectedValue(selectedValue_ss);
         setRandom_Own("random");
         if (selectedValue_ss > 0) {
@@ -378,7 +367,6 @@ export default function Test() {
       } else {
         if (selectedValue_ss <= 64) {
           setInputSize(selectedValue_ss);
-          setSSsize(selectedValue_ss);
           setSelectedValue(selectedValue_ss);
           setRandom_Own("own");
           setSortState_ss(true);
@@ -441,7 +429,7 @@ export default function Test() {
             <div className="container">
               <div className="left-div">
                 <div>
-                  <div>
+                  <div id="box1">
                     <Box
                       border={alg === "SHEARSHORT" ? "5px solid" : "1px solid"}
                       borderColor={alg === "SHEARSHORT" ? "teal" : "black"}
@@ -463,7 +451,9 @@ export default function Test() {
                         <div>
                           <ChakraProvider
                             theme={extendTheme({
-                              styles: { global: { body: { bg: "gray.100" } } },
+                              styles: {
+                                global: { body: { bg: "gray.100" } },
+                              },
                             })}
                           >
                             <CSSReset />
@@ -561,10 +551,10 @@ export default function Test() {
                       </div>
                     </Box>
                   </div>
-
-                  <div>
+                  <div id="box2">
                     <Box
                       //------------------------------------------------------------------------------------------------------SS BLOCK---------------------------------------------
+
                       border={
                         alg === "SNOR_SHAMMIR" ? "5px solid" : "1px solid"
                       }
@@ -588,7 +578,9 @@ export default function Test() {
                         <div>
                           <ChakraProvider
                             theme={extendTheme({
-                              styles: { global: { body: { bg: "gray.100" } } },
+                              styles: {
+                                global: { body: { bg: "gray.100" } },
+                              },
                             })}
                           >
                             <CSSReset />
@@ -629,8 +621,8 @@ export default function Test() {
 
                           <Button
                             size="lg"
-                            width="200px"
-                            height="40px"
+                            width="180px"
+                            height="38px"
                             margin="5px"
                             isDisabled={
                               alg === "SHEARSHORT" ||

@@ -3,8 +3,6 @@ import { useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 
-import TextDisplay from "./phase_expl";
-
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 
 import MeshComponent from "./Mesh";
@@ -13,7 +11,6 @@ import "../styles/Paginator.css";
 const Paginator = ({ items, algorithm, on_go_back }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
-  const [dimensions, setDimensions] = useState(null);
 
   const ss_subs = [
     "Random array",

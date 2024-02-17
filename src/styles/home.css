@@ -107,11 +107,53 @@
   
 }
 
-@media (max-width: 600px) {
+/* Εφαρμογή περιορισμένης διάταξης για κινητά */
+@media (max-width: 768px) {
   .container {
-    width: 100%;
-    position: relative;
-    top: 90%;
-    transform: translateY(-50%);
+    flex-direction: column;
   }
+
+ 
+
+  canvas {
+    width: 100%; /* Προσαρμογή του πλάτους στο 100% του παραθύρου προβολής */
+    height: auto; /* Αυτόματο ύψος για διατήρηση της αναλογίας */
+    max-width: 300px; /* Μέγιστο πλάτος του canvas για να μην υπερβαίνει το 300px */
+  }
+
+  .right-div {
+    flex: 1; 
+    display: grid;
+    place-items: center;
+    padding: 0 10px; /* Προσθήκη padding 10px από αριστερά και δεξιά */
+  }
+
+  .pagi-container > div {
+    flex: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .pagi-container > div:nth-child(2) {
+    flex: 0 0 100%;
+  }
+
+  /* Περισσότερα κανόνες CSS για προσαρμογή σε μικρότερες οθόνες */
+  .navbarstyle {
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .navbarstyle > div {
+    margin-bottom: 10px;
+  }
+
+  .text, .phase_text, .title_text {
+    font-size: 18px;
+  }
+
+  
+  
 }
+
