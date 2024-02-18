@@ -541,8 +541,10 @@ export default function Test() {
                             width="100px"
                             height="40px"
                             margin="5px"
-                            colorScheme={alg === "SHEARSHORT" ? "teal" : "gray"}
-                            isDisabled={sortstate_shear}
+                            colorScheme={sortstate_shear ? "gray" : "teal"}
+                            isDisabled={
+                              sortstate_shear || alg === "SNOR_SHAMMIR"
+                            }
                             onClick={go_sort}
                           >
                             Sort
@@ -668,10 +670,8 @@ export default function Test() {
                             width="100px"
                             height="40px"
                             margin="5px"
-                            colorScheme={
-                              alg === "SNOR_SHAMMIR" ? "teal" : "gray"
-                            }
-                            isDisabled={sortstate_ss}
+                            colorScheme={sortstate_ss ? "gray" : "teal"}
+                            isDisabled={sortstate_ss || alg === "SHEARSHORT"}
                             onClick={go_sort}
                           >
                             Sort

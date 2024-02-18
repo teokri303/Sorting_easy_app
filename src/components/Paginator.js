@@ -168,7 +168,7 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
           <ArrowRightIcon />
         </div>
       </div>
-      <div>
+      <div className="back">
         <Button
           size="lg"
           width="180px"

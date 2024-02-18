@@ -12,10 +12,12 @@
     #e6dada
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
-  min-height: 130vh;
   display: flex;
   flex-direction: column;
+  min-height: 150vh; 
+
 }
+
 
 
 .container {
@@ -82,6 +84,12 @@
 }
 
 
+.back{
+  position: absolute;
+  top: 30%;
+  left: 5%;
+}
+
 #bar{
   position: absolute;
   top: 40%;
@@ -125,7 +133,8 @@
     flex: 1; 
     display: grid;
     place-items: center;
-    padding: 0 10px; /* Προσθήκη padding 10px από αριστερά και δεξιά */
+    padding: 10px; 
+    
   }
 
   .pagi-container > div {
@@ -138,7 +147,6 @@
     flex: 0 0 100%;
   }
 
-  /* Περισσότερα κανόνες CSS για προσαρμογή σε μικρότερες οθόνες */
   .navbarstyle {
     flex-direction: column;
     align-items: center;
@@ -151,6 +159,11 @@
 
   .text, .phase_text, .title_text {
     font-size: 18px;
+  }
+
+  .back{
+    position: relative;
+    
   }
 
   
