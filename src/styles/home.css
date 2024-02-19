@@ -10,7 +10,7 @@
     to top,
     #274046,
     #e6dada
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  ); 
 
   display: flex;
   flex-direction: column;
@@ -23,10 +23,9 @@
 .container {
   display: flex;
   position: relative;
-  height: 100vh; /* 100% του ύψους της οθόνης */
+  height: 100%; /* 100% του ύψους της οθόνης */
   
 }
-
 
 .navbarstyle {
   padding: 10px;
@@ -62,7 +61,15 @@
   display: flex;
   flex-direction: column;
   align-items: center
-  
+}
+
+.collectNcreate {
+  cursor: pointer;
+  position: absolute;
+  right: 3%;
+  top: 43%;
+  transform: translateY(-50%);
+
 }
 
 
@@ -113,14 +120,6 @@
 
 
 
-
-.left-top {
-  position: absolute;
-  left: 200px;
-  top: 95px;
-}
-
-
 .styled-text {
   font-weight: bold;
   font-size: 20px;
@@ -134,42 +133,47 @@
     flex-direction: column;
   }
 
+
+  .navbarstyle  {
+    margin-bottom: 0;
+  }
+  .navbarstyle p {
+    font-size: 20px;
+  }
  
 
   canvas {
     width: 100%; /* Προσαρμογή του πλάτους στο 100% του παραθύρου προβολής */
     height: auto; /* Αυτόματο ύψος για διατήρηση της αναλογίας */
-    max-width: 300px; /* Μέγιστο πλάτος του canvas για να μην υπερβαίνει το 300px */
+    max-width: 300px;
+    margin: 0 auto; /* Κεντράρισμα στον οριζόντιο άξονα */
+    margin-top: 5px;
+  }
+
+  .left-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center
+    
   }
 
   .right-div {
     flex: 1; 
-    display: grid;
-    place-items: center;
-    padding: 10px; 
-    
-  }
-
-  .pagi-container > div {
-    flex: 1;
-    width: 100%;
-    height: auto;
-  }
-
-  .pagi-container > div:nth-child(2) {
-    flex: 0 0 100%;
-  }
-
-  /* Περισσότερα κανόνες CSS για προσαρμογή σε μικρότερες οθόνες */
-  .navbarstyle {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 5px;
+    align-items: center
   }
 
-  .navbarstyle > div {
-    margin-bottom: 10px;
+  .collectNcreate {
+    cursor: pointer;
+    position: absolute;
+    right: 3%;
+    top: 135px;
+    transform: translateY(-50%);
+  
   }
+
+
 
   .text, .phase_text, .title_text {
     font-size: 18px;
@@ -181,9 +185,18 @@
   }
 
   .language {
-    position: absolute;
-    bottom: 100px;
-    left: 100%;
+    display: none;
+   
+  
+}
+
+#bar{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); 
+  size: 100px; 
+
 }
 
 

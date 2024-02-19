@@ -416,6 +416,21 @@ export default function Test() {
   const options_shear = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+
+    handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
+    window.addEventListener("resize", handleResize); // Παρακολουθεί τις αλλαγές μεγέθους της οθόνης
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Καθαρίζει τον event listener κατά το unmount
+    };
+  }, []);
+
   return (
     <div>
       <div>
@@ -431,7 +446,7 @@ export default function Test() {
                     <Box
                       border={alg === "SHEARSHORT" ? "5px solid" : "1px solid"}
                       borderColor={alg === "SHEARSHORT" ? "teal" : "black"}
-                      p=" 10px"
+                      p="10px"
                       position="relative"
                       onClick={() => {
                         change_box("SHEARSHORT");
@@ -504,30 +519,47 @@ export default function Test() {
                             {t("Own")}
                           </Button>
 
-                          <Icon
-                            as={MdNotStarted}
-                            w={14}
-                            h={14}
-                            color={
-                              alg === "SNOR_SHAMMIR" ? "transparent" : "red.500"
-                            }
-                            style={{
-                              cursor: "pointer",
-                              position: "absolute",
-                              right: "3%", // Τερμα αριστερά μέσα στο Box
-                              top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
-                              transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
-                            }}
-                            onClick={
-                              alg === "SNOR_SHAMMIR"
-                                ? null
-                                : () => collectNcreate(alg)
-                            }
-                          />
+                          <div className="collectNcreate">
+                            <Icon
+                              as={MdNotStarted}
+                              w={14}
+                              h={14}
+                              color={
+                                alg === "SNOR_SHAMMIR"
+                                  ? "transparent"
+                                  : "red.500"
+                              }
+                              style={{
+                                cursor: "pointer",
+                                position: "absolute",
+                                right: "3%", // Τερμα αριστερά μέσα στο Box
+                                top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
+                                transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
+                              }}
+                              onClick={
+                                alg === "SNOR_SHAMMIR"
+                                  ? null
+                                  : () => collectNcreate(alg)
+                              }
+                            />
+                          </div>
                         </div>
 
                         <div className="text-display-container">
                           <p className="main-text">{t("shear text")}</p>
+                        </div>
+                        <div className="box_mesh">
+                          {random_or_own === "random" && isMobile && (
+                            <MeshComponent grid={array} />
+                          )}
+                          {random_or_own === "own" &&
+                            input_size !== null &&
+                            isMobile && (
+                              <CanvasMesh
+                                onPrintValues={set_grid_ready}
+                                size={input_size}
+                              />
+                            )}
                         </div>
                         <div>
                           <Button
@@ -628,7 +660,7 @@ export default function Test() {
                           >
                             {t("Own")}
                           </Button>
-                          <div>
+                          <div className="collectNcreate">
                             <Icon
                               as={MdNotStarted}
                               w={14}
@@ -636,13 +668,6 @@ export default function Test() {
                               color={
                                 alg === "SHEARSHORT" ? "transparent" : "red.500"
                               }
-                              style={{
-                                cursor: "pointer",
-                                position: "absolute",
-                                right: "3%", // Τερμα αριστερά μέσα στο Box
-                                top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
-                                transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
-                              }}
                               onClick={
                                 alg === "SHEARSHORT"
                                   ? null
@@ -653,6 +678,19 @@ export default function Test() {
                         </div>
                         <div className="text-display-container">
                           <p className="main-text">{t("ss text")}</p>
+                        </div>
+                        <div className="box_mesh">
+                          {random_or_own === "random" && isMobile && (
+                            <MeshComponent grid={array} />
+                          )}
+                          {random_or_own === "own" &&
+                            input_size !== null &&
+                            isMobile && (
+                              <CanvasMesh
+                                onPrintValues={set_grid_ready}
+                                size={input_size}
+                              />
+                            )}
                         </div>
                         <div>
                           <Button
@@ -674,38 +712,40 @@ export default function Test() {
               </div>
 
               <div className="right-div">
-                <div>
+                {!isMobile && (
                   <div>
-                    <Box
-                      //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
-                      mt={4}
-                    >
-                      <Text fontSize="lg" fontWeight="bold">
-                        {t("Current array dimensions:")}
-                      </Text>
-                      <Text fontSize="md">
-                        {array === null
-                          ? t("no conf")
-                          : alg === "SHEARSHORT" && array.length > 0
-                          ? selectedValue + " X " + selectedValue
-                          : alg === "SNOR_SHAMMIR" && array.length > 0
-                          ? selectedValue + " X " + selectedValue
-                          : t("no conf")}
-                      </Text>
-                    </Box>
+                    <div>
+                      <Box
+                        //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
+                        mt={4}
+                      >
+                        <Text fontSize="lg" fontWeight="bold">
+                          {t("Current array dimensions:")}
+                        </Text>
+                        <Text fontSize="md">
+                          {array === null
+                            ? t("no conf")
+                            : alg === "SHEARSHORT" && array.length > 0
+                            ? selectedValue + " X " + selectedValue
+                            : alg === "SNOR_SHAMMIR" && array.length > 0
+                            ? selectedValue + " X " + selectedValue
+                            : t("no conf")}
+                        </Text>
+                      </Box>
+                    </div>
+                    <div>
+                      {random_or_own === "random" && (
+                        <MeshComponent grid={array} />
+                      )}
+                      {random_or_own === "own" && input_size !== null && (
+                        <CanvasMesh
+                          onPrintValues={set_grid_ready}
+                          size={input_size}
+                        />
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    {random_or_own === "random" && (
-                      <MeshComponent grid={array} />
-                    )}
-                    {random_or_own === "own" && input_size !== null && (
-                      <CanvasMesh
-                        onPrintValues={set_grid_ready}
-                        size={input_size}
-                      />
-                    )}
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
