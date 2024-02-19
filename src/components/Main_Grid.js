@@ -39,6 +39,8 @@ import Navbar from "./Navbar";
 import { Icon } from "@chakra-ui/react";
 import { MdNotStarted } from "react-icons/md";
 
+import { useTranslation } from "react-i18next";
+
 export default function Test() {
   const [array, setArray] = useState(null);
   const [record, setRecord] = useState([]);
@@ -52,10 +54,11 @@ export default function Test() {
   const [alg, setAlg] = useState("SHEARSHORT");
   const [loadingbar, setLoadingbar] = useState(false);
   const [selectedValue, setSelectedValue] = useState(null);
-
   const [selectedValue_shear, setSelectedValue_shear] = useState(null);
   const [selectedValue_ss, setSelectedValue_ss] = useState(null);
   const [input_size, setInputSize] = useState(null);
+
+  const { t } = useTranslation();
 
   const addRecord = (newArray) => {
     setRecord((prevRecord) => [...prevRecord, newArray]);
@@ -413,11 +416,6 @@ export default function Test() {
   const options_shear = [4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
 
-  const shear_text =
-    "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.";
-  const SS_text =
-    "The parallel sorting algorithm of Schnorr and Shamir for large N values. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.";
-
   return (
     <div>
       <div>
@@ -441,13 +439,9 @@ export default function Test() {
                       cursor={alg === "SHEARSHORT" ? null : "pointer"}
                     >
                       <div className="text">
-                        <p>Shearsort algorithm</p>
+                        <p>{t("Shearsort algorithm")}</p>
                       </div>
-                      <div
-                        style={{
-                          filter: alg === "SNOR_SHAMMIR" ? "blur(1px)" : "none",
-                        }}
-                      >
+                      <div>
                         <div>
                           <ChakraProvider
                             theme={extendTheme({
@@ -459,7 +453,7 @@ export default function Test() {
                             <CSSReset />
                             <Box p={4} maxW="md" mx="auto">
                               <Select
-                                placeholder="Enter mesh dimensions"
+                                placeholder={t("Enter mesh dimensions")}
                                 onChange={(e) =>
                                   handleSelectChange(e.target.value)
                                 }
@@ -489,7 +483,7 @@ export default function Test() {
                             }
                             onClick={() => random_mesh()}
                           >
-                            Random array
+                            {t("Random array")}
                           </Button>
 
                           <Button
@@ -507,7 +501,7 @@ export default function Test() {
                             }
                             onClick={() => your_own()}
                           >
-                            Your own array
+                            {t("Own")}
                           </Button>
 
                           <Icon
@@ -532,8 +526,8 @@ export default function Test() {
                           />
                         </div>
 
-                        <div>
-                          <TextDisplay text={shear_text} />
+                        <div className="text-display-container">
+                          <p className="main-text">{t("shear text")}</p>
                         </div>
                         <div>
                           <Button
@@ -547,7 +541,7 @@ export default function Test() {
                             }
                             onClick={go_sort}
                           >
-                            Sort
+                            {t("Sort")}
                           </Button>
                         </div>
                       </div>
@@ -572,11 +566,7 @@ export default function Test() {
                       <div className="text">
                         <p>Schnorr Shamir algorithm</p>
                       </div>
-                      <div
-                        style={{
-                          filter: alg === "SHEARSHORT" ? "blur(1px)" : "none",
-                        }}
-                      >
+                      <div>
                         <div>
                           <ChakraProvider
                             theme={extendTheme({
@@ -588,7 +578,7 @@ export default function Test() {
                             <CSSReset />
                             <Box p={4} maxW="md" mx="auto">
                               <Select
-                                placeholder="Enter mesh dimensions"
+                                placeholder={t("Enter mesh dimensions")}
                                 onChange={(e) =>
                                   handleSelectChange(e.target.value)
                                 }
@@ -618,7 +608,7 @@ export default function Test() {
                             }
                             onClick={() => random_mesh()}
                           >
-                            Random array
+                            {t("Random array")}
                           </Button>
 
                           <Button
@@ -636,7 +626,7 @@ export default function Test() {
                             }
                             onClick={() => your_own()}
                           >
-                            Your own array
+                            {t("Own")}
                           </Button>
                           <div>
                             <Icon
@@ -661,8 +651,8 @@ export default function Test() {
                             />
                           </div>
                         </div>
-                        <div>
-                          <TextDisplay text={SS_text} />
+                        <div className="text-display-container">
+                          <p className="main-text">{t("ss text")}</p>
                         </div>
                         <div>
                           <Button
@@ -674,7 +664,7 @@ export default function Test() {
                             isDisabled={sortstate_ss || alg === "SHEARSHORT"}
                             onClick={go_sort}
                           >
-                            Sort
+                            {t("Sort")}
                           </Button>
                         </div>
                       </div>
@@ -684,31 +674,37 @@ export default function Test() {
               </div>
 
               <div className="right-div">
-                <Box
-                  //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
-                  mt={4}
-                >
-                  <Text fontSize="lg" fontWeight="bold">
-                    Current array dimensions:
-                  </Text>
-                  <Text fontSize="md">
-                    {array === null
-                      ? "No configurations made"
-                      : alg === "SHEARSHORT" && array.length > 0
-                      ? selectedValue + " X " + selectedValue
-                      : alg === "SNOR_SHAMMIR" && array.length > 0
-                      ? selectedValue + " X " + selectedValue
-                      : "No configurations made"}
-                  </Text>
-                </Box>
                 <div>
-                  {random_or_own === "random" && <MeshComponent grid={array} />}
-                  {random_or_own === "own" && input_size !== null && (
-                    <CanvasMesh
-                      onPrintValues={set_grid_ready}
-                      size={input_size}
-                    />
-                  )}
+                  <div>
+                    <Box
+                      //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
+                      mt={4}
+                    >
+                      <Text fontSize="lg" fontWeight="bold">
+                        {t("Current array dimensions:")}
+                      </Text>
+                      <Text fontSize="md">
+                        {array === null
+                          ? t("no conf")
+                          : alg === "SHEARSHORT" && array.length > 0
+                          ? selectedValue + " X " + selectedValue
+                          : alg === "SNOR_SHAMMIR" && array.length > 0
+                          ? selectedValue + " X " + selectedValue
+                          : t("no conf")}
+                      </Text>
+                    </Box>
+                  </div>
+                  <div>
+                    {random_or_own === "random" && (
+                      <MeshComponent grid={array} />
+                    )}
+                    {random_or_own === "own" && input_size !== null && (
+                      <CanvasMesh
+                        onPrintValues={set_grid_ready}
+                        size={input_size}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

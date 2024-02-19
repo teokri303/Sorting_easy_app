@@ -1,7 +1,10 @@
 import React from "react";
 import { Box, Image } from "@chakra-ui/react";
+import LanguageSwitcher from "./Language_switcher";
+import { useTranslation } from "react-i18next";
 
 const Navbar = ({ onLogoClick }) => {
+  const { t } = useTranslation();
   return (
     <div className="navbarstyle">
       <span
@@ -24,8 +27,11 @@ const Navbar = ({ onLogoClick }) => {
               fontSize: "15px",
             }}
           >
-            Parallel sorting algorithm simulator.
+            {t("Subtitle")}
           </p>
+        </div>
+        <div className="language">
+          <LanguageSwitcher />
         </div>
       </span>
     </div>

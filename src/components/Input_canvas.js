@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@chakra-ui/react";
 
 const CanvasMesh = ({ onPrintValues, size }) => {
+  const { t } = useTranslation();
+
   const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [ready_to_sort, setReadytoSort] = useState(false);
@@ -117,12 +120,12 @@ const CanvasMesh = ({ onPrintValues, size }) => {
       />
       <Button
         size="md"
-        width="90px"
+        width="110px"
         margin="10px"
         marginBottom="20px"
         onClick={resetGrid}
       >
-        Reset Grid
+        {t("Reset Grid")}
       </Button>
       <Button
         size="lg"
@@ -132,7 +135,7 @@ const CanvasMesh = ({ onPrintValues, size }) => {
         colorScheme={ready_to_sort ? "teal" : "gray"}
         onClick={createGridFromArray}
       >
-        Ready to sort
+        {t("Ready to sort")}
       </Button>
     </div>
   );

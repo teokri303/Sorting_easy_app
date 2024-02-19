@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Button } from "@chakra-ui/react";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useTranslation } from "react-i18next";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 
@@ -9,36 +10,38 @@ import MeshComponent from "./Mesh";
 import "../styles/Paginator.css";
 
 const Paginator = ({ items, algorithm, on_go_back }) => {
+  const { t } = useTranslation();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
 
   const ss_subs = [
-    "Random array",
-    "Reshape array to optimal dimensions",
-    "Phase 1 - Snakelike blocks",
-    "Phase 2 - K-way  Unshuffle",
-    "Phase 3 - Snakelike blocks",
-    "Phase 4 - Sort columns",
-    "Phase 5 - Vertical slices sort (1-2...)",
-    "Phase 6 - Vertical slices sort (2-3...)",
-    "Phase 7 - Rows sort snakelike",
-    "Phase 8 - 2N^3/8 Steps of odd-even transpotition",
+    t("Random array"),
+    t("Reshape array to optimal dimensions"),
+    t("Phase 1 - Snakelike blocks"),
+    t("Phase 2 - K-way  Unshuffle"),
+    t("Phase 3 - Snakelike blocks"),
+    t("Phase 4 - Sort columns"),
+    t("Phase 5 - Vertical slices sort (1-2...)"),
+    t("Phase 6 - Vertical slices sort (2-3...)"),
+    t("Phase 7 - Rows sort snakelike"),
+    t("Phase 8 - 2N^3/8 Steps of odd-even transpotition"),
   ];
   const ss_subs_optimal = [
-    "Random array",
-    "Phase 1 - Snakelike blocks",
-    "Phase 2 - K-way  Unshuffle",
-    "Phase 3 - Snakelike blocks",
-    "Phase 4 - Sort columns",
-    "Phase 5 - Vertical slices sort (1-2...)",
-    "Phase 6 - Vertical slices sort (2-3...)",
-    "Phase 7 - Rows sort snakelike",
-    "Phase 8 - 2N^3/8 Steps of odd-even transpotition",
+    t("Random array"),
+    t("Phase 1 - Snakelike blocks"),
+    t("Phase 2 - K-way  Unshuffle"),
+    t("Phase 3 - Snakelike blocks"),
+    t("Phase 4 - Sort columns"),
+    t("Phase 5 - Vertical slices sort (1-2...)"),
+    t("Phase 6 - Vertical slices sort (2-3...)"),
+    t("Phase 7 - Rows sort snakelike"),
+    t("Phase 8 - 2N^3/8 Steps of odd-even transpotition"),
   ];
   const shearsort_subs = [
-    "Random array",
-    "Parallel sorting rows snakelike order",
-    "Parallel sorting columns",
+    t("Random array"),
+    t("Parallel sorting rows snakelike order"),
+    t("Parallel sorting columns"),
   ];
 
   const [text, setText] = useState(shearsort_subs[0]);
@@ -89,7 +92,7 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
             items[items.length - 1].length !== 256) &&
           currentIndex === items.length - 2
         ) {
-          setText("Reshape to given dimensions");
+          setText(t("Reshape to given dimensions"));
         } else {
           setText(ss_subs[currentIndex + 1]);
         }
@@ -113,7 +116,7 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
             items[items.length - 1].length !== 256) &&
           currentIndex + 1 === items.length - 2
         ) {
-          setText("Reshape to given dimensions");
+          setText(t("Reshape to given dimensions"));
         } else {
           setText(ss_subs[currentIndex - 1]);
         }
@@ -136,8 +139,8 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
         <div>
           <h1 className="title_text">
             {algorithm === "SNOR_SHAMMIR"
-              ? "Schnorr Sammir algorithm"
-              : "Shearsort algorithm"}
+              ? t("Schnorr Shamir algorithm")
+              : t("Shearsort algorithm")}
           </h1>
           <p>
             {items[currentIndex].length} X {items[currentIndex].length}{" "}
@@ -177,7 +180,7 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
           leftIcon={<ArrowBackIcon />}
           onClick={handle_back_click}
         >
-          Back to sort
+          {t("Back to sort")}
         </Button>
       </div>
     </div>
