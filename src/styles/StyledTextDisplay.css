@@ -1,12 +1,12 @@
 .text-display-container {
   max-width: 600px;
-  padding: 20px;
-
+  text-align: left;
+  margin-top: 10px;
 }
 
 .main-text {
-  font-size: 18px;
-  line-height: 1.6;
+  font-size: 14px;
+  line-height: 1.2;
 
   color: #333;
 }

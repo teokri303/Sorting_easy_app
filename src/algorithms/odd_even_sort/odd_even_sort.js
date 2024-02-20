@@ -26,14 +26,16 @@ function are2DArraysEqual(arr1, arr2) {
   return true;
 }
 
-async function shearsort(array, random_or_own) {
-  let numRows = array.length;
+async function shearsort(grid, random_or_own) {
+  let numRows = grid.length;
   let oddPhases = Math.log(numRows) / Math.log(2) + 1; //rows
   let evenPhases = Math.log(numRows) / Math.log(2); //columns
   let Phases = Math.round(oddPhases + evenPhases);
 
+  //console.log(array);
+
   let sortedPhase;
-  let grid = array;
+
   let rows_phase;
   let columns_phase;
 
@@ -43,10 +45,10 @@ async function shearsort(array, random_or_own) {
       //tis grammes poy den einai sortarismenes
       let dirtyRows;
 
-      if (random_or_own === "random") {
-        dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
-      } else {
+      if (i === 0) {
         dirtyRows = [...grid];
+      } else {
+        dirtyRows = grid.filter((row) => row.includes(0) && row.includes(1));
       }
 
       const index = grid.indexOf(dirtyRows[0]);
@@ -62,7 +64,7 @@ async function shearsort(array, random_or_own) {
     let dirtyIndex = 0;
     let resultGrid = [];
     for (let j = 0; j < grid.length; j++) {
-      if (grid[j].includes(0) && grid[j].includes(1)) {
+      if ((grid[j].includes(0) && grid[j].includes(1)) || i < 2) {
         // Αν η γραμμή είναι dirty, προσθέτει την ταξινομημένη dirty γραμμή
         resultGrid.push(sortedPhase[dirtyIndex]);
         dirtyIndex++;
@@ -72,24 +74,22 @@ async function shearsort(array, random_or_own) {
       }
     }
 
-    if (random_or_own === "random") {
-      grid = [...resultGrid];
+    const areArraysEqual = are2DArraysEqual(grid, resultGrid);
+
+    if (areArraysEqual && i !== 0) {
+      //console.log("Οι πίνακες είναι ίδιοι.");
+      break;
     } else {
-      const areArraysEqual = are2DArraysEqual(grid, sortedPhase);
-
-      if (areArraysEqual && i !== 0) {
-        //console.log("Οι πίνακες είναι ίδιοι.");
-        break;
-      }
-
-      grid = [...sortedPhase];
+      grid = [...resultGrid];
     }
 
     if (sortedPhase.length <= 1) {
-      //console.log("GRID IS SORTED ");
+      //console.log("BLOCK IS SORTED ");
       break;
     }
   }
+
+  // console.log(grid);
 
   return grid;
 }

@@ -1,0 +1,48 @@
+{
+    "Shearsort algorithm": "Shearsort algorithm",
+    "Schnorr Shamir algorithm": "Schnorr Shamir algorithm",
+    "Current array dimensions:": "Current array dimensions:",
+    "Εnglish": "English",
+    "Greek": "Greek",
+    "Subtitle": "Parallel sorting algorithm simulator.",
+    "no conf" : "No configurations made",
+    "Reset Grid":"Reset Grid",
+    "Ready to sort":"Ready to sort",
+
+
+    "Enter mesh dimensions" :"Enter mesh dimensions",
+    "Random array":"Random array",
+    "Own":"My own array",
+    "Sort" : "Sort",
+
+    "shear text" : "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.",
+    "ss text" :  "The parallel sorting algorithm of Schnorr and Shamir for large N values. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.",
+
+
+    "Back to sort" :"Back to creation",
+
+
+
+    
+    "Parallel sorting rows snakelike order" : "Parallel sorting rows snakelike order" ,
+    "Parallel sorting columns" : "Parallel sorting columns",
+
+
+
+
+    "Phase 1 - Snakelike blocks" : "Phase 1 - Snakelike blocks",
+    "Phase 2 - K-way  Unshuffle" : "Phase 2 - K-way  Unshuffle",
+    "Phase 3 - Snakelike blocks" : "Phase 3 - Snakelike blocks",
+    "Phase 4 - Sort columns" : "Phase 4 - Sort columns",
+    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5 - Vertical slices sort (1-2...)",
+    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6 - Vertical slices sort (2-3...)",
+    "Phase 7 - Rows sort snakelike" : "Phase 7 - Rows sort snakelike",
+    "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8 - 2N^3/8 Steps of odd-even transpotition",
+
+    "Reshape array to optimal dimensions" : "Reshape array to optimal dimensions",
+    "Reshape to given dimensions" : "Reshape to given dimensions",
+
+
+
+    "language choose" : "Change language"
+}
