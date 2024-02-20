@@ -445,6 +445,7 @@ export default function Test() {
                   <div id="box1">
                     <Box
                       border={alg === "SHEARSHORT" ? "5px solid" : "1px solid"}
+                      borderRadius={15}
                       borderColor={alg === "SHEARSHORT" ? "teal" : "black"}
                       p="10px"
                       position="relative"
@@ -529,13 +530,6 @@ export default function Test() {
                                   ? "transparent"
                                   : "red.500"
                               }
-                              style={{
-                                cursor: "pointer",
-                                position: "absolute",
-                                right: "3%", // Τερμα αριστερά μέσα στο Box
-                                top: "43%", // Κεντράρετε κατακόρυφα μέσα στο Box
-                                transform: "translateY(-50%)", // Κεντράρετε κατακόρυφα μέσα στο Box
-                              }}
                               onClick={
                                 alg === "SNOR_SHAMMIR"
                                   ? null
@@ -543,15 +537,34 @@ export default function Test() {
                               }
                             />
                           </div>
+                          <div>
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              isDisabled={
+                                alg === "SNOR_SHAMMIR" ||
+                                selectedValue_shear === null
+                              }
+                              onClick={
+                                alg === "SNOR_SHAMMIR"
+                                  ? null
+                                  : () => collectNcreate(alg)
+                              }
+                            >
+                              Show array
+                            </Button>
+                          </div>
                         </div>
 
                         <div className="text-display-container">
                           <p className="main-text">{t("shear text")}</p>
                         </div>
                         <div className="box_mesh">
-                          {random_or_own === "random" && isMobile && (
-                            <MeshComponent grid={array} />
-                          )}
+                          {random_or_own === "random" &&
+                            isMobile &&
+                            alg !== "SNOR_SHAMMIR" && (
+                              <MeshComponent grid={array} />
+                            )}
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile && (
@@ -586,6 +599,7 @@ export default function Test() {
                       border={
                         alg === "SNOR_SHAMMIR" ? "5px solid" : "1px solid"
                       }
+                      borderRadius={15}
                       borderColor={alg === "SNOR_SHAMMIR" ? "teal" : "black"}
                       marginTop="10px"
                       p="10px"
@@ -660,6 +674,7 @@ export default function Test() {
                           >
                             {t("Own")}
                           </Button>
+
                           <div className="collectNcreate">
                             <Icon
                               as={MdNotStarted}
@@ -675,14 +690,33 @@ export default function Test() {
                               }
                             />
                           </div>
+                          <div>
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              isDisabled={
+                                alg === "SHEARSHORT" ||
+                                selectedValue_ss === null
+                              }
+                              onClick={
+                                alg === "SHEARSHORT"
+                                  ? null
+                                  : () => collectNcreate(alg)
+                              }
+                            >
+                              Show array
+                            </Button>
+                          </div>
                         </div>
                         <div className="text-display-container">
                           <p className="main-text">{t("ss text")}</p>
                         </div>
                         <div className="box_mesh">
-                          {random_or_own === "random" && isMobile && (
-                            <MeshComponent grid={array} />
-                          )}
+                          {random_or_own === "random" &&
+                            isMobile &&
+                            alg !== "SHEARSHORT" && (
+                              <MeshComponent grid={array} />
+                            )}
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile && (
@@ -760,7 +794,7 @@ export default function Test() {
               {loadingbar && (
                 <div id="bar">
                   <CircularProgress
-                    size="420px"
+                    size={isMobile ? "250px" : "420px"}
                     color="teal"
                     thickness="5px"
                     isIndeterminate

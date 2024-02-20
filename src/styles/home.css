@@ -14,7 +14,8 @@
 
   display: flex;
   flex-direction: column;
-  min-height: 150vh; 
+  min-height: 100vh;
+
 
 }
 
@@ -23,15 +24,15 @@
 .container {
   display: flex;
   position: relative;
-  height: 100%; /* 100% του ύψους της οθόνης */
-  
+  height: 100%;
+  margin-bottom: 60px;  
 }
 
 .navbarstyle {
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
   border: 100px;
 }
 .text{
@@ -46,6 +47,7 @@
   text-align: center; 
   font-size: 25px;
   margin-top: 10px;
+  margin-bottom: 10px;
         
 }
 .title_text{
@@ -67,7 +69,7 @@
   cursor: pointer;
   position: absolute;
   right: 3%;
-  top: 43%;
+  top: 38%;
   transform: translateY(-50%);
 
 }
@@ -98,7 +100,7 @@
 
 #bar{
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);  
   width: 100%;
@@ -170,34 +172,29 @@
     right: 3%;
     top: 135px;
     transform: translateY(-50%);
-  
   }
-
-
 
   .text, .phase_text, .title_text {
     font-size: 18px;
   }
 
   .back{
-    position: relative;
-    
+    position: relative; 
   }
 
   .language {
     display: none;
-   
-  
 }
+
 
 #bar{
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%); 
-  size: 100px; 
-
+  transform: translateX(-50%) translateY(-50%);  
+  width: 100%;
 }
+
 
 
 
