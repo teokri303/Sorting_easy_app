@@ -319,7 +319,7 @@ export default function Test() {
     setRandom_Own("random");
     setRandom_Own_shear("random");
     setRandom_Own_ss("random");
-    setAlg("SHEARSHORT");
+    //setAlg("SHEARSHORT");
   }
 
   const handleSelectChange = (value) => {
@@ -520,23 +520,6 @@ export default function Test() {
                             {t("Own")}
                           </Button>
 
-                          <div className="collectNcreate">
-                            <Icon
-                              as={MdNotStarted}
-                              w={14}
-                              h={14}
-                              color={
-                                alg === "SNOR_SHAMMIR"
-                                  ? "transparent"
-                                  : "red.500"
-                              }
-                              onClick={
-                                alg === "SNOR_SHAMMIR"
-                                  ? null
-                                  : () => collectNcreate(alg)
-                              }
-                            />
-                          </div>
                           <div>
                             <Button
                               colorScheme="red"
@@ -551,7 +534,7 @@ export default function Test() {
                                   : () => collectNcreate(alg)
                               }
                             >
-                              Show array
+                              {t("Show array")}
                             </Button>
                           </div>
                         </div>
@@ -675,21 +658,6 @@ export default function Test() {
                             {t("Own")}
                           </Button>
 
-                          <div className="collectNcreate">
-                            <Icon
-                              as={MdNotStarted}
-                              w={14}
-                              h={14}
-                              color={
-                                alg === "SHEARSHORT" ? "transparent" : "red.500"
-                              }
-                              onClick={
-                                alg === "SHEARSHORT"
-                                  ? null
-                                  : () => collectNcreate(alg)
-                              }
-                            />
-                          </div>
                           <div>
                             <Button
                               colorScheme="red"
@@ -704,7 +672,7 @@ export default function Test() {
                                   : () => collectNcreate(alg)
                               }
                             >
-                              Show array
+                              {t("Show array")}
                             </Button>
                           </div>
                         </div>
@@ -753,9 +721,6 @@ export default function Test() {
                         //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
                         mt={4}
                       >
-                        <Text fontSize="lg" fontWeight="bold">
-                          {t("Current array dimensions:")}
-                        </Text>
                         <Text fontSize="md">
                           {array === null
                             ? t("no conf")

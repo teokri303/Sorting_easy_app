@@ -22,7 +22,6 @@ function LanguageSwitcher() {
         margin: "20px",
       }}
     >
-      <p style={{ fontSize: "13px" }}>{t("language choose")}</p>
       <RadioGroup
         defaultValue={language}
         onChange={(value) => changeLanguage(value)}

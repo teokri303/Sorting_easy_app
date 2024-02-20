@@ -171,18 +171,6 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
           <ArrowRightIcon />
         </div>
       </div>
-      <div className="back">
-        <Button
-          size="lg"
-          width="180px"
-          colorScheme="red"
-          backgroundColor="#404040"
-          leftIcon={<ArrowBackIcon />}
-          onClick={handle_back_click}
-        >
-          {t("Back to sort")}
-        </Button>
-      </div>
     </div>
   );
 };
