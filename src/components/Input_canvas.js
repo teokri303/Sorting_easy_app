@@ -35,8 +35,14 @@ const CanvasMesh = ({ onPrintValues, size }) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+
+    // Υπολογισμός της κλίμακας συσκευής
+    const scale = canvas.width / rect.width;
+
+    // Υπολογισμός των συντεταγμένων με βάση την κλίμακα
+    const x = (event.clientX - rect.left) * scale;
+    const y = (event.clientY - rect.top) * scale;
+
     const row = Math.floor(y / cellSize);
     const col = Math.floor(x / cellSize);
 
@@ -109,7 +115,7 @@ const CanvasMesh = ({ onPrintValues, size }) => {
         ref={canvasRef}
         width={480}
         height={480}
-        style={{ border: "0.8px solid #C0C0C0", marginBottom: "20px" }}
+        style={{ border: "0.8px solid #C0C0C0", marginBottom: "5px" }}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseMove={(event) => {
@@ -121,17 +127,17 @@ const CanvasMesh = ({ onPrintValues, size }) => {
       <Button
         size="md"
         width="110px"
-        margin="10px"
-        marginBottom="20px"
+        height="38px"
+        margin="5px"
         onClick={resetGrid}
       >
         {t("Reset Grid")}
       </Button>
       <Button
         size="lg"
-        width="200px"
-        margin="10px"
-        marginBottom="20px"
+        width="180px"
+        height="45px"
+        margin="5px"
         colorScheme={ready_to_sort ? "teal" : "gray"}
         onClick={createGridFromArray}
       >

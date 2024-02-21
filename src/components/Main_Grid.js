@@ -33,13 +33,11 @@ import {
 
 import MeshComponent from "./Mesh";
 import Paginator from "./Paginator";
-import TextDisplay from "./phase_expl";
 import CanvasMesh from "./Input_canvas";
 import Navbar from "./Navbar";
-import { Icon } from "@chakra-ui/react";
-import { MdNotStarted } from "react-icons/md";
 
 import { useTranslation } from "react-i18next";
+import HorizontalAccordion from "./Accordion";
 
 export default function Test() {
   const [array, setArray] = useState(null);
@@ -436,6 +434,12 @@ export default function Test() {
       <div>
         <Navbar onLogoClick={go_back} />
       </div>
+      {isMobile && (
+        <div>
+          <HorizontalAccordion />
+        </div>
+      )}
+
       {showFirst && (
         <div>
           <div>
@@ -550,7 +554,8 @@ export default function Test() {
                             )}
                           {random_or_own === "own" &&
                             input_size !== null &&
-                            isMobile && (
+                            isMobile &&
+                            alg !== "SNOR_SHAMMIR" && (
                               <CanvasMesh
                                 onPrintValues={set_grid_ready}
                                 size={input_size}
@@ -687,7 +692,8 @@ export default function Test() {
                             )}
                           {random_or_own === "own" &&
                             input_size !== null &&
-                            isMobile && (
+                            isMobile &&
+                            alg !== "SHEARSHORT" && (
                               <CanvasMesh
                                 onPrintValues={set_grid_ready}
                                 size={input_size}

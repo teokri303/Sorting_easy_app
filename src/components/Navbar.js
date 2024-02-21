@@ -1,10 +1,26 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Box, Image } from "@chakra-ui/react";
 import LanguageSwitcher from "./Language_switcher";
 import { useTranslation } from "react-i18next";
 
 const Navbar = ({ onLogoClick }) => {
   const { t } = useTranslation();
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+
+    handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
+    window.addEventListener("resize", handleResize); // Παρακολουθεί τις αλλαγές μεγέθους της οθόνης
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Καθαρίζει τον event listener κατά το unmount
+    };
+  }, []);
   return (
     <div className="navbarstyle">
       <span
@@ -30,9 +46,11 @@ const Navbar = ({ onLogoClick }) => {
             {t("Subtitle")}
           </p>
         </div>
-        <div className="language">
-          <LanguageSwitcher />
-        </div>
+        {!isMobile && (
+          <div className="language">
+            <LanguageSwitcher />
+          </div>
+        )}
       </span>
     </div>
   );

@@ -1,7 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
@@ -128,10 +126,6 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
     { length: items.length },
     (_, index) => index + 1
   );
-
-  function handle_back_click() {
-    on_go_back();
-  }
 
   return (
     <div>

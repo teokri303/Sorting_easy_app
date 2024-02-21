@@ -8,7 +8,7 @@
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to top,
-    #274046,
+    #5c7a82,
     #e6dada
   ); 
 
@@ -122,14 +122,22 @@
   color: #333;
 }
 
-
+.language{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+}
 
 .styled-text {
   font-weight: bold;
   font-size: 20px;
   color: #333;
-  
 }
+
+
+
+
 
 /* Εφαρμογή περιορισμένης διάταξης για κινητά */
 @media (max-width: 768px) {
@@ -149,7 +157,7 @@
   canvas {
     width: 100%; /* Προσαρμογή του πλάτους στο 100% του παραθύρου προβολής */
     height: auto; /* Αυτόματο ύψος για διατήρηση της αναλογίας */
-    max-width: 300px;
+    max-width: 320px;
     margin: 0 auto; /* Κεντράρισμα στον οριζόντιο άξονα */
     margin-top: 5px;
   }
@@ -185,8 +193,12 @@
   }
 
   .language {
-    display: none;
+    display: flex;
+    position: relative
+    
 }
+
+
 
 
 #bar{
