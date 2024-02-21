@@ -434,7 +434,7 @@ export default function Test() {
       <div>
         <Navbar onLogoClick={go_back} />
       </div>
-      {isMobile && (
+      {isMobile && showFirst && (
         <div>
           <HorizontalAccordion />
         </div>
