@@ -5,10 +5,21 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
+  Button,
   Text,
 } from "@chakra-ui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemOption,
+  MenuGroup,
+  MenuOptionGroup,
+  MenuDivider,
+} from "@chakra-ui/react";
 import LanguageSwitcher from "./Language_switcher";
-import { SettingsIcon } from "@chakra-ui/icons";
+import { SettingsIcon, HamburgerIcon } from "@chakra-ui/icons";
 import "../styles/Accordion.css";
 
 const HorizontalAccordion = () => {
@@ -55,20 +66,33 @@ const HorizontalAccordion = () => {
   return (
     <div className="container_n_content">
       <Accordion allowToggle>
-        {contexts.map((context, index) => (
-          <AccordionItem key={index}>
+        <AccordionItem>
+          <h2>
             <AccordionButton>
-              <Box flex="1" textAlign="left" borderColor="teal">
-                {index === 4 && <SettingsIcon color="teal" />}
-                {context}
+              <Box display="block" alignItems="center">
+                <HamburgerIcon />
               </Box>
             </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <Accordion allowToggle>
+              {contexts.map((context, index) => (
+                <AccordionItem key={index}>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left" borderColor="teal">
+                      {index === 4 && <SettingsIcon color="teal" />}
+                      {context}
+                    </Box>
+                  </AccordionButton>
 
-            <AccordionPanel pb={4} textAlign="left">
-              {content[index]}
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
+                  <AccordionPanel pb={4} textAlign="left">
+                    {content[index]}
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </AccordionPanel>
+        </AccordionItem>
       </Accordion>
     </div>
   );
