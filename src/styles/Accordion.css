@@ -1,1 +1,29 @@
-/* styles.css */
+
+
+.container_n_content {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.tip_container{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 10px;
+
+
+}
+
+.tip_box{   
+    width: 55px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-color: teal;
+  border-radius: 15%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+
+}

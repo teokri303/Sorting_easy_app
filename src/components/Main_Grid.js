@@ -38,6 +38,7 @@ import Navbar from "./Navbar";
 
 import { useTranslation } from "react-i18next";
 import HorizontalAccordion from "./Accordion";
+import Tipline from "./Tip_line";
 
 export default function Test() {
   const [array, setArray] = useState(null);
@@ -437,6 +438,11 @@ export default function Test() {
       {isMobile && showFirst && (
         <div>
           <HorizontalAccordion />
+        </div>
+      )}
+      {!isMobile && showFirst && (
+        <div>
+          <Tipline />
         </div>
       )}
 

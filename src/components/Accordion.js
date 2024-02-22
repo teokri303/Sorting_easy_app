@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Box, Text } from "@chakra-ui/react";
 import LanguageSwitcher from "./Language_switcher";
+import "../styles/Accordion.css";
 
 const HorizontalAccordion = () => {
   const [openIndex, setOpenIndex] = useState(-1);
@@ -19,41 +20,42 @@ const HorizontalAccordion = () => {
   }, [openIndex]);
 
   const content = [
-    <div>Περιεχόμενο 1: Κάτι ενδιαφέρον εδώ.</div>,
-    <div>Περιεχόμενο 2: Κάτι διαφορετικό εδώ.</div>,
-    <div>Περιεχόμενο 3: Περισσότερες πληροφορίες.</div>,
-    <div>Περιεχόμενο 4: Επιπλέον περιεχόμενο εδώ.</div>,
+    <div>
+      <Text fontSize="sm">How to use</Text>
+    </div>,
+    <div>
+      <Text fontSize="sm">Why 0/1 Lemma?</Text>
+    </div>,
+    <div>
+      <Text fontSize="sm">Reshaping in SS algorithm</Text>
+    </div>,
+    <div>
+      <Text fontSize="sm">About the app</Text>
+    </div>,
     <LanguageSwitcher />,
   ];
   return (
-    <div style={{ marginTop: "5px", marginBottom: "10px" }}>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-          gap: "10px",
-        }}
-      >
+    <div className="container_n_content">
+      <div className="tip_container">
         {Array.from({ length: 5 }).map((_, index) => (
           <div
+            className="tip_box"
             key={index}
             style={{
-              width: "55px",
-              height: "45px",
-              backgroundColor: openIndex === index ? "teal" : "transparent",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "1px solid black",
-              borderColor: "teal",
-              borderRadius: "15%",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.5)",
+              backgroundColor:
+                openIndex === index ? "rgba(0, 128, 128, 0.5)" : "transparent",
             }}
             onClick={() => handleAccordionClick(index)}
           >
-            {index === 4 ? "en/gr" : `Tip ${index + 1}`}
+            {index === 4 ? (
+              <Text fontWeight="bold" fontSize="sm">
+                en/gr
+              </Text>
+            ) : (
+              <Text fontWeight="bold" fontSize="sm">
+                Tip {index + 1}
+              </Text>
+            )}
           </div>
         ))}
       </div>
@@ -63,6 +65,9 @@ const HorizontalAccordion = () => {
             style={{
               marginTop: "2px",
               padding: "10px",
+              overflow: "hidden",
+              animation:
+                openIndex === -1 ? "fadeOut 1.5s ease" : "fadeIn 1.5s ease",
             }}
           >
             {content[openIndex]}

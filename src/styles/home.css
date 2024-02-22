@@ -34,7 +34,7 @@
   display: flex;
   justify-content: space-between;
   text-align: left;
-  margin-bottom: 10px;
+  
   border: 100px;
 }
 .text{
@@ -194,8 +194,10 @@
   }
 
   .language {
-    display: flex;
-    position: relative
+    display: grid;
+    margin: 5px;
+    position:relative;
+    place-items: center;
     
 }
 
@@ -209,6 +211,26 @@
   transform: translateX(-50%) translateY(-50%);  
   width: 100%;
 }
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 
 
 
