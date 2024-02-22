@@ -3,15 +3,17 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
+import { Box, Text } from "@chakra-ui/react";
 
 import MeshComponent from "./Mesh";
 import "../styles/Paginator.css";
 
-const Paginator = ({ items, algorithm, on_go_back }) => {
+const Paginator = ({ items, algorithm }) => {
   const { t } = useTranslation();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedPage, setSelectedPage] = useState(1);
+  const [clicked, setClicked] = useState(false);
 
   const ss_subs = [
     t("Random array"),
@@ -70,55 +72,18 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
         }
       }
     }
+    setClicked(true);
   };
 
   const handleArrowClick = (direction) => {
     if (direction === "right" && currentIndex < items.length - 1) {
       setCurrentIndex(currentIndex + 1);
       setSelectedPage(selectedPage + 1);
-      if (algorithm === "SHEARSHORT") {
-        if (currentIndex % 2 === 0) {
-          setText(shearsort_subs[1]);
-        } else {
-          setText(shearsort_subs[2]);
-        }
-      } else {
-        if (items[0].length === 16 || items[0].length === 256) {
-          setText(ss_subs_optimal[currentIndex + 1]);
-        } else if (
-          (items[items.length - 1].length !== 16 ||
-            items[items.length - 1].length !== 256) &&
-          currentIndex === items.length - 2
-        ) {
-          setText(t("Reshape to given dimensions"));
-        } else {
-          setText(ss_subs[currentIndex + 1]);
-        }
-      }
+      setClicked(false);
     } else if (direction === "left" && currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
       setSelectedPage(selectedPage - 1);
-      if (algorithm === "SHEARSHORT") {
-        if (currentIndex % 2 === 0) {
-          setText(shearsort_subs[1]);
-        } else if (currentIndex === 1) {
-          setText(shearsort_subs[0]);
-        } else {
-          setText(shearsort_subs[2]);
-        }
-      } else {
-        if (items[0].length === 16 || items[0].length === 256) {
-          setText(ss_subs_optimal[currentIndex - 1]);
-        } else if (
-          (items[items.length - 1].length !== 16 ||
-            items[items.length - 1].length !== 256) &&
-          currentIndex + 1 === items.length - 2
-        ) {
-          setText(t("Reshape to given dimensions"));
-        } else {
-          setText(ss_subs[currentIndex - 1]);
-        }
-      }
+      setClicked(false);
     }
   };
 
@@ -142,9 +107,20 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
 
           <MeshComponent grid={items[currentIndex]} />
         </div>
-        <div className="phase_text">
-          <p>{text}</p>
-        </div>
+        {clicked && (
+          <div className="phase_text">
+            <Box
+              border="1px"
+              borderRadius="15px"
+              boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
+              p="20px"
+            >
+              <Text textAlign="left" fontSize="md">
+                {text}
+              </Text>
+            </Box>
+          </div>
+        )}
       </div>
       <div className="page-numbers-container">
         <div className="arrow-left" onClick={() => handleArrowClick("left")}>

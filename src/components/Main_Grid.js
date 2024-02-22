@@ -416,10 +416,12 @@ export default function Test() {
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isblocksStraight, setIsBlocksStraight] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+      setIsBlocksStraight(window.matchMedia("(max-width: 1300px)").matches);
     };
 
     handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
@@ -435,12 +437,12 @@ export default function Test() {
       <div>
         <Navbar onLogoClick={go_back} />
       </div>
-      {isMobile && showFirst && (
+      {showFirst && isblocksStraight && (
         <div>
           <HorizontalAccordion />
         </div>
       )}
-      {!isMobile && showFirst && (
+      {!isblocksStraight && showFirst && (
         <div>
           <Tipline />
         </div>

@@ -1,79 +1,75 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Box,
+  Text,
+} from "@chakra-ui/react";
 import LanguageSwitcher from "./Language_switcher";
+import { SettingsIcon } from "@chakra-ui/icons";
 import "../styles/Accordion.css";
 
 const HorizontalAccordion = () => {
-  const [openIndex, setOpenIndex] = useState(-1);
+  const contexts = [
+    <Text fontWeight="bold" fontSize="sm">
+      How to use
+    </Text>,
 
-  const handleAccordionClick = (index) => {
-    if (index === openIndex) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
+    <Text fontWeight="bold" fontSize="sm">
+      Why B&W?
+    </Text>,
 
-  useEffect(() => {
-    //console.log(openIndex);
-  }, [openIndex]);
+    <Text fontWeight="bold" fontSize="sm">
+      Mesh enclosures
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      About the app
+    </Text>,
+
+    "    EN/EL",
+  ];
 
   const content = [
     <div>
-      <Text fontSize="sm">How to use</Text>
+      <Text fontSize="sm">At first you choose ...</Text>
     </div>,
     <div>
-      <Text fontSize="sm">Why 0/1 Lemma?</Text>
+      <Text fontSize="sm">
+        The black and white cells in the mesh you create....etc etc
+      </Text>
     </div>,
     <div>
-      <Text fontSize="sm">Reshaping in SS algorithm</Text>
+      <Text fontSize="sm">
+        The SS algorithm if you choose dimensions other than.....
+      </Text>
     </div>,
     <div>
-      <Text fontSize="sm">About the app</Text>
+      <Text fontSize="sm">This app....</Text>
     </div>,
     <LanguageSwitcher />,
   ];
+
   return (
     <div className="container_n_content">
-      <div className="tip_container">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div
-            className="tip_box"
-            key={index}
-            style={{
-              backgroundColor:
-                openIndex === index ? "rgba(0, 128, 128, 0.5)" : "transparent",
-            }}
-            onClick={() => handleAccordionClick(index)}
-          >
-            {index === 4 ? (
-              <Text fontWeight="bold" fontSize="sm">
-                en/gr
-              </Text>
-            ) : (
-              <Text fontWeight="bold" fontSize="sm">
-                Tip {index + 1}
-              </Text>
-            )}
-          </div>
+      <Accordion allowToggle>
+        {contexts.map((context, index) => (
+          <AccordionItem key={index}>
+            <AccordionButton>
+              <Box flex="1" textAlign="left" borderColor="teal">
+                {index === 4 && <SettingsIcon color="teal" />}
+                {context}
+              </Box>
+            </AccordionButton>
+
+            <AccordionPanel pb={4} textAlign="left">
+              {content[index]}
+            </AccordionPanel>
+          </AccordionItem>
         ))}
-      </div>
-      <div>
-        {openIndex !== -1 && (
-          <div
-            style={{
-              marginTop: "2px",
-              padding: "10px",
-              overflow: "hidden",
-              animation:
-                openIndex === -1 ? "fadeOut 1.5s ease" : "fadeIn 1.5s ease",
-            }}
-          >
-            {content[openIndex]}
-          </div>
-        )}
-      </div>
+      </Accordion>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { Box, Text } from "@chakra-ui/react";
 
 const TipBox = ({ title, content }) => {
@@ -35,26 +34,39 @@ const TipBox = ({ title, content }) => {
 const Tipline = () => {
   const content = [
     <div>
-      <Text fontSize="sm">Information about the use of app.</Text>
-    </div>,
-    <div>
-      <Text fontSize="sm">Why 0/1 Lemma?</Text>
+      <Text fontSize="sm">At first you choose ...</Text>
     </div>,
     <div>
       <Text fontSize="sm">
-        Why SS algorithm reshapes my grid from 8x8 to 16x16 etc?
+        The black and white cells in the mesh you create....etc etc
       </Text>
     </div>,
     <div>
-      <Text fontSize="sm">About and more tips if needed.</Text>
+      <Text fontSize="sm">
+        The SS algorithm if you choose dimensions other than.....
+      </Text>
+    </div>,
+    <div>
+      <Text fontSize="sm">This app....</Text>
     </div>,
   ];
 
   const titles = [
-    "How to use",
-    "Why 0/1 Lemma?",
-    "Reshaping in SS algorithm",
-    "About the app",
+    <Text fontWeight="bold" fontSize="sm">
+      How to use
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      Why B&W?
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      Mesh enclosures
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      About the app
+    </Text>,
   ];
 
   return (

@@ -11,7 +11,7 @@ const Navbar = ({ onLogoClick }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+      setIsMobile(window.matchMedia("(max-width: 1300px)").matches);
     };
 
     handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
