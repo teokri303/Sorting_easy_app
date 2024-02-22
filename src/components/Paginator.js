@@ -1,7 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { Button } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import { useTranslation } from "react-i18next";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
@@ -129,10 +127,6 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
     (_, index) => index + 1
   );
 
-  function handle_back_click() {
-    on_go_back();
-  }
-
   return (
     <div>
       <div className="paginator-container">
@@ -170,18 +164,6 @@ const Paginator = ({ items, algorithm, on_go_back }) => {
         <div className="arrow-right" onClick={() => handleArrowClick("right")}>
           <ArrowRightIcon />
         </div>
-      </div>
-      <div className="back">
-        <Button
-          size="lg"
-          width="180px"
-          colorScheme="red"
-          backgroundColor="#404040"
-          leftIcon={<ArrowBackIcon />}
-          onClick={handle_back_click}
-        >
-          {t("Back to sort")}
-        </Button>
       </div>
     </div>
   );

@@ -8,13 +8,15 @@
   ); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to top,
-    #274046,
+    #5c7a82,
     #e6dada
   ); 
 
   display: flex;
   flex-direction: column;
-  min-height: 150vh; 
+
+  min-height: 100vh;
+
 
 }
 
@@ -23,15 +25,16 @@
 .container {
   display: flex;
   position: relative;
-  height: 100%; /* 100% του ύψους της οθόνης */
-  
+  height: 100%;
+  margin-bottom: 60px;  
 }
 
 .navbarstyle {
   padding: 10px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 60px;
+  text-align: left;
+  
   border: 100px;
 }
 .text{
@@ -46,6 +49,7 @@
   text-align: center; 
   font-size: 25px;
   margin-top: 10px;
+  margin-bottom: 10px;
         
 }
 .title_text{
@@ -67,7 +71,7 @@
   cursor: pointer;
   position: absolute;
   right: 3%;
-  top: 43%;
+  top: 38%;
   transform: translateY(-50%);
 
 }
@@ -98,7 +102,7 @@
 
 #bar{
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);  
   width: 100%;
@@ -118,19 +122,28 @@
   color: #333;
 }
 
-
+.language{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+}
 
 .styled-text {
   font-weight: bold;
   font-size: 20px;
   color: #333;
-  
 }
+
+
+
+
 
 /* Εφαρμογή περιορισμένης διάταξης για κινητά */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
+    margin-bottom: 180px;
   }
 
 
@@ -145,7 +158,7 @@
   canvas {
     width: 100%; /* Προσαρμογή του πλάτους στο 100% του παραθύρου προβολής */
     height: auto; /* Αυτόματο ύψος για διατήρηση της αναλογίας */
-    max-width: 300px;
+    max-width: 320px;
     margin: 0 auto; /* Κεντράρισμα στον οριζόντιο άξονα */
     margin-top: 5px;
   }
@@ -170,34 +183,55 @@
     right: 3%;
     top: 135px;
     transform: translateY(-50%);
-  
   }
-
-
 
   .text, .phase_text, .title_text {
     font-size: 18px;
   }
 
   .back{
-    position: relative;
-    
+    position: relative; 
   }
 
   .language {
-    display: none;
-   
-  
+    display: grid;
+    margin: 5px;
+    position:relative;
+    place-items: center;
+    
 }
+
+
+
 
 #bar{
   position: absolute;
   top: 40%;
   left: 50%;
-  transform: translateX(-50%) translateY(-50%); 
-  size: 100px; 
-
+  transform: translateX(-50%) translateY(-50%);  
+  width: 100%;
 }
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
 
 
 
