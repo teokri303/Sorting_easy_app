@@ -5,19 +5,9 @@ import {
   AccordionButton,
   AccordionPanel,
   Box,
-  Button,
   Text,
 } from "@chakra-ui/react";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-} from "@chakra-ui/react";
+
 import LanguageSwitcher from "./Language_switcher";
 import { SettingsIcon, HamburgerIcon } from "@chakra-ui/icons";
 import "../styles/Accordion.css";
@@ -35,12 +25,6 @@ const HorizontalAccordion = () => {
     <Text fontWeight="bold" fontSize="sm">
       Mesh enclosures
     </Text>,
-
-    <Text fontWeight="bold" fontSize="sm">
-      About the app
-    </Text>,
-
-    "    EN/EL",
   ];
 
   const content = [
@@ -57,39 +41,79 @@ const HorizontalAccordion = () => {
         The SS algorithm if you choose dimensions other than.....
       </Text>
     </div>,
-    <div>
-      <Text fontSize="sm">This app....</Text>
-    </div>,
-    <LanguageSwitcher />,
   ];
 
   return (
     <div className="container_n_content">
       <Accordion allowToggle>
         <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box display="block" alignItems="center">
-                <HamburgerIcon />
-              </Box>
-            </AccordionButton>
-          </h2>
+          <AccordionButton>
+            <Box display="flex" alignItems="center">
+              <HamburgerIcon />
+            </Box>
+          </AccordionButton>
+
           <AccordionPanel pb={4}>
             <Accordion allowToggle>
-              {contexts.map((context, index) => (
-                <AccordionItem key={index}>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left" borderColor="teal">
-                      {index === 4 && <SettingsIcon color="teal" />}
-                      {context}
-                    </Box>
-                  </AccordionButton>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box display="flex" alignItems="center">
+                    <Text fontWeight="bold" fontSize="sm">
+                      Tips
+                    </Text>
+                  </Box>
+                </AccordionButton>
 
-                  <AccordionPanel pb={4} textAlign="left">
-                    {content[index]}
-                  </AccordionPanel>
-                </AccordionItem>
-              ))}
+                <AccordionPanel pb={4}>
+                  <Accordion allowToggle>
+                    {contexts.map((context, index) => (
+                      <AccordionItem key={index}>
+                        <AccordionButton>
+                          <Box flex="1" textAlign="left" borderColor="teal">
+                            {context}
+                          </Box>
+                        </AccordionButton>
+
+                        <AccordionPanel pb={4} textAlign="left">
+                          {content[index]}
+                        </AccordionPanel>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left" borderColor="teal">
+                    <Text fontWeight="bold" fontSize="sm">
+                      About the app
+                    </Text>
+                  </Box>
+                </AccordionButton>
+
+                <AccordionPanel pb={4} textAlign="left">
+                  <Text fontSize="sm">This app....</Text>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left" borderColor="teal">
+                    <Text fontWeight="bold" fontSize="sm">
+                      <SettingsIcon color="teal" /> EN/EL
+                    </Text>
+                  </Box>
+                </AccordionButton>
+
+                <AccordionPanel pb={4} textAlign="left">
+                  <LanguageSwitcher />
+                </AccordionPanel>
+              </AccordionItem>
             </Accordion>
           </AccordionPanel>
         </AccordionItem>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
@@ -92,6 +92,21 @@ const Paginator = ({ items, algorithm }) => {
     (_, index) => index + 1
   );
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+
+    handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
+    window.addEventListener("resize", handleResize); // Παρακολουθεί τις αλλαγές μεγέθους της οθόνης
+
+    return () => {
+      window.removeEventListener("resize", handleResize); // Καθαρίζει τον event listener κατά το unmount
+    };
+  }, []);
+
   return (
     <div>
       <div className="paginator-container">
@@ -101,19 +116,35 @@ const Paginator = ({ items, algorithm }) => {
               ? t("Schnorr Shamir algorithm")
               : t("Shearsort algorithm")}
           </h1>
-          <p>
+          {isMobile && clicked && (
+            <div className="phase_text">
+              <Box
+                border="2px"
+                borderColor="teal"
+                borderRadius="15px"
+                boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
+                p="10px"
+              >
+                <Text textAlign="left" fontSize="sm">
+                  {text}
+                </Text>
+              </Box>
+            </div>
+          )}
+          <Text fontWeight="bold" fontSize="md">
             {items[currentIndex].length} X {items[currentIndex].length}{" "}
-          </p>
+          </Text>
 
           <MeshComponent grid={items[currentIndex]} />
         </div>
-        {clicked && (
+        {!isMobile && clicked && (
           <div className="phase_text">
             <Box
-              border="1px"
+              border="2px"
+              borderColor="teal"
               borderRadius="15px"
               boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
-              p="20px"
+              p="15px"
             >
               <Text textAlign="left" fontSize="md">
                 {text}
@@ -123,9 +154,12 @@ const Paginator = ({ items, algorithm }) => {
         )}
       </div>
       <div className="page-numbers-container">
-        <div className="arrow-left" onClick={() => handleArrowClick("left")}>
-          <ArrowLeftIcon />{" "}
-        </div>
+        {!isMobile && (
+          <div className="arrow-left" onClick={() => handleArrowClick("left")}>
+            <ArrowLeftIcon />{" "}
+          </div>
+        )}
+
         {pageNumbers.map((pageNumber) => (
           <div
             key={pageNumber}
@@ -137,10 +171,29 @@ const Paginator = ({ items, algorithm }) => {
             {pageNumber}
           </div>
         ))}
-        <div className="arrow-right" onClick={() => handleArrowClick("right")}>
-          <ArrowRightIcon />
-        </div>
+
+        {!isMobile && (
+          <div
+            className="arrow-right"
+            onClick={() => handleArrowClick("right")}
+          >
+            <ArrowRightIcon />
+          </div>
+        )}
       </div>
+      {isMobile && (
+        <div className="mobile_arrows">
+          <div className="arrow-left" onClick={() => handleArrowClick("left")}>
+            <ArrowLeftIcon />{" "}
+          </div>
+          <div
+            className="arrow-right"
+            onClick={() => handleArrowClick("right")}
+          >
+            <ArrowRightIcon />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

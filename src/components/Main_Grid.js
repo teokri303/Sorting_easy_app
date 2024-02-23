@@ -735,7 +735,7 @@ export default function Test() {
                         //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
                         mt={4}
                       >
-                        <Text fontSize="md">
+                        <Text fontWeight="bold" fontSize="md">
                           {array === null
                             ? t("no conf")
                             : alg === "SHEARSHORT" && array.length > 0
