@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 const TipBox = ({ title, content }) => {
   return (
@@ -32,22 +33,27 @@ const TipBox = ({ title, content }) => {
 };
 
 const Tipline = () => {
+  const { t } = useTranslation();
   const content = [
     <div>
-      <Text fontSize="sm">At first you choose ...</Text>
-    </div>,
-    <div>
-      <Text fontSize="sm">
-        The black and white cells in the mesh you create....etc etc
+      <Text textAlign="left" fontSize="xs">
+        {t("how to use")}
       </Text>
     </div>,
     <div>
-      <Text fontSize="sm">
-        The SS algorithm if you choose dimensions other than.....
+      <Text textAlign="left" fontSize="xs">
+        {t("leema")}
       </Text>
     </div>,
     <div>
-      <Text fontSize="sm">This app....</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("mesh enclosures reshape")}
+      </Text>
+    </div>,
+    <div>
+      <Text textAlign="left" fontSize="xs">
+        {t("the purpose")}
+      </Text>
     </div>,
   ];
 

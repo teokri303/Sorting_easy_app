@@ -11,8 +11,11 @@ import {
 import LanguageSwitcher from "./Language_switcher";
 import { SettingsIcon, HamburgerIcon } from "@chakra-ui/icons";
 import "../styles/Accordion.css";
+import { useTranslation } from "react-i18next";
 
 const HorizontalAccordion = () => {
+  const { t } = useTranslation();
+
   const contexts = [
     <Text fontWeight="bold" fontSize="sm">
       How to use
@@ -29,16 +32,18 @@ const HorizontalAccordion = () => {
 
   const content = [
     <div>
-      <Text fontSize="sm">At first you choose ...</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("how to use")}
+      </Text>{" "}
     </div>,
     <div>
-      <Text fontSize="sm">
-        The black and white cells in the mesh you create....etc etc
+      <Text textAlign="left" fontSize="xs">
+        {t("leema")}
       </Text>
     </div>,
     <div>
-      <Text fontSize="sm">
-        The SS algorithm if you choose dimensions other than.....
+      <Text textAlign="left" fontSize="xs">
+        {t("mesh enclosures reshape")}
       </Text>
     </div>,
   ];
@@ -95,7 +100,9 @@ const HorizontalAccordion = () => {
                 </AccordionButton>
 
                 <AccordionPanel pb={4} textAlign="left">
-                  <Text fontSize="sm">This app....</Text>
+                  <Text textAlign="left" fontSize="xs">
+                    {t("the purpose")}
+                  </Text>
                 </AccordionPanel>
               </AccordionItem>
             </Accordion>

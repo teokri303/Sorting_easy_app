@@ -318,7 +318,6 @@ export default function Test() {
     setRandom_Own("random");
     setRandom_Own_shear("random");
     setRandom_Own_ss("random");
-    //setAlg("SHEARSHORT");
   }
 
   const handleSelectChange = (value) => {
@@ -334,6 +333,16 @@ export default function Test() {
       setAlg(value);
     } else {
       setAlg("SNOR_SHAMMIR");
+    }
+
+    if (isMobile && value !== alg) {
+      setRecord([]);
+      setArray(null);
+      setSortState_shear(true);
+      setSortState_ss(true);
+      setSelectedValue_shear(null);
+      setSelectedValue_ss(null);
+      setInputSize(null);
     }
   };
 
@@ -558,16 +567,45 @@ export default function Test() {
                           {random_or_own === "random" &&
                             isMobile &&
                             alg !== "SNOR_SHAMMIR" && (
-                              <MeshComponent grid={array} />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+
+                                <MeshComponent grid={array} />
+                              </div>
                             )}
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile &&
                             alg !== "SNOR_SHAMMIR" && (
-                              <CanvasMesh
-                                onPrintValues={set_grid_ready}
-                                size={input_size}
-                              />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <CanvasMesh
+                                  onPrintValues={set_grid_ready}
+                                  size={input_size}
+                                />
+                              </div>
                             )}
                         </div>
                         <div>
@@ -696,16 +734,45 @@ export default function Test() {
                           {random_or_own === "random" &&
                             isMobile &&
                             alg !== "SHEARSHORT" && (
-                              <MeshComponent grid={array} />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <MeshComponent grid={array} />
+                              </div>
                             )}
+
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile &&
                             alg !== "SHEARSHORT" && (
-                              <CanvasMesh
-                                onPrintValues={set_grid_ready}
-                                size={input_size}
-                              />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <CanvasMesh
+                                  onPrintValues={set_grid_ready}
+                                  size={input_size}
+                                />
+                              </div>
                             )}
                         </div>
                         <div>

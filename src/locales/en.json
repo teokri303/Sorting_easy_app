@@ -24,25 +24,33 @@
 
 
     
-    "Parallel sorting rows snakelike order" : "Parallel sorting rows snakelike order" ,
-    "Parallel sorting columns" : "Parallel sorting columns",
+    "Parallel sorting rows snakelike order" : "Parallel sorting rows into snake-like row-major order" ,
+    "Parallel sorting columns" : "Parallel sorting all the columns of the array downwards.",
 
 
 
 
-    "Phase 1 - Snakelike blocks" : "Phase 1 - Snakelike blocks",
-    "Phase 2 - K-way  Unshuffle" : "Phase 2 - K-way  Unshuffle",
-    "Phase 3 - Snakelike blocks" : "Phase 3 - Snakelike blocks",
-    "Phase 4 - Sort columns" : "Phase 4 - Sort columns",
-    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5 - Vertical slices sort (1-2...)",
-    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6 - Vertical slices sort (2-3...)",
-    "Phase 7 - Rows sort snakelike" : "Phase 7 - Rows sort snakelike",
-    "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8 - 2N^3/8 Steps of odd-even transpotition",
+    "Phase 1 - Snakelike blocks" : "Phase 1 - Sort all the blocks into snake-like row-major order",
+    "Phase 2 - K-way  Unshuffle" : "Phase 2 - Perform a N^1/4-way unshuffle along all the rows of the array.",
+    "Phase 3 - Snakelike blocks" : "Phase 3 - Sort all the blocks into snake-like row-major order.",
+    "Phase 4 - Sort columns" : "Phase 4 - Sort all the columns of the array downwards.",
+    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5 - Sort all the vertical slices into snake-like row-major order. (part 1)",
+    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6 - Sort all the vertical slices into snake-like row-major order. (part 2)",
+    "Phase 7 - Rows sort snakelike" : "Phase 7 - Sort all the rows of the array into alternating left-to- right and right-to-left order.",
+    "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8 - 2N^3/8 Steps of odd-even transpotition sort along the snake.",
 
     "Reshape array to optimal dimensions" : "Reshape array to optimal dimensions",
     "Reshape to given dimensions" : "Reshape to given dimensions",
 
 
 
-    "language choose" : "Change language"
+    "language choose" : "Change language",
+
+
+
+
+    "leema": "The arrays are filled with black and white cells representing 0s and 1s, demonstrating the algorithms' correctness using the 0-1 principle. This principle asserts that if a comparator network can sort every sequence of 0s and 1s, then it can sort any sequence of arbitrary values. Therefore, we can focus our proof on input sequences consisting solely of 0s and 1s without loss of generality.",    "how to use": "You can experiment with two parallel algorithms: Shearsort and Schnorr & Shamir. After selecting the preferred dimensions, the array can be generated with either random or user-input values. By clicking 'Show array,' the settings are translated into an actual array, allowing you to sort and review all the sorting phases." ,
+    "mesh enclosures reshape": "The Schnorr & Shamir parallel algorithm performs optimally with dimensions (N) of the form   N = 2^4q. However, it can adapt to arbitrary N values while maintaining its complexity. Its correctness relies on the 0-1 principle. In our simulator, if the user doesn't select an optimal dimension (like 16 or 256), the system automatically adjusts the array. Regardless of the initial size, the user receives the sorted result.",
+    "the purpose" : " The purpose of this learning application is to assist users, whether experienced or not, in understanding the operation of two parallel algorithms, namely Shearsort and Schnorr & Shamir, by experimenting with two-dimensional arrays and exploring the sorting process step by step."
+
 }

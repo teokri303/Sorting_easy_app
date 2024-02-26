@@ -125,9 +125,7 @@ const Paginator = ({ items, algorithm }) => {
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
                 p="10px"
               >
-                <Text textAlign="left" fontSize="sm">
-                  {text}
-                </Text>
+                <Text fontSize="xs">{text}</Text>
               </Box>
             </div>
           )}
