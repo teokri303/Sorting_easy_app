@@ -18,15 +18,15 @@ const HorizontalAccordion = () => {
 
   const contexts = [
     <Text fontWeight="bold" fontSize="sm">
-      How to use
+      {t("how to use_T")}
     </Text>,
 
     <Text fontWeight="bold" fontSize="sm">
-      Why B&W?
+      {t("leema_T")}
     </Text>,
 
     <Text fontWeight="bold" fontSize="sm">
-      Mesh enclosures
+      {t("mesh enclosures reshape_T")}
     </Text>,
   ];
 
@@ -64,7 +64,7 @@ const HorizontalAccordion = () => {
                 <AccordionButton>
                   <Box display="flex" alignItems="center">
                     <Text fontWeight="bold" fontSize="sm">
-                      Tips
+                      {t("Tips")}
                     </Text>
                   </Box>
                 </AccordionButton>
@@ -94,7 +94,7 @@ const HorizontalAccordion = () => {
                 <AccordionButton>
                   <Box flex="1" textAlign="left" borderColor="teal">
                     <Text fontWeight="bold" fontSize="sm">
-                      About the app
+                      {t("the purpose_T")}
                     </Text>
                   </Box>
                 </AccordionButton>

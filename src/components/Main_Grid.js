@@ -39,6 +39,7 @@ import Navbar from "./Navbar";
 import { useTranslation } from "react-i18next";
 import HorizontalAccordion from "./Accordion";
 import Tipline from "./Tip_line";
+import UserWayWidget from "./UserWay";
 
 export default function Test() {
   const [array, setArray] = useState(null);
@@ -144,7 +145,7 @@ export default function Test() {
     console.timeEnd("WHOLE TIME");
 
     setLoadingbar(false);
-
+    addRecord(grid);
     return grid;
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
@@ -237,9 +238,11 @@ export default function Test() {
       function check_reshape(mesh) {
         if (array.length === 16 || array.length === 256) {
           //console.log("no need for reshape");
+          addRecord(mesh);
         } else {
           //console.log("NEED FOR reshape");
           let final = reshape_to_given(mesh);
+          addRecord(final);
           addRecord(final);
         }
       }
@@ -443,6 +446,7 @@ export default function Test() {
 
   return (
     <div>
+      <UserWayWidget />
       <div>
         <Navbar onLogoClick={go_back} />
       </div>
@@ -506,6 +510,7 @@ export default function Test() {
                             </Box>
                           </ChakraProvider>
                         </div>
+
                         <div>
                           <Button
                             size="lg"

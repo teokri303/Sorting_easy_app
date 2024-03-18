@@ -51,11 +51,11 @@ const Paginator = ({ items, algorithm }) => {
     setSelectedPage(pageNumber);
     if (algorithm === "SHEARSHORT") {
       if (pageNumber % 2 === 0) {
-        setText(shearsort_subs[1]);
+        setText("Phase " + (pageNumber - 1) + shearsort_subs[1]);
       } else if (pageNumber === 1) {
         setText(shearsort_subs[0]);
       } else {
-        setText(shearsort_subs[2]);
+        setText("Phase " + (pageNumber - 1) + shearsort_subs[2]);
       }
     } else {
       if (items[0].length === 16 || items[0].length === 256) {
@@ -64,13 +64,17 @@ const Paginator = ({ items, algorithm }) => {
         if (
           (items[items.length - 1].length !== 16 ||
             items[items.length - 1].length !== 256) &&
-          pageNumber === items.length
+          pageNumber === items.length - 1
         ) {
-          setText("Reshape to given dimensions");
+          setText(t("Reshape to given dimensions"));
         } else {
           setText(ss_subs[pageNumber - 1]);
         }
       }
+    }
+
+    if (pageNumber === items.length) {
+      setText(t("final sorted"));
     }
     setClicked(true);
   };

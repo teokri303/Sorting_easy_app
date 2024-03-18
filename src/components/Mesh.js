@@ -30,7 +30,7 @@ const MeshComponent = ({ grid }) => {
     // Render the mesh
     grid.forEach((row, rowIndex) => {
       row.forEach((cell, cellIndex) => {
-        ctx.fillStyle = cell === 0 ? "black" : "white";
+        ctx.fillStyle = cell === 0 ? "white" : "black";
         ctx.fillRect(cellIndex * boxSize, rowIndex * boxSize, boxSize, boxSize);
 
         if (grid.length <= 70) {

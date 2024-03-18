@@ -59,19 +59,19 @@ const Tipline = () => {
 
   const titles = [
     <Text fontWeight="bold" fontSize="sm">
-      How to use
+      {t("how to use_T")}
     </Text>,
 
     <Text fontWeight="bold" fontSize="sm">
-      Why B&W?
+      {t("leema_T")}
     </Text>,
 
     <Text fontWeight="bold" fontSize="sm">
-      Mesh enclosures
+      {t("mesh enclosures reshape_T")}
     </Text>,
 
     <Text fontWeight="bold" fontSize="sm">
-      About the app
+      {t("the purpose_T")}
     </Text>,
   ];
 

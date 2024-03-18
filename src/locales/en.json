@@ -1,22 +1,22 @@
 {
     "Shearsort algorithm": "Shearsort algorithm",
     "Schnorr Shamir algorithm": "Schnorr Shamir algorithm",
-    "Show array": "Show array",
+    "Show array": "Show mesh",
     "Εnglish": "English",
     "Greek": "Greek",
     "Subtitle": "Parallel sorting algorithm simulator",
-    "no conf" : "No configurations made",
-    "Reset Grid":"Reset Grid",
+    "no conf" : "Define mesh to display",
+    "Reset Grid":"Reset mesh",
     "Ready to sort":"Ready to sort",
 
 
-    "Enter mesh dimensions" :"Enter mesh dimensions",
-    "Random array":"Random array",
-    "Own":"My own array",
+    "Enter mesh dimensions" :"Select mesh dimensions",
+    "Random array":"Random mesh",
+    "Own":"My own mesh",
     "Sort" : "Sort",
 
-    "shear text" : "Shearshort is a grid parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted grid horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire grid is sorted.",
-    "ss text" :  "The parallel sorting algorithm of Schnorr and Shamir for large N values. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.",
+    "shear text" : "Shearshort is a mesh parallel sorting algorithm that organizes elements in phases. It alternates between sorting rows towards the right or left and sorting columns downward. Rows are first sorted in alternating directions, creating a partially sorted mesh horizontally. Then, all columns are sorted downward in subsequent phases, refining the order. This process repeats until the entire mesh is sorted.",
+    "ss text" :  "The parallel sorting algorithm of Schnorr and Shamir for large meshes. This algorithm efficiently sorts N items into a snakelike order using a multi-phase approach (8 phases). It divides the mesh into blocks, sorts them in snakelike order, performs column unshuffling, and conducts additional sorting phases. Phases 1, 3, 5, and 6 can all be accomplished using the Shearsort algorithm.",
 
 
     "Back to sort" :"Back to creation",
@@ -24,10 +24,10 @@
 
 
     
-    "Parallel sorting rows snakelike order" : "Parallel sorting rows into snake-like row-major order" ,
-    "Parallel sorting columns" : "Parallel sorting all the columns of the array downwards.",
+    "Parallel sorting rows snakelike order" : ": Row sorting. In odd rows smaller numbers move leftward. In even rows smaller numbers move rightward. " ,
+    "Parallel sorting columns" : ": Column sorting. Smaller numbers move upward",
 
-
+    "final sorted": "Mesh sorted. Numbers appear in snakelike order",
 
 
     "Phase 1 - Snakelike blocks" : "Phase 1 - Sort all the blocks into snake-like row-major order",
@@ -39,18 +39,26 @@
     "Phase 7 - Rows sort snakelike" : "Phase 7 - Sort all the rows of the array into alternating left-to- right and right-to-left order.",
     "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8 - 2N^3/8 Steps of odd-even transpotition sort along the snake.",
 
-    "Reshape array to optimal dimensions" : "Reshape array to optimal dimensions",
-    "Reshape to given dimensions" : "Reshape to given dimensions",
+    "Reshape array to optimal dimensions" : "Reshape mesh to optimal dimensions",
+    "Reshape to given dimensions" : "Reshape mesh to given dimensions",
 
 
 
     "language choose" : "Change language",
+    "Tips":"Tips",
 
 
+    "how to use_T": "How to use:",
+    "leema_T": "Why B&W?",
+    "mesh enclosures reshape_T": "Mesh enclosures:",
+    "the purpose_T" : "About the app:",
 
 
-    "leema": "The arrays are filled with black and white cells representing 0s and 1s, demonstrating the algorithms' correctness using the 0-1 principle. This principle asserts that if a comparator network can sort every sequence of 0s and 1s, then it can sort any sequence of arbitrary values. Therefore, we can focus our proof on input sequences consisting solely of 0s and 1s without loss of generality.",    "how to use": "You can experiment with two parallel algorithms: Shearsort and Schnorr & Shamir. After selecting the preferred dimensions, the array can be generated with either random or user-input values. By clicking 'Show array,' the settings are translated into an actual array, allowing you to sort and review all the sorting phases." ,
-    "mesh enclosures reshape": "The Schnorr & Shamir parallel algorithm performs optimally with dimensions (N) of the form   N = 2^4q. However, it can adapt to arbitrary N values while maintaining its complexity. Its correctness relies on the 0-1 principle. In our simulator, if the user doesn't select an optimal dimension (like 16 or 256), the system automatically adjusts the array. Regardless of the initial size, the user receives the sorted result.",
-    "the purpose" : " The purpose of this learning application is to assist users, whether experienced or not, in understanding the operation of two parallel algorithms, namely Shearsort and Schnorr & Shamir, by experimenting with two-dimensional arrays and exploring the sorting process step by step."
+    "how to use": "First select the parallel sorting algorithm (Shearsort or Schnorr-Shamir alg.) you wish to apply by clicking on its box. Then, within the selected box, define and visualize the mesh: select its dimension by the dropdwn menu, either fill it automatically with random 0/1 values or fill in your own 0/1 values and click Show array to view. By clicking Sort, you see the algorithm running.",
+    "leema": "Both algorithms correctly sort every input sequence. However, all input sequences - no matter what their exact values are - can alwyas be mapped to an appropriately generated sequence of zeros and ones which are visualized here as white and black cells, respectively." ,
+    "mesh enclosures reshape": "Shearsort is a good choice for small meshes while for big meshes the algorithm by Schnorr-Shamir runs faster deploying a more sophisticated breakdown of the mesh into blocks. As you will probably notice, sometimes your mesh is embedded into a bigger one for facilitating the mesh breakdown into appropriate blocks.",
+    "the purpose" : "This game-like interactive web app is intended to serve as assistive material for learning / training purposes regarding the study and analysis of two parallel sorting algorithms for two-dimensional meshes, i.e., the Shearsort algorithm and the '3n sort' algorithm suggested by Schnorr and Shamir."
+
+
 
 }
