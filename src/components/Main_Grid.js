@@ -649,7 +649,7 @@ export default function Test() {
                       cursor={alg === "SNOR_SHAMMIR" ? null : "pointer"}
                     >
                       <div className="text">
-                        <p>Schnorr Shamir algorithm</p>
+                        <p>{t("Schnorr Shamir algorithm")}</p>
                       </div>
                       <div>
                         <div>

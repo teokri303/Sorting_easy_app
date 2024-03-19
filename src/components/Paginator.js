@@ -16,9 +16,9 @@ const Paginator = ({ items, algorithm }) => {
   const [clicked, setClicked] = useState(false);
 
   const ss_subs = [
-    t("Random array"),
+    t("Random mesh pagi"),
     t("Reshape array to optimal dimensions"),
-    t("Phase 1 - Snakelike blocks"),
+    t("Phase 1 - Snakelike blocks").replace(/\^(\d*\/\d*)/g, "<sup>$1</sup>"),
     t("Phase 2 - K-way  Unshuffle"),
     t("Phase 3 - Snakelike blocks"),
     t("Phase 4 - Sort columns"),
@@ -39,7 +39,7 @@ const Paginator = ({ items, algorithm }) => {
     t("Phase 8 - 2N^3/8 Steps of odd-even transpotition"),
   ];
   const shearsort_subs = [
-    t("Random array"),
+    t("Random mesh pagi"),
     t("Parallel sorting rows snakelike order"),
     t("Parallel sorting columns"),
   ];
@@ -51,11 +51,11 @@ const Paginator = ({ items, algorithm }) => {
     setSelectedPage(pageNumber);
     if (algorithm === "SHEARSHORT") {
       if (pageNumber % 2 === 0) {
-        setText("Phase " + (pageNumber - 1) + shearsort_subs[1]);
+        setText(t("Phase") + (pageNumber - 1) + ": " + shearsort_subs[1]);
       } else if (pageNumber === 1) {
         setText(shearsort_subs[0]);
       } else {
-        setText("Phase " + (pageNumber - 1) + shearsort_subs[2]);
+        setText(t("Phase") + (pageNumber - 1) + ": " + shearsort_subs[2]);
       }
     } else {
       if (items[0].length === 16 || items[0].length === 256) {
@@ -111,6 +111,33 @@ const Paginator = ({ items, algorithm }) => {
     };
   }, []);
 
+  function formatText(text) {
+    return text.split("*").map((item, key) => {
+      if (item.includes("$")) {
+        const processedItem = item.split("$").map((subItem, subKey) => {
+          if (subKey % 2 === 1) {
+            return <sup key={subKey}>{subItem}</sup>;
+          } else {
+            return subItem;
+          }
+        });
+        return (
+          <React.Fragment key={key}>
+            {processedItem}
+            <br />
+          </React.Fragment>
+        );
+      } else {
+        return (
+          <React.Fragment key={key}>
+            {item}
+            <br />
+          </React.Fragment>
+        );
+      }
+    });
+  }
+
   return (
     <div>
       <div className="paginator-container">
@@ -129,7 +156,7 @@ const Paginator = ({ items, algorithm }) => {
                 boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
                 p="10px"
               >
-                <Text fontSize="xs">{text}</Text>
+                <Text fontSize="xs">{formatText(text)}</Text>
               </Box>
             </div>
           )}
@@ -145,11 +172,12 @@ const Paginator = ({ items, algorithm }) => {
               border="2px"
               borderColor="teal"
               borderRadius="15px"
+              maxWidth="60vw"
               boxShadow="0 0 10px rgba(0, 0, 0, 0.4)"
               p="15px"
             >
               <Text textAlign="left" fontSize="md">
-                {text}
+                {formatText(text)}
               </Text>
             </Box>
           </div>

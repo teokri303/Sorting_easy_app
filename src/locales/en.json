@@ -1,6 +1,6 @@
 {
     "Shearsort algorithm": "Shearsort algorithm",
-    "Schnorr Shamir algorithm": "Schnorr Shamir algorithm",
+    "Schnorr Shamir algorithm": "Schnorr-Shamir algorithm",
     "Show array": "Show mesh",
     "Εnglish": "English",
     "Greek": "Greek",
@@ -22,25 +22,26 @@
     "Back to sort" :"Back to creation",
 
 
+    "Phase":"Phase ",
 
-    
-    "Parallel sorting rows snakelike order" : ": Row sorting. In odd rows smaller numbers move leftward. In even rows smaller numbers move rightward. " ,
-    "Parallel sorting columns" : ": Column sorting. Smaller numbers move upward",
+    "Random mesh pagi" :"Random mesh.",
+    "Parallel sorting rows snakelike order" : "Row sorting.* In odd rows smaller numbers move leftward.* In even rows smaller numbers move rightward. " ,
+    "Parallel sorting columns" : "Column sorting.* Smaller numbers move upward.",
 
-    "final sorted": "Mesh sorted. Numbers appear in snakelike order",
+    "final sorted": "Mesh sorted.* Numbers appear in snakelike order.",
 
 
-    "Phase 1 - Snakelike blocks" : "Phase 1 - Sort all the blocks into snake-like row-major order",
-    "Phase 2 - K-way  Unshuffle" : "Phase 2 - Perform a N^1/4-way unshuffle along all the rows of the array.",
-    "Phase 3 - Snakelike blocks" : "Phase 3 - Sort all the blocks into snake-like row-major order.",
-    "Phase 4 - Sort columns" : "Phase 4 - Sort all the columns of the array downwards.",
-    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5 - Sort all the vertical slices into snake-like row-major order. (part 1)",
-    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6 - Sort all the vertical slices into snake-like row-major order. (part 2)",
-    "Phase 7 - Rows sort snakelike" : "Phase 7 - Sort all the rows of the array into alternating left-to- right and right-to-left order.",
-    "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8 - 2N^3/8 Steps of odd-even transpotition sort along the snake.",
+    "Phase 1 - Snakelike blocks" : "Phase 1: * Divide the mesh into N$1/4$ blocks of size N$3/8$ x N$3/8$ and simultaneuously sort each block in snakelike order.",
+    "Phase 2 - K-way  Unshuffle" : "Phase 2:*  Perform an N$1/8$-way unshuffle of the columns. In particular, permute the columns so that the N$3/8$ columns in each block are distributed evenly among the N$1/8$ vertical slices. (A vertical slice is simply a column of blocks).",
+    "Phase 3 - Snakelike blocks" : "Phase 3:* Sort each block into snakelike order.",
+    "Phase 4 - Sort columns" : "Phase 4:* Sort each column in linear order.",
+    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5:* Collectively sort blocks 1 and 2, blocks 3 and 4, etc., of each vertical slice into snakelike order.",
+    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6:* Collectively sort blocks 2 and 3, blocks 4 and 5, etc., of each vertical slice into snakelike order.",
+    "Phase 7 - Rows sort snakelike" : "Phase 7:* Sort each row in linear order according to the direction of the overall N-cell snake.",
+    "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8:* Perform 2N$3/8$ steps of odd-even transposition sort on the overall N-cell snake.",
 
-    "Reshape array to optimal dimensions" : "Reshape mesh to optimal dimensions",
-    "Reshape to given dimensions" : "Reshape mesh to given dimensions",
+    "Reshape array to optimal dimensions" : "Reshape mesh to optimal dimensions.",
+    "Reshape to given dimensions" : "Reshape mesh to given dimensions.",
 
 
 
@@ -48,13 +49,13 @@
     "Tips":"Tips",
 
 
-    "how to use_T": "How to use:",
-    "leema_T": "Why B&W?",
-    "mesh enclosures reshape_T": "Mesh enclosures:",
-    "the purpose_T" : "About the app:",
+    "how to use_T": "How to use",
+    "leema_T": "Why B&W",
+    "mesh enclosures reshape_T": "Mesh enclosures",
+    "the purpose_T" : "About the app",
 
 
-    "how to use": "First select the parallel sorting algorithm (Shearsort or Schnorr-Shamir alg.) you wish to apply by clicking on its box. Then, within the selected box, define and visualize the mesh: select its dimension by the dropdwn menu, either fill it automatically with random 0/1 values or fill in your own 0/1 values and click Show array to view. By clicking Sort, you see the algorithm running.",
+    "how to use": "First select the parallel sorting algorithm (Shearsort or Schnorr-Shamir algorithm) you wish to apply by clicking on its box. Then, within the selected box, define and visualize the mesh: select its dimension by the dropdwn menu, either fill it automatically with random 0/1 values or fill in your own 0/1 values and click Show array to view. By clicking Sort, you see the algorithm running.",
     "leema": "Both algorithms correctly sort every input sequence. However, all input sequences - no matter what their exact values are - can alwyas be mapped to an appropriately generated sequence of zeros and ones which are visualized here as white and black cells, respectively." ,
     "mesh enclosures reshape": "Shearsort is a good choice for small meshes while for big meshes the algorithm by Schnorr-Shamir runs faster deploying a more sophisticated breakdown of the mesh into blocks. As you will probably notice, sometimes your mesh is embedded into a bigger one for facilitating the mesh breakdown into appropriate blocks.",
     "the purpose" : "This game-like interactive web app is intended to serve as assistive material for learning / training purposes regarding the study and analysis of two parallel sorting algorithms for two-dimensional meshes, i.e., the Shearsort algorithm and the '3n sort' algorithm suggested by Schnorr and Shamir."
