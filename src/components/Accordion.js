@@ -1,79 +1,130 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  Box,
+  Text,
+} from "@chakra-ui/react";
+
 import LanguageSwitcher from "./Language_switcher";
+import { SettingsIcon, HamburgerIcon } from "@chakra-ui/icons";
 import "../styles/Accordion.css";
+import { useTranslation } from "react-i18next";
 
 const HorizontalAccordion = () => {
-  const [openIndex, setOpenIndex] = useState(-1);
+  const { t } = useTranslation();
 
-  const handleAccordionClick = (index) => {
-    if (index === openIndex) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
+  const contexts = [
+    <Text fontWeight="bold" fontSize="sm">
+      {t("how to use_T")}
+    </Text>,
 
-  useEffect(() => {
-    //console.log(openIndex);
-  }, [openIndex]);
+    <Text fontWeight="bold" fontSize="sm">
+      {t("leema_T")}
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      {t("mesh enclosures reshape_T")}
+    </Text>,
+  ];
 
   const content = [
     <div>
-      <Text fontSize="sm">How to use</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("how to use")}
+      </Text>{" "}
     </div>,
     <div>
-      <Text fontSize="sm">Why 0/1 Lemma?</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("leema")}
+      </Text>
     </div>,
     <div>
-      <Text fontSize="sm">Reshaping in SS algorithm</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("mesh enclosures reshape")}
+      </Text>
     </div>,
-    <div>
-      <Text fontSize="sm">About the app</Text>
-    </div>,
-    <LanguageSwitcher />,
   ];
+
   return (
     <div className="container_n_content">
-      <div className="tip_container">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <div
-            className="tip_box"
-            key={index}
-            style={{
-              backgroundColor:
-                openIndex === index ? "rgba(0, 128, 128, 0.5)" : "transparent",
-            }}
-            onClick={() => handleAccordionClick(index)}
-          >
-            {index === 4 ? (
-              <Text fontWeight="bold" fontSize="sm">
-                en/gr
-              </Text>
-            ) : (
-              <Text fontWeight="bold" fontSize="sm">
-                Tip {index + 1}
-              </Text>
-            )}
-          </div>
-        ))}
-      </div>
-      <div>
-        {openIndex !== -1 && (
-          <div
-            style={{
-              marginTop: "2px",
-              padding: "10px",
-              overflow: "hidden",
-              animation:
-                openIndex === -1 ? "fadeOut 1.5s ease" : "fadeIn 1.5s ease",
-            }}
-          >
-            {content[openIndex]}
-          </div>
-        )}
-      </div>
+      <Accordion allowToggle>
+        <AccordionItem>
+          <AccordionButton>
+            <Box display="flex" alignItems="center">
+              <HamburgerIcon />
+            </Box>
+          </AccordionButton>
+
+          <AccordionPanel pb={4}>
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box display="flex" alignItems="center">
+                    <Text fontWeight="bold" fontSize="sm">
+                      {t("Tips")}
+                    </Text>
+                  </Box>
+                </AccordionButton>
+
+                <AccordionPanel pb={4}>
+                  <Accordion allowToggle>
+                    {contexts.map((context, index) => (
+                      <AccordionItem key={index}>
+                        <AccordionButton>
+                          <Box flex="1" textAlign="left" borderColor="teal">
+                            {context}
+                          </Box>
+                        </AccordionButton>
+
+                        <AccordionPanel pb={4} textAlign="left">
+                          {content[index]}
+                        </AccordionPanel>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left" borderColor="teal">
+                    <Text fontWeight="bold" fontSize="sm">
+                      {t("the purpose_T")}
+                    </Text>
+                  </Box>
+                </AccordionButton>
+
+                <AccordionPanel pb={4} textAlign="left">
+                  <Text textAlign="left" fontSize="xs">
+                    {t("the purpose")}
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion allowToggle>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left" borderColor="teal">
+                    <Text fontWeight="bold" fontSize="sm">
+                      <SettingsIcon color="teal" /> EN/EL
+                    </Text>
+                  </Box>
+                </AccordionButton>
+
+                <AccordionPanel pb={4} textAlign="left">
+                  <LanguageSwitcher />
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </div>
   );
 };

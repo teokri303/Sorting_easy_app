@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 const TipBox = ({ title, content }) => {
   return (
@@ -33,28 +33,46 @@ const TipBox = ({ title, content }) => {
 };
 
 const Tipline = () => {
+  const { t } = useTranslation();
   const content = [
     <div>
-      <Text fontSize="sm">Information about the use of app.</Text>
-    </div>,
-    <div>
-      <Text fontSize="sm">Why 0/1 Lemma?</Text>
-    </div>,
-    <div>
-      <Text fontSize="sm">
-        Why SS algorithm reshapes my grid from 8x8 to 16x16 etc?
+      <Text textAlign="left" fontSize="xs">
+        {t("how to use")}
       </Text>
     </div>,
     <div>
-      <Text fontSize="sm">About and more tips if needed.</Text>
+      <Text textAlign="left" fontSize="xs">
+        {t("leema")}
+      </Text>
+    </div>,
+    <div>
+      <Text textAlign="left" fontSize="xs">
+        {t("mesh enclosures reshape")}
+      </Text>
+    </div>,
+    <div>
+      <Text textAlign="left" fontSize="xs">
+        {t("the purpose")}
+      </Text>
     </div>,
   ];
 
   const titles = [
-    "How to use",
-    "Why 0/1 Lemma?",
-    "Reshaping in SS algorithm",
-    "About the app",
+    <Text fontWeight="bold" fontSize="sm">
+      {t("how to use_T")}
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      {t("leema_T")}
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      {t("mesh enclosures reshape_T")}
+    </Text>,
+
+    <Text fontWeight="bold" fontSize="sm">
+      {t("the purpose_T")}
+    </Text>,
   ];
 
   return (

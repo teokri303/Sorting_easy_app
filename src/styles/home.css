@@ -20,8 +20,6 @@
 
 }
 
-
-
 .container {
   display: flex;
   position: relative;
@@ -45,11 +43,9 @@
         
 }
 .phase_text{
-  display: grid;
-  text-align: center; 
-  font-size: 25px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
         
 }
 .title_text{
@@ -202,8 +198,6 @@
 }
 
 
-
-
 #bar{
   position: absolute;
   top: 40%;
@@ -230,12 +224,17 @@
     opacity: 0;
   }
 }
-
-
-
-
-
-  
-  
+ 
 }
 
+
+@media (max-width: 1300px) {
+  .language {
+    display: grid;
+    margin: 5px;
+    position:relative;
+    place-items: center;
+    
+}
+
+}

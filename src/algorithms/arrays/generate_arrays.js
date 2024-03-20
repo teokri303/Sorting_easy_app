@@ -22,7 +22,7 @@ function generateLeema(side) {
   for (let i = 0; i < side; i++) {
     const row = [];
     for (let j = 0; j < side; j++) {
-      const randomValue = Math.random() < 0.65 ? 0 : 1; // pithanotita katanomis 1-0
+      const randomValue = Math.random() < 0.5 ? 0 : 1; // pithanotita katanomis 1-0
       row.push(randomValue);
     }
     random2DArray.push(row);

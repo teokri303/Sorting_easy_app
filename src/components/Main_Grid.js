@@ -39,6 +39,7 @@ import Navbar from "./Navbar";
 import { useTranslation } from "react-i18next";
 import HorizontalAccordion from "./Accordion";
 import Tipline from "./Tip_line";
+import UserWayWidget from "./UserWay";
 
 export default function Test() {
   const [array, setArray] = useState(null);
@@ -144,7 +145,7 @@ export default function Test() {
     console.timeEnd("WHOLE TIME");
 
     setLoadingbar(false);
-
+    addRecord(grid);
     return grid;
   }
   //----------------------------------------------------SCHNORR AND SHAMIR-------------------------------------------------
@@ -237,9 +238,11 @@ export default function Test() {
       function check_reshape(mesh) {
         if (array.length === 16 || array.length === 256) {
           //console.log("no need for reshape");
+          addRecord(mesh);
         } else {
           //console.log("NEED FOR reshape");
           let final = reshape_to_given(mesh);
+          addRecord(final);
           addRecord(final);
         }
       }
@@ -318,7 +321,6 @@ export default function Test() {
     setRandom_Own("random");
     setRandom_Own_shear("random");
     setRandom_Own_ss("random");
-    //setAlg("SHEARSHORT");
   }
 
   const handleSelectChange = (value) => {
@@ -334,6 +336,16 @@ export default function Test() {
       setAlg(value);
     } else {
       setAlg("SNOR_SHAMMIR");
+    }
+
+    if (isMobile && value !== alg) {
+      setRecord([]);
+      setArray(null);
+      setSortState_shear(true);
+      setSortState_ss(true);
+      setSelectedValue_shear(null);
+      setSelectedValue_ss(null);
+      setInputSize(null);
     }
   };
 
@@ -416,10 +428,12 @@ export default function Test() {
   const options_SS = [4, 8, 16, 32, 64, 128, 256];
 
   const [isMobile, setIsMobile] = useState(false);
+  const [isblocksStraight, setIsBlocksStraight] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+      setIsBlocksStraight(window.matchMedia("(max-width: 1300px)").matches);
     };
 
     handleResize(); // Ελέγχει το πλάτος της οθόνης όταν η εφαρμογή φορτώνεται
@@ -432,15 +446,16 @@ export default function Test() {
 
   return (
     <div>
+      <UserWayWidget />
       <div>
         <Navbar onLogoClick={go_back} />
       </div>
-      {isMobile && showFirst && (
+      {showFirst && isblocksStraight && (
         <div>
           <HorizontalAccordion />
         </div>
       )}
-      {!isMobile && showFirst && (
+      {!isblocksStraight && showFirst && (
         <div>
           <Tipline />
         </div>
@@ -495,6 +510,7 @@ export default function Test() {
                             </Box>
                           </ChakraProvider>
                         </div>
+
                         <div>
                           <Button
                             size="lg"
@@ -556,16 +572,45 @@ export default function Test() {
                           {random_or_own === "random" &&
                             isMobile &&
                             alg !== "SNOR_SHAMMIR" && (
-                              <MeshComponent grid={array} />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+
+                                <MeshComponent grid={array} />
+                              </div>
                             )}
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile &&
                             alg !== "SNOR_SHAMMIR" && (
-                              <CanvasMesh
-                                onPrintValues={set_grid_ready}
-                                size={input_size}
-                              />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <CanvasMesh
+                                  onPrintValues={set_grid_ready}
+                                  size={input_size}
+                                />
+                              </div>
                             )}
                         </div>
                         <div>
@@ -604,7 +649,7 @@ export default function Test() {
                       cursor={alg === "SNOR_SHAMMIR" ? null : "pointer"}
                     >
                       <div className="text">
-                        <p>Schnorr Shamir algorithm</p>
+                        <p>{t("Schnorr Shamir algorithm")}</p>
                       </div>
                       <div>
                         <div>
@@ -694,16 +739,45 @@ export default function Test() {
                           {random_or_own === "random" &&
                             isMobile &&
                             alg !== "SHEARSHORT" && (
-                              <MeshComponent grid={array} />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <MeshComponent grid={array} />
+                              </div>
                             )}
+
                           {random_or_own === "own" &&
                             input_size !== null &&
                             isMobile &&
                             alg !== "SHEARSHORT" && (
-                              <CanvasMesh
-                                onPrintValues={set_grid_ready}
-                                size={input_size}
-                              />
+                              <div>
+                                <Box mt={4}>
+                                  <Text fontWeight="bold" fontSize="xs">
+                                    {array === null
+                                      ? t("no conf")
+                                      : alg === "SHEARSHORT" && array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : alg === "SNOR_SHAMMIR" &&
+                                        array.length > 0
+                                      ? selectedValue + " X " + selectedValue
+                                      : t("no conf")}
+                                  </Text>
+                                </Box>
+                                <CanvasMesh
+                                  onPrintValues={set_grid_ready}
+                                  size={input_size}
+                                />
+                              </div>
                             )}
                         </div>
                         <div>
@@ -733,7 +807,7 @@ export default function Test() {
                         //------------------------------------------------------------------------------------------------------RIGHT DIV---------------------------------------------
                         mt={4}
                       >
-                        <Text fontSize="md">
+                        <Text fontWeight="bold" fontSize="md">
                           {array === null
                             ? t("no conf")
                             : alg === "SHEARSHORT" && array.length > 0
