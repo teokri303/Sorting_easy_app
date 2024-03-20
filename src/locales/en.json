@@ -2,8 +2,8 @@
     "Shearsort algorithm": "Shearsort algorithm",
     "Schnorr Shamir algorithm": "Schnorr-Shamir algorithm",
     "Show array": "Show mesh",
-    "Εnglish": "English",
-    "Greek": "Greek",
+    "Εnglish": "EN",
+    "Greek": "EL",
     "Subtitle": "Parallel sorting algorithm simulator",
     "no conf" : "Define mesh to display",
     "Reset Grid":"Reset mesh",
@@ -32,12 +32,12 @@
 
 
     "Phase 1 - Snakelike blocks" : "Phase 1: Divide the mesh into N$1/4$ blocks of size N$3/8$ x N$3/8$ and simultaneuously sort each block in snakelike order. N is the number of mesh cells, i.e., the total number of elements to be sorted. ",
-    "Phase 2 - K-way  Unshuffle" : "Phase 2:  Perform an N$1/8$-way unshuffle of the columns. In particular, permute the columns so that the N$3/8$ columns in each block are distributed evenly among the N$1/8$ vertical slices. A vertical slice contains a column of blocks.* Here, unshuffle of the mesh columns means the distribution of the columns of each vertical slice to all other vertical slices. Mesh columns receive unique consecutive binary labels starting from 0. Unshuffle of the mesh columns practically means moving each column to a new position indicated by the cyclic right shift of the column-label, i.e., column 7 labelled 0111 is moved to position 11 labelled 1011.",
+    "Phase 2 - K-way  Unshuffle" : "Phase 2:  Perform an N$1/8$-way unshuffle of the columns. In particular, permute the columns so that the N$3/8$ columns in each block are distributed evenly among the N$1/8$ vertical slices.* k-way unshuffle means the distribution of items to k players in a round-robin way with each player receiving evenly spaced items. A vertical slice contains a column of blocks. Here, unshuffle of the mesh columns means the distribution of the columns of each vertical slice to all other vertical slices. Mesh columns receive unique consecutive binary labels starting from 0. Unshuffle of the mesh columns practically means moving each column to a new position indicated by the cyclic right shift of the column-label, i.e., column 7 labelled 0111 is moved to position 11 labelled 1011.",
     "Phase 3 - Snakelike blocks" : "Phase 3: Sort each block into snakelike order.",
     "Phase 4 - Sort columns" : "Phase 4: Sort each column in linear order. Smaller numbers move upward.",
-    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5: Collectively sort blocks 1 and 2, blocks 3 and 4, etc., of each vertical slice into snakelike order. A vertical slice contains a column of blocks.",
-    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6: Collectively sort blocks 2 and 3, blocks 4 and 5, etc., of each vertical slice into snakelike order. A vertical slice contains a column of blocks.",
-    "Phase 7 - Rows sort snakelike" : "Phase 7: Sort each row in linear order according to the direction of the overall N-cell snake. In odd rows smaller numbers move leftward. In even rows smaller numbers move rightward. ",
+    "Phase 5 - Vertical slices sort (1-2...)" : "Phase 5: Collectively sort blocks 1 and 2, blocks 3 and 4, etc., of each vertical slice into snakelike order.",
+    "Phase 6 - Vertical slices sort (2-3...)" : "Phase 6: Collectively sort blocks 2 and 3, blocks 4 and 5, etc., of each vertical slice into snakelike order.",
+    "Phase 7 - Rows sort snakelike" : "Phase 7: Sort each row in linear order according to the direction of the overall snake. In odd rows smaller numbers move leftward. In even rows smaller numbers move rightward. ",
     "Phase 8 - 2N^3/8 Steps of odd-even transpotition" : "Phase 8: Perform 2N$3/8$ steps of odd-even transposition sort on the mesh.",
 
     "Reshape array to optimal dimensions" : "Reshape mesh to optimal dimensions.",
