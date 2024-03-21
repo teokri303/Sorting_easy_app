@@ -566,7 +566,12 @@ export default function Test() {
                         </div>
 
                         <div className="text-display-container">
-                          <p className="main-text">{t("shear text")}</p>
+                          <Text
+                            fontSize="sm"
+                            dangerouslySetInnerHTML={{
+                              __html: t("shear text"),
+                            }}
+                          ></Text>
                         </div>
                         <div className="box_mesh">
                           {random_or_own === "random" &&
@@ -733,7 +738,12 @@ export default function Test() {
                           </div>
                         </div>
                         <div className="text-display-container">
-                          <p className="main-text">{t("ss text")}</p>
+                          <Text
+                            fontSize="sm"
+                            dangerouslySetInnerHTML={{
+                              __html: t("ss text"),
+                            }}
+                          ></Text>
                         </div>
                         <div className="box_mesh">
                           {random_or_own === "random" &&
