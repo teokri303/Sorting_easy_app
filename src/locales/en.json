@@ -8,6 +8,8 @@
     "no conf" : "Define mesh to display",
     "Reset Grid":"Reset mesh",
     "Ready to sort":"Ready to sort",
+    "More text": "Show more",
+    "Less text":"Show less",
 
 
     "Enter mesh dimensions" :"Select mesh dimensions",

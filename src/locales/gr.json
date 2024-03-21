@@ -12,6 +12,8 @@
     "no conf" : "Ορίστε το πλέγμα για να εμφανιστεί ",
     "Reset Grid": "Καθαρισμός",
     "Ready to sort" : "Πλέγμα έτοιμο",
+    "More text": "Περισσότερα",
+    "Less text":"Λιγότερα",
 
     "Enter mesh dimensions" :"Επιλογή διαστάσεων πλέγματος",
     "Random array":"Τυχαίο πλέγμα",
