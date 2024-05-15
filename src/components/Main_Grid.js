@@ -40,6 +40,7 @@ import { useTranslation } from "react-i18next";
 import HorizontalAccordion from "./Accordion";
 import Tipline from "./Tip_line";
 import UserWayWidget from "./UserWay";
+import ExpandableText from "./ExpandableText";
 
 export default function Test() {
   const [array, setArray] = useState(null);
@@ -566,7 +567,7 @@ export default function Test() {
                         </div>
 
                         <div className="text-display-container">
-                          <p className="main-text">{t("shear text")}</p>
+                          <ExpandableText text={t("shear text")} />
                         </div>
                         <div className="box_mesh">
                           {random_or_own === "random" &&
@@ -733,7 +734,7 @@ export default function Test() {
                           </div>
                         </div>
                         <div className="text-display-container">
-                          <p className="main-text">{t("ss text")}</p>
+                          <ExpandableText text={t("ss text")} />
                         </div>
                         <div className="box_mesh">
                           {random_or_own === "random" &&
