@@ -1,5 +1,7 @@
 <img src="https://github.com/user-attachments/assets/cb3f682f-fa34-4b29-9d75-52fbaf7b6bb9" alt="onlylogo" width="70"/>  
-# Sorting Easy
+
+# <img src="https://github.com/user-attachments/assets/cb3f682f-fa34-4b29-9d75-52fbaf7b6bb9" alt="onlylogo" width="70"/>  
+ Sorting Easy
 
 ## Overview
 
