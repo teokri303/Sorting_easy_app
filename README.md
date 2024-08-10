@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Sorting Easy 📊
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+**Sorting Easy** is a web application that visualizes two key parallel sorting algorithms on 2D meshes: **Shearsort** and the **Schnorr-Shamir algorithm**. It provides a graphical and interactive environment for students and educators to explore parallel computation concepts. The app is fully responsive, accessible, and can be used on any device. You can access it easily on [Netlify](https://www.netlify.com).
 
-## Available Scripts
+## Features
+- **📱 Fully Responsive**: Works seamlessly across all devices—desktop, tablet, and mobile.
+- **🔍 Interactive Visualization**: Create and fill 2D meshes manually or automatically, then execute and observe sorting algorithms step-by-step.
+- **🚀 Parallel Execution**: The algorithms run in parallel using JavaScript Web Workers, improving performance and providing a true parallel computation experience.
+- **🕹️ Step-by-Step Navigation**: Explore each step of the algorithms with detailed explanations.
+- - **♿ Accessibility**: Integrated with UserWay to ensure accessibility for all users.
 
-In the project directory, you can run:
 
-### `npm start`
+## Technologies Used 🛠️
+- **⚛️ React.js**: Interactive UI and management of dynamic content.
+- **✨ JavaScript**: Core programming language for functionality, including the use of Web Workers for parallel execution.
+- **HTML/CSS**: Markup and styling for the application’s front end.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Parallel Execution
+- **⚡ Performance**: By leveraging JavaScript Web Workers, the algorithms execute in parallel, maximizing efficiency and reducing computation time.
+- **🎯 Realism**: Provides a more accurate simulation of parallel processing, enhancing the educational value.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## How to Use 🚀
+1. **Set Up the Mesh**: Define and fill the 2D mesh manually or automatically.
+2. **Select an Algorithm**: Choose between Shearsort or Schnorr-Shamir sorting algorithms.
+3. **Run the Algorithm**: Watch the sorting process unfold in real-time.
+4. **Step Navigation**: Navigate through the execution steps for in-depth understanding.
 
-### `npm test`
+## Purpose 🎯
+The app serves as an educational tool for visualizing and interacting with parallel sorting algorithms, deepening the understanding of parallel computation and its applications.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License 📜
+This project is licensed under the MIT License.
