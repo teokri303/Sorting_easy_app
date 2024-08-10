@@ -7,7 +7,7 @@
 
 **Sorting Easy** is a gamelike web application that visualizes two key parallel sorting algorithms on 2D meshes: **Shearsort** and the **Schnorr-Shamir algorithm**. It provides a graphical and interactive environment for students and educators to explore parallel computation concepts. The app is fully responsive, accessible, and can be used on any device. 
 
-You can access it easily on [Sorting Easy](https://sortingeasy.netlify.app)).
+You can access it easily on [Sorting Easy](https://sortingeasy.netlify.app).
 
 ## Features
 - **📱 Fully Responsive**: Works seamlessly across all devices—desktop, tablet, and mobile.
