@@ -1,5 +1,7 @@
 # Sorting Easy ![onlylogo](https://github.com/user-attachments/assets/cb3f682f-fa34-4b29-9d75-52fbaf7b6bb9)
 
+<img src="https://github.com/user-attachments/assets/cb3f682f-fa34-4b29-9d75-52fbaf7b6bb9" alt="onlylogo" width="200"/>
+
 ## Overview
 
 **Sorting Easy** is a gamelike web application that visualizes two key parallel sorting algorithms on 2D meshes: **Shearsort** and the **Schnorr-Shamir algorithm**. It provides a graphical and interactive environment for students and educators to explore parallel computation concepts. The app is fully responsive, accessible, and can be used on any device. 
